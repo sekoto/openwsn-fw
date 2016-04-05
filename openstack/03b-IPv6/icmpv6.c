@@ -1,7 +1,16 @@
 #include "opendefs.h"
 #include "icmpv6.h"
 #include "icmpv6echo.h"
+
+// RPL Mode election
+#if RPLMODE == 1
+#include "icmpv6rpl-storing.h"
+#endif
+#if RPLMODE == 0
 #include "icmpv6rpl.h"
+#endif
+
+
 #include "forwarding.h"
 #include "openqueue.h"
 #include "openserial.h"

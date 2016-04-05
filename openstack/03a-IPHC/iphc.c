@@ -7,7 +7,13 @@
 #include "forwarding.h"
 #include "neighbors.h"
 #include "openbridge.h"
+
+// RPL Mode election
+#if RPLMODE == 1
+#include "icmpv6rpl-storing.h"
+#elif RPLMODE == 0
 #include "icmpv6rpl.h"
+#endif
 
 //=========================== variables =======================================
 
