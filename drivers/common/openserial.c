@@ -19,13 +19,8 @@
 #include "opentimers.h"
 #include "openhdlc.h"
 #include "schedule.h"
-
-// RPL Mode election
-#if RPLMODE == 1
-#include "icmpv6rpl-storing.h"
-#elif RPLMODE == 0
 #include "icmpv6rpl.h"
-#endif
+
 
 //=========================== variables =======================================
 

@@ -7,15 +7,7 @@
 #include "packetfunctions.h"
 #include "neighbors.h"
 #include "icmpv6.h"
-
-// RPL Mode election
-#if RPLMODE == 1
-#include "icmpv6rpl-storing.h"
-#endif
-#if RPLMODE == 0
 #include "icmpv6rpl.h"
-#endif
-
 #include "openudp.h"
 #include "opentcp.h"
 #include "debugpins.h"

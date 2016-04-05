@@ -13,7 +13,9 @@
 
 //=========================== variables =======================================
 
-icmpv6rpl_vars_t             icmpv6rpl_vars;
+icmpv6rpl_vars_t            icmpv6rpl_vars;
+
+routes_vars_t               routes_vars;
 
 //=========================== prototypes ======================================
 
@@ -25,6 +27,24 @@ void sendDIO(void);
 void icmpv6rpl_timer_DAO_cb(opentimer_id_t id);
 void icmpv6rpl_timer_DAO_task(void);
 void sendDAO(void);
+
+// Routing table (Storing-Mode))
+void registerRoute(
+        open_addr_t*    routeID,
+        open_addr_t*    IPv6,
+        open_addr_t*    MAC64b,
+        uint8_t         DAOS,
+        uint8_t         PathS,  
+        uint8_t         PathL
+     );
+bool isRoute(open_addr_t* destinadd);
+uint8_t posRoute(open_addr_t* destinadd);
+void removeRoute(uint8_t routeIndex);
+bool ThisRowMatch(
+        open_addr_t* address,
+        uint8_t      rowNumber
+     );
+uint8_t routes_getNumRoutes(void);
 
 //=========================== public ==========================================
 
@@ -131,6 +151,11 @@ void icmpv6rpl_init() {
    
 }
 
+void routing_table_init() {
+   // clear module variables
+   memset(&routes_vars,0,sizeof(routes_vars_t));
+}
+
 void  icmpv6rpl_writeDODAGid(uint8_t* dodagid) {
    
    // write DODAGID to DIO/DAO
@@ -188,8 +213,15 @@ void icmpv6rpl_sendDone(OpenQueueEntry_t* msg, owerror_t error) {
 \param[in] msg   Pointer to the received message.
 */
 void icmpv6rpl_receive(OpenQueueEntry_t* msg) {
-   uint8_t      icmpv6code;
-   open_addr_t  myPrefix;
+   uint8_t          icmpv6code;
+   open_addr_t      myPrefix;
+   uint8_t          i;
+   uint8_t          daooptioncode;
+   uint8_t          posi;
+   uint8_t*         pposi;
+   open_addr_t      routeadd;
+   open_addr_t      origipv6;
+   open_addr_t      origmac;
    
    // take ownership
    msg->owner      = COMPONENT_ICMPv6RPL;
@@ -197,15 +229,49 @@ void icmpv6rpl_receive(OpenQueueEntry_t* msg) {
    // retrieve ICMPv6 code
    icmpv6code      = (((ICMPv6_ht*)(msg->payload))->code);
    
+   printf ("\n");
+   if (routes_vars.initated == 0){
+        printf("### INITIATING-ROUTING...\n");
+        memcpy(
+            &routes_vars.macmote,
+            &idmanager_vars.my64bID,
+            sizeof(idmanager_vars.my64bID)
+        );
+        routes_vars.initated = 1; 
+   }
+
+   printf("### MAC-MOTE -- ");
+   for (i=0;i<LENGTH_ADDR64b;i++) {
+        //printf(" %X",(&idmanager_vars.my64bID)->addr_64b[i]);  
+        printf(" %X",(&routes_vars.macmote)->addr_64b[i]); 
+   }
+   printf ("\n");
+   
+   printf("### ID-MAC-MOTE -- ");
+   for (i=0;i<LENGTH_ADDR64b;i++) {
+        printf(" %X",(&idmanager_vars.my64bID)->addr_64b[i]);  
+   }
+   printf ("\n");
+   
    // toss ICMPv6 header
    packetfunctions_tossHeader(msg,sizeof(ICMPv6_ht));
+   
+   // IPv6 destination
+   
+   printf("### MSG-Destination-IPv6 -- ");
+   for (i=0;i<LENGTH_ADDR128b;i++) {
+        printf (" %X",msg->l3_destinationAdd.addr_128b[i]);  
+   }
+   printf ("\n");
    
    // handle message
    switch (icmpv6code) {
       case IANA_ICMPv6_RPL_DIS:
+         printf("¬¬¬¬ DIS-Message \n");
          icmpv6rpl_timer_DIO_task();
          break;
       case IANA_ICMPv6_RPL_DIO:
+         printf("¬¬¬¬ DIO-Message \n");
          if (idmanager_getIsDAGroot()==TRUE) {
             // stop here if I'm in the DAG root
             break; // break, don't return
@@ -231,15 +297,174 @@ void icmpv6rpl_receive(OpenQueueEntry_t* msg) {
             sizeof(myPrefix.prefix)
          );
          idmanager_setMyID(&myPrefix);
-         
+                  
          break;
       
       case IANA_ICMPv6_RPL_DAO:
-         // this should never happen
-         openserial_printCritical(COMPONENT_ICMPv6RPL,ERR_UNEXPECTED_DAO,
-                               (errorparameter_t)0,
-                               (errorparameter_t)0);
+          
+		printf("¬¬¬¬ DAO-Message \n");
+          
+		if (RPLMODE==0){ 
+			// this should never happen
+			//openserial_printCritical(COMPONENT_ICMPv6RPL,ERR_UNEXPECTED_DAO,
+			//                      (errorparameter_t)0,
+			//                      (errorparameter_t)0);
+		} else if (RPLMODE==1){ 
+			memcpy(
+				&(icmpv6rpl_vars.dao),
+				(icmpv6rpl_dao_ht*)(msg->payload),
+				sizeof(icmpv6rpl_dao_ht)
+			);
+			
+			printf ("\n/////////////////////////////////////////\n");
+			//printf ("--SRC-Add.. ");
+			
+			memcpy(&origipv6.addr_128b,&(msg->l3_sourceAdd.addr_128b),sizeof(msg->l3_sourceAdd.addr_128b));
+			
+			for (i=LENGTH_ADDR64b;i<LENGTH_ADDR128b;i++) {
+					origmac.addr_64b[i-8] = origipv6.addr_128b[i];
+			}
+			
+			//for (i=0;i<LENGTH_ADDR128b;i++) {
+				//printf (" %X",msg->l3_sourceAdd.addr_128b[i]);  
+			//   printf (" %X",origipv6.addr_128b[i]);
+			//}
+			//printf ("\n");
+	
+			//printf ("--SRC-MAC64.. ");
+			//for (i=0;i<LENGTH_ADDR64b;i++) {
+			//   printf (" %X",origmac.addr_64b[i]);
+			//}
+			//printf ("\n");
+			
+			printf ("-- Payload.. ");
+			for (i=0;i<120;i++) {
+				printf (" %X",msg->payload[i]);  
+			}
+			printf ("\n");
+			
+			// retrieve DAO option code
+			daooptioncode      = msg->payload[sizeof(icmpv6rpl_dao_ht)];
+			
+			//printf (" -daooptioncode-- %i \n",daooptioncode);
+			
+			posi=sizeof(icmpv6rpl_dao_ht);
+			pposi = &(msg->payload[posi]);
+			
+			while(posi > 0){
+				
+				// retrieve DAO option code
+				daooptioncode = msg->payload[posi];   
+				//printf ("--daooptioncode.. %i \n",daooptioncode);
+				
+				// DAO option select
+				switch (daooptioncode) {
+			
+				case OPTION_TARGET_INFORMATION_TYPE:    
+					
+					printf ("##### Target Option \n");
+					//printf ("** type %X \n",((icmpv6rpl_dao_target_ht*)(pposi))->type);
+					//printf ("** OptionLength %X \n",((icmpv6rpl_dao_target_ht*)(pposi))->optionLength);
+					//printf ("** Flags %X \n",((icmpv6rpl_dao_target_ht*)(pposi))->flags);
+					//printf ("** PrefixLength %X \n",((icmpv6rpl_dao_target_ht*)(pposi))->prefixLength);
+					//**
+					
+					memcpy(
+					&(icmpv6rpl_vars.dao_target),
+					(icmpv6rpl_dao_target_ht*)(pposi),
+					sizeof(icmpv6rpl_dao_target_ht)
+					);
+					//printf ("** PrefixLength %X \n",(&icmpv6rpl_vars.dao_target)->prefixLength);
+	
+	
+					posi=posi+sizeof(icmpv6rpl_dao_target_ht)-1; 
+					pposi = &(msg->payload[posi]);
+	
+					// printf ("** Posicion %X \n",posi);
+					
+					// Record the IPv6 anounced
+					for (i=0;i<LENGTH_ADDR128b;i++) {
+						routeadd.addr_128b[i] = ((open_addr_t*)(pposi))->addr_128b[i];
+					}
+					
+					//printf ("** Child-Address.. ");
+					// for (i=0;i<LENGTH_ADDR128b;i++) {
+					//      printf (" %X",routeadd.addr_128b[i]);  
+					// }
+					//printf ("\n");
+					
+					printf ("...Before Register .. %X\n",routes_getNumRoutes());
+					
+					registerRoute(&routeadd,&origipv6,&origmac,(&icmpv6rpl_vars.dao)->DAOSequence,(&icmpv6rpl_vars.dao_transit)->PathSequence,(&icmpv6rpl_vars.dao_transit)->PathLifetime);
+	
+					printf ("...After Register .. %X\n",routes_getNumRoutes());
+					
+					
+					posi=posi+LENGTH_ADDR128b+1; 
+					pposi = &(msg->payload[posi]);
+				
+					// printf ("** Ultimo %X \n",msg->payload[posi]);
+				
+					break;
+				
+				case OPTION_TRANSIT_INFORMATION_TYPE:    
+					printf ("##### Transit Option \n");
+					//printf ("** type %X \n",((icmpv6rpl_dao_transit_ht*)(pposi))->type);
+					//printf ("** optionLength %X \n",((icmpv6rpl_dao_transit_ht*)(pposi))->optionLength);
+					//printf ("** E_flags %X \n",((icmpv6rpl_dao_transit_ht*)(pposi))->E_flags);
+					//printf ("** PathControl %X \n",((icmpv6rpl_dao_transit_ht*)(pposi))->PathControl);
+					//printf ("** PathSequence %X \n",((icmpv6rpl_dao_transit_ht*)(pposi))->PathSequence);
+					//printf ("** PathLifetime %X \n",((icmpv6rpl_dao_transit_ht*)(pposi))->PathLifetime);
+					
+					memcpy(
+					&(icmpv6rpl_vars.dao_transit),
+					(icmpv6rpl_dao_transit_ht*)(pposi),
+					sizeof(icmpv6rpl_dao_transit_ht)
+					);
+				
+					//printf ("** type %X \n",(&icmpv6rpl_vars.dao_transit)->type);
+					//printf ("** optionLength %X \n",(&icmpv6rpl_vars.dao_transit)->optionLength);
+					//printf ("** E_flags %X \n",(&icmpv6rpl_vars.dao_transit)->E_flags);
+					//printf ("** PathControl %X \n",(&icmpv6rpl_vars.dao_transit)->PathControl);
+					//printf ("** PathSequence %X \n",(&icmpv6rpl_vars.dao_transit)->PathSequence);
+					//printf ("** PathLifetime %X \n",(&icmpv6rpl_vars.dao_transit)->PathLifetime);
+					
+					posi=posi+sizeof(icmpv6rpl_dao_transit_ht)-1; 
+					pposi = &(msg->payload[posi]);
+	
+					// printf ("** Posicion %X \n",posi);
+				
+					if ((((icmpv6rpl_dao_transit_ht*)(pposi))->optionLength)==0){
+						printf ("** Storing-Mode.. (No Parent Address)\n");   
+					}else{
+						printf ("** Parent-Address  ");
+						for (i=0;i<LENGTH_ADDR128b;i++) {
+							printf (" %X",((open_addr_t*)(pposi))->addr_128b[i]);  
+						}
+						printf ("\n");
+					}
+	
+					posi=posi+LENGTH_ADDR128b+1; 
+					pposi = &(msg->payload[posi]);
+				
+					//printf ("** Ultimo %X \n",msg->payload[posi]);
+	
+					break;
+				
+				default:  
+					printf ("##### FIN DAO %X \n",msg->payload[posi]);
+					posi=0;
+					break;
+				
+				}
+			
+			}
+			
+			
+		}
+
          break;
+         
       default:
          // this should never happen
          openserial_printError(COMPONENT_ICMPv6RPL,ERR_MSG_UNKNOWN_TYPE,
@@ -410,8 +635,9 @@ void sendDAO() {
    OpenQueueEntry_t*    msg;                // pointer to DAO messages
    uint8_t              nbrIdx;             // running neighbor index
    uint8_t              numTransitParents,numTargetParents;  // the number of parents indicated in transit option
-   open_addr_t         address;
-   open_addr_t*        prefix;
+   open_addr_t          address;
+   open_addr_t*         prefix;
+   uint8_t              i;
    
    if (ieee154e_isSynch()==FALSE) {
       // I'm not sync'ed 
@@ -462,36 +688,18 @@ void sendDAO() {
    
    // set DAO destination
    msg->l3_destinationAdd.type=ADDR_128B;
-   memcpy(msg->l3_destinationAdd.addr_128b,icmpv6rpl_vars.dio.DODAGID,sizeof(icmpv6rpl_vars.dio.DODAGID));
+   
+   if (RPLMODE==0){ 
+		memcpy(msg->l3_destinationAdd.addr_128b,icmpv6rpl_vars.dio.DODAGID,sizeof(icmpv6rpl_vars.dio.DODAGID));
+   } else if (RPLMODE==1){ 
+		// l3_destinationAdd MUST be Prefered Parent in Storing mode
+		neighbors_getPreferredParentEui64(&address);
+		packetfunctions_mac64bToIp128b(idmanager_getMyID(ADDR_PREFIX),&address,&(msg->l3_destinationAdd));
+   }
    
    //===== fill in packet
    
-   //NOTE: limit to preferrred parent only the number of DAO transit addresses to send
-   
-   //=== transit option -- from RFC 6550, page 55 - 1 transit information header per parent is required. 
-   //getting only preferred parent as transit
-   numTransitParents=0;
-   neighbors_getPreferredParentEui64(&address);
-   packetfunctions_writeAddress(msg,&address,OW_BIG_ENDIAN);
-   prefix=idmanager_getMyID(ADDR_PREFIX);
-   packetfunctions_writeAddress(msg,prefix,OW_BIG_ENDIAN);
-   // update transit info fields
-   // from rfc6550 p.55 -- Variable, depending on whether or not the DODAG ParentAddress subfield is present.
-   // poipoi xv: it is not very clear if this includes all fields in the header. or as target info 2 bytes are removed.
-   // using the same pattern as in target information.
-   icmpv6rpl_vars.dao_transit.optionLength  = LENGTH_ADDR128b + sizeof(icmpv6rpl_dao_transit_ht)-2;
-   icmpv6rpl_vars.dao_transit.PathControl=0; //todo. this is to set the preference of this parent.      
-   icmpv6rpl_vars.dao_transit.type=OPTION_TRANSIT_INFORMATION_TYPE;
-           
-   // write transit info in packet
-   packetfunctions_reserveHeaderSize(msg,sizeof(icmpv6rpl_dao_transit_ht));
-   memcpy(
-          ((icmpv6rpl_dao_transit_ht*)(msg->payload)),
-          &(icmpv6rpl_vars.dao_transit),
-          sizeof(icmpv6rpl_dao_transit_ht)
-   );
-   numTransitParents++;
-   
+   // TARGET OPTION
    //target information is required. RFC 6550 page 55.
    /*
    One or more Transit Information options MUST be preceded by one or
@@ -533,6 +741,52 @@ void sendDAO() {
       if (numTargetParents>=MAX_TARGET_PARENTS) break;
    }
    
+   // TRANSIT OPTION
+   //NOTE: limit to preferrred parent only the number of DAO transit addresses to send
+   
+   //=== transit option -- from RFC 6550, page 55 - 1 transit information header per parent is required. 
+   //getting only preferred parent as transit
+   numTransitParents=0;
+   
+   if (RPLMODE==0){ 
+		neighbors_getPreferredParentEui64(&address);
+		packetfunctions_writeAddress(msg,&address,OW_BIG_ENDIAN);
+		prefix=idmanager_getMyID(ADDR_PREFIX);
+		packetfunctions_writeAddress(msg,prefix,OW_BIG_ENDIAN);
+   } else if (RPLMODE==1){ 
+		// Parent Address in storing-mode is unassigned
+		// Unassigned bits of the Transit Information option are reserved.  
+		// They MUST be set to zero on transmission and MUST be ignored on reception.
+		for (i=0;i<LENGTH_ADDR128b;i++) {
+			msg->payload      -= sizeof(uint8_t);
+			msg->length       += sizeof(uint8_t);
+			*((uint8_t*)(msg->payload)) = 0;
+		}
+   }
+
+   // update transit info fields
+   // from rfc6550 p.55 -- Variable, depending on whether or not the DODAG ParentAddress subfield is present.
+   // poipoi xv: it is not very clear if this includes all fields in the header. or as target info 2 bytes are removed.
+   // using the same pattern as in target information.
+   
+   if (RPLMODE==0){ 
+		icmpv6rpl_vars.dao_transit.optionLength  = LENGTH_ADDR128b + sizeof(icmpv6rpl_dao_transit_ht)-2;
+   } else if (RPLMODE==1){ 
+		// optionLength set to 0 because Storing-mode
+		icmpv6rpl_vars.dao_transit.optionLength  = 0;
+   }
+
+   icmpv6rpl_vars.dao_transit.PathControl=0; //todo. this is to set the preference of this parent.      
+   icmpv6rpl_vars.dao_transit.type=OPTION_TRANSIT_INFORMATION_TYPE;
+           
+   // write transit info in packet
+   packetfunctions_reserveHeaderSize(msg,sizeof(icmpv6rpl_dao_transit_ht));
+   memcpy(
+          ((icmpv6rpl_dao_transit_ht*)(msg->payload)),
+          &(icmpv6rpl_vars.dao_transit),
+          sizeof(icmpv6rpl_dao_transit_ht)
+   );
+   numTransitParents++;
    
    // stop here if no parents found
    if (numTransitParents==0) {
@@ -588,4 +842,124 @@ void icmpv6rpl_setDAOPeriod(uint16_t daoPeriod){
        TIME_MS,
        daoPeriodRandom
    );
+}
+
+// Routing Table related
+void registerRoute(open_addr_t*     destaddress,
+                   open_addr_t*     IPv6,
+                   open_addr_t*     MAC64b,
+                   uint8_t          DAOS,
+                   uint8_t          PathS,
+                   uint8_t          PathL) {
+   uint8_t  i,posi;
+   bool     isneworig;
+   printf("Registering route process....\n");
+   
+   // add this Route
+   if (isRoute(destaddress)==FALSE) {
+      printf("The route is not on the table...\n");
+      i=0;
+      while(i<MAX_ROUTE_NUM) {
+         if (routes_vars.routes[i].used==FALSE) {
+             printf("Adding route...\n");
+            // add this route
+            routes_vars.routes[i].used                      = TRUE;
+            routes_vars.routes[i].advertneighinf            = 0;
+            memcpy(&routes_vars.routes[i].addr_128b,IPv6,sizeof(open_addr_t));
+            memcpy(&routes_vars.routes[i].addr_64b,MAC64b,sizeof(open_addr_t));
+            routes_vars.routes[i].retcount                  = 0;
+            routes_vars.routes[i].DAOSequence               = DAOS;
+            routes_vars.routes[i].PathSequence              = PathS;
+            routes_vars.routes[i].PathLifetime              = PathL;
+            memcpy(&routes_vars.routes[i].destination,destaddress,sizeof(open_addr_t));
+ 
+            break;
+         }
+         i++;
+      }
+      if (i==MAX_ROUTE_NUM) {
+         //openserial_printError(COMPONENT_NEIGHBORS,ERR_NEIGHBORS_FULL,
+         //                      (errorparameter_t)MAX_ROUTE_NUM,
+         //                      (errorparameter_t)0);
+         return;
+      }
+   }else{
+       printf("The route is in the table already...\n");
+        // Obtain position of route
+        posi = posRoute(destaddress);
+        // Is new the address of publisher
+        isneworig = packetfunctions_equalAddress(IPv6,&routes_vars.routes[posi].addr_128b);
+        // In case of error and no position is bigger than MAX_ROUTE_NUM
+        if (posi <= MAX_ROUTE_NUM){
+            // Looking for update in the info of routing, in case of new info updates route
+            if ((routes_vars.routes[posi].DAOSequence != DAOS) || (routes_vars.routes[posi].PathSequence != PathS) || isneworig){
+                printf("Updating Route...\n");
+                // update this route
+                routes_vars.routes[posi].used                      = TRUE;
+                routes_vars.routes[posi].advertneighinf            = 0;
+                memcpy(&routes_vars.routes[posi].addr_128b,IPv6,sizeof(open_addr_t));
+                memcpy(&routes_vars.routes[posi].addr_64b,MAC64b,sizeof(open_addr_t));
+                routes_vars.routes[posi].retcount                  = 0;
+                routes_vars.routes[posi].DAOSequence               = DAOS;
+                routes_vars.routes[posi].PathSequence              = PathS;
+                routes_vars.routes[posi].PathLifetime              = PathL;
+                memcpy(&routes_vars.routes[posi].destination,destaddress,sizeof(open_addr_t));
+            }
+        }  
+        return;
+   }
+}
+
+bool isRoute(open_addr_t* destroute) {
+   uint8_t i=0;
+   for (i=0;i<MAX_ROUTE_NUM;i++) {
+      if (ThisRowMatch(destroute,i)) {
+         return TRUE;
+      }
+   }
+   return FALSE;
+}
+
+uint8_t posRoute(open_addr_t* destroute) {
+   uint8_t i=0;
+   for (i=0;i<MAX_ROUTE_NUM;i++) {
+      if (ThisRowMatch(destroute,i)) {
+         return i;
+      }
+   }
+   return MAX_ROUTE_NUM+1;
+}
+
+void removeRoute(uint8_t routeIndex) {
+   routes_vars.routes[routeIndex].used                      = FALSE;
+   routes_vars.routes[routeIndex].advertneighinf            = 0;
+   routes_vars.routes[routeIndex].addr_128b.type            = ADDR_NONE;
+   routes_vars.routes[routeIndex].addr_64b.type             = ADDR_NONE;
+   routes_vars.routes[routeIndex].retcount                  = 0;
+   routes_vars.routes[routeIndex].DAOSequence               = 0;
+   routes_vars.routes[routeIndex].PathSequence              = 0;
+   routes_vars.routes[routeIndex].PathLifetime              = 0;
+   routes_vars.routes[routeIndex].destination.type          = ADDR_NONE;
+}
+
+uint8_t routes_getNumRoutes() {
+   uint8_t i;
+   uint8_t returnVal;
+   
+   returnVal=0;
+   for (i=0;i<MAX_ROUTE_NUM;i++) {
+      if (routes_vars.routes[i].used==TRUE) {
+         returnVal++;
+      }
+   }
+   return returnVal;
+}
+
+//=========================== helpers =========================================
+
+bool ThisRowMatch(open_addr_t* address, uint8_t rowNumber) {
+
+         return routes_vars.routes[rowNumber].used &&
+                packetfunctions_equalAddress(address,&routes_vars.routes[rowNumber].destination);
+
 }

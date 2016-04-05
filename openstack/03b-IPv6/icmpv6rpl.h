@@ -8,6 +8,7 @@
 \{
 */
 
+#include "opendefs.h"
 #include "opentimers.h"
 
 //=========================== define ==========================================
@@ -15,10 +16,18 @@
 #define TIMER_DIO_TIMEOUT         10000
 #define TIMER_DAO_TIMEOUT         60000
 
-// Non-Storing Mode of Operation (1)
-#define MOP_DIO_A                 0<<5
-#define MOP_DIO_B                 0<<4
-#define MOP_DIO_C                 1<<3
+#if RPLMODE == 0
+    // Non-Storing Mode of Operation (1)
+    #define MOP_DIO_A                 0<<5
+    #define MOP_DIO_B                 0<<4
+    #define MOP_DIO_C                 1<<3
+#elif RPLMODE == 1
+    // Storing Mode of Operation (3)
+    #define MOP_DIO_A                 0<<5
+    #define MOP_DIO_B                 1<<4
+    #define MOP_DIO_C                 1<<3
+#endif
+
 // least preferred (0)
 #define PRF_DIO_A                 0<<2
 #define PRF_DIO_B                 0<<1
@@ -54,7 +63,12 @@
 
 // max number of parents and children to send in DAO
 //section 8.2.1 pag 67 RFC6550 -- using a subset
+//#define MAX_TARGET_PARENTS        0x01
 #define MAX_TARGET_PARENTS        0x01
+
+// max number of routes in a Mote 
+
+#define MAX_ROUTE_NUM              0x20
 
 enum{
   OPTION_ROUTE_INFORMATION_TYPE   = 0x03,
@@ -133,6 +147,23 @@ typedef struct {
    uint8_t         prefixLength;  
 } icmpv6rpl_dao_target_ht;
 END_PACK
+        
+/**
+\Routing tables for RPL Storing mode
+*/       
+BEGIN_PACK
+typedef struct {
+   bool             used;
+   uint8_t          advertneighinf; //Advertising Neighbor Information
+   open_addr_t      addr_128b; //IPv6 from the announcer
+   open_addr_t      addr_64b; // Interface ID to which DAO parents has this entry been reported
+   uint8_t          retcount; // Retry counter
+   uint8_t          DAOSequence; // DAO-Sequence
+   uint8_t          PathSequence;   
+   uint8_t          PathLifetime; 
+   open_addr_t      destination; //Destination Prefix (or address or Mcast Group) 
+} routeRow_t;
+END_PACK
 
 //=========================== module variables ================================
 
@@ -149,11 +180,18 @@ typedef struct {
    // DAO-related
    icmpv6rpl_dao_ht          dao;                     ///< pre-populated DAO packet.
    icmpv6rpl_dao_transit_ht  dao_transit;             ///< pre-populated DAO "Transit Info" option header.
-   icmpv6rpl_dao_target_ht   dao_target;              ///< pre-populated DAO "Transit Info" option header.
+   icmpv6rpl_dao_target_ht   dao_target;              ///< pre-populated DAO "Target Info" option header.
    opentimer_id_t            timerIdDAO;              ///< ID of the timer used to send DAOs.
    uint32_t                  daoPeriod;               ///< duration, in ms, of a timerIdDAO timeout.
    uint8_t                   delayDAO;                ///< number of timerIdDIO events before actually sending a DAO.
 } icmpv6rpl_vars_t;
+
+typedef struct {
+   routeRow_t           routes[MAX_ROUTE_NUM];
+   icmpv6rpl_dio_ht*    rplOptions; // To see the RPL options
+   open_addr_t          macmote; // MAC of the MOTE
+   uint8_t              initated; 
+} routes_vars_t;
 
 //=========================== prototypes ======================================
 
@@ -169,5 +207,7 @@ void     icmpv6rpl_setDAOPeriod(uint16_t daoPeriod);
 \}
 \}
 */
+
+void          routing_table_init(void);
 
 #endif

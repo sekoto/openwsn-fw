@@ -8,13 +8,7 @@
 \{
 */
 #include "opendefs.h"
-
-// RPL Mode election
-#if RPLMODE == 1
-#include "icmpv6rpl-storing.h"
-#elif RPLMODE == 0
 #include "icmpv6rpl.h"
-#endif
 
 //=========================== define ==========================================
 
