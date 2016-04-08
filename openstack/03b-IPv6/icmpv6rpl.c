@@ -222,7 +222,7 @@ void icmpv6rpl_receive(OpenQueueEntry_t* msg) {
    open_addr_t      routeadd;
    open_addr_t      origipv6;
    open_addr_t      origmac;
-   
+
    // take ownership
    msg->owner      = COMPONENT_ICMPv6RPL;
    
@@ -305,11 +305,14 @@ void icmpv6rpl_receive(OpenQueueEntry_t* msg) {
 		printf("+++++ DAO-Message \n");
           
 		if (RPLMODE==0){ 
+		
 			// this should never happen
 			//openserial_printCritical(COMPONENT_ICMPv6RPL,ERR_UNEXPECTED_DAO,
 			//                      (errorparameter_t)0,
 			//                      (errorparameter_t)0);
+		
 		} else if (RPLMODE==1){ 
+		
 			memcpy(
 				&(icmpv6rpl_vars.dao),
 				(icmpv6rpl_dao_ht*)(msg->payload),
@@ -394,7 +397,7 @@ void icmpv6rpl_receive(OpenQueueEntry_t* msg) {
 					//printf ("\n");
 					
 					printf ("...Before Register .. %X\n",routes_getNumRoutes());
-					
+                               
 					registerRoute(&routeadd,&origipv6,&origmac,(&icmpv6rpl_vars.dao)->DAOSequence,(&icmpv6rpl_vars.dao_transit)->PathSequence,(&icmpv6rpl_vars.dao_transit)->PathLifetime);
 	
 					printf ("...After Register .. %X\n",routes_getNumRoutes());
@@ -705,6 +708,34 @@ void sendDAO() {
    One or more Transit Information options MUST be preceded by one or
    more RPL Target options.   
    */
+   // Routes announced -- Storing-Mode
+   printf ("\n");
+   printf("### Mounting DAO-Target-Option -- \n");
+   
+   printf("### ID-MOTE -- ");
+   for (i=0;i<LENGTH_ADDR64b;i++) {
+        printf(" %X",(&idmanager_vars.my64bID)->addr_64b[i]);  
+   }
+   printf ("\n");
+   
+   for (nbrIdx=0;nbrIdx<MAX_ROUTE_NUM;nbrIdx++) {
+       if (routes_vars.routes[nbrIdx].used==TRUE) {
+           
+           
+            printf("### Routing-Ruta-Destino -- ");
+            for (i=0;i<LENGTH_ADDR128b;i++) {
+                printf (" %X",routes_vars.routes[nbrIdx].destination.addr_128b[i]);  
+            }
+            printf ("\n"); 
+            printf("### Routing-Publicante -- ");
+            for (i=0;i<LENGTH_ADDR128b;i++) {
+                printf (" %X",routes_vars.routes[nbrIdx].addr_128b.addr_128b[i]);  
+            }
+            printf ("\n"); 
+       }
+   }
+   
+   // Direct Child of the MOTE
     numTargetParents                        = 0;
     for (nbrIdx=0;nbrIdx<MAXNUMNEIGHBORS;nbrIdx++) {
       if ((neighbors_isNeighborWithHigherDAGrank(nbrIdx))==TRUE) {
@@ -741,6 +772,7 @@ void sendDAO() {
       if (numTargetParents>=MAX_TARGET_PARENTS) break;
    }
    
+    
    // TRANSIT OPTION
    //NOTE: limit to preferrred parent only the number of DAO transit addresses to send
    
