@@ -240,14 +240,14 @@ void icmpv6rpl_receive(OpenQueueEntry_t* msg) {
         routes_vars.initated = 1; 
    }
 
-   printf("### MAC-MOTE -- ");
-   for (i=0;i<LENGTH_ADDR64b;i++) {
-        //printf(" %X",(&idmanager_vars.my64bID)->addr_64b[i]);  
-        printf(" %X",(&routes_vars.macmote)->addr_64b[i]); 
-   }
-   printf ("\n");
+   //printf("### MAC-MOTE -- ");
+   //for (i=0;i<LENGTH_ADDR64b;i++) {
+   //     //printf(" %X",(&idmanager_vars.my64bID)->addr_64b[i]);  
+   //     printf(" %X",(&routes_vars.macmote)->addr_64b[i]); 
+   //}
+   //printf ("\n");
    
-   printf("### ID-MAC-MOTE -- ");
+   printf("### ID-MOTE -- ");
    for (i=0;i<LENGTH_ADDR64b;i++) {
         printf(" %X",(&idmanager_vars.my64bID)->addr_64b[i]);  
    }
@@ -267,11 +267,11 @@ void icmpv6rpl_receive(OpenQueueEntry_t* msg) {
    // handle message
    switch (icmpv6code) {
       case IANA_ICMPv6_RPL_DIS:
-         printf("¬¬¬¬ DIS-Message \n");
+         printf("+++++ DIS-Message \n");
          icmpv6rpl_timer_DIO_task();
          break;
       case IANA_ICMPv6_RPL_DIO:
-         printf("¬¬¬¬ DIO-Message \n");
+         printf("+++++ DIO-Message \n");
          if (idmanager_getIsDAGroot()==TRUE) {
             // stop here if I'm in the DAG root
             break; // break, don't return
@@ -302,7 +302,7 @@ void icmpv6rpl_receive(OpenQueueEntry_t* msg) {
       
       case IANA_ICMPv6_RPL_DAO:
           
-		printf("¬¬¬¬ DAO-Message \n");
+		printf("+++++ DAO-Message \n");
           
 		if (RPLMODE==0){ 
 			// this should never happen
@@ -316,7 +316,7 @@ void icmpv6rpl_receive(OpenQueueEntry_t* msg) {
 				sizeof(icmpv6rpl_dao_ht)
 			);
 			
-			printf ("\n/////////////////////////////////////////\n");
+			printf ("/////////////////////////////////////////\n");
 			//printf ("--SRC-Add.. ");
 			
 			memcpy(&origipv6.addr_128b,&(msg->l3_sourceAdd.addr_128b),sizeof(msg->l3_sourceAdd.addr_128b));
