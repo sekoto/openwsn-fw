@@ -222,6 +222,7 @@ void icmpv6rpl_receive(OpenQueueEntry_t* msg) {
    open_addr_t      routeadd;
    open_addr_t      origipv6;
    open_addr_t      origmac;
+   open_addr_t      origpref;
 
    // take ownership
    msg->owner      = COMPONENT_ICMPv6RPL;
@@ -320,25 +321,27 @@ void icmpv6rpl_receive(OpenQueueEntry_t* msg) {
 			);
 			
 			printf ("/////////////////////////////////////////\n");
-			//printf ("--SRC-Add.. ");
+			printf ("--SRC-Add.. ");
 			
-			memcpy(&origipv6.addr_128b,&(msg->l3_sourceAdd.addr_128b),sizeof(msg->l3_sourceAdd.addr_128b));
+                        //memcpy(&origipv6.addr_128b,&(msg->l3_sourceAdd.addr_128b),sizeof(msg->l3_sourceAdd.addr_128b));
+			memcpy(&origipv6,&(msg->l3_sourceAdd),sizeof(msg->l3_sourceAdd));
 			
-			for (i=LENGTH_ADDR64b;i<LENGTH_ADDR128b;i++) {
-					origmac.addr_64b[i-8] = origipv6.addr_128b[i];
-			}
+                        packetfunctions_ip128bToMac64b(&origipv6,&origpref,&origmac);
+			//for (i=LENGTH_ADDR64b;i<LENGTH_ADDR128b;i++) {
+			//		origmac.addr_64b[i-8] = origipv6.addr_128b[i];
+			//}
 			
-			//for (i=0;i<LENGTH_ADDR128b;i++) {
+			for (i=0;i<LENGTH_ADDR128b;i++) {
 				//printf (" %X",msg->l3_sourceAdd.addr_128b[i]);  
-			//   printf (" %X",origipv6.addr_128b[i]);
-			//}
-			//printf ("\n");
+			   printf (" %X",origipv6.addr_128b[i]);
+			}
+			printf ("\n");
 	
-			//printf ("--SRC-MAC64.. ");
-			//for (i=0;i<LENGTH_ADDR64b;i++) {
-			//   printf (" %X",origmac.addr_64b[i]);
-			//}
-			//printf ("\n");
+			printf ("--SRC-MAC64.. ");
+			for (i=0;i<LENGTH_ADDR64b;i++) {
+			   printf (" %X",origmac.addr_64b[i]);
+			}
+			printf ("\n");
 			
 			printf ("-- Payload.. ");
 			for (i=0;i<120;i++) {
@@ -373,28 +376,26 @@ void icmpv6rpl_receive(OpenQueueEntry_t* msg) {
 					//**
 					
 					memcpy(
-					&(icmpv6rpl_vars.dao_target),
-					(icmpv6rpl_dao_target_ht*)(pposi),
-					sizeof(icmpv6rpl_dao_target_ht)
+                                            &(icmpv6rpl_vars.dao_target),
+                                            (icmpv6rpl_dao_target_ht*)(pposi),
+                                            sizeof(icmpv6rpl_dao_target_ht)
 					);
 					//printf ("** PrefixLength %X \n",(&icmpv6rpl_vars.dao_target)->prefixLength);
-	
-	
+
 					posi=posi+sizeof(icmpv6rpl_dao_target_ht)-1; 
 					pposi = &(msg->payload[posi]);
-	
-					// printf ("** Posicion %X \n",posi);
 					
+                                        memcpy(&routeadd,(open_addr_t*)(pposi),sizeof(open_addr_t));
 					// Record the IPv6 anounced
-					for (i=0;i<LENGTH_ADDR128b;i++) {
-						routeadd.addr_128b[i] = ((open_addr_t*)(pposi))->addr_128b[i];
-					}
+					//for (i=0;i<LENGTH_ADDR128b;i++) {
+					//	routeadd.addr_128b[i] = ((open_addr_t*)(pposi))->addr_128b[i];
+					//}
 					
-					//printf ("** Child-Address.. ");
-					// for (i=0;i<LENGTH_ADDR128b;i++) {
-					//      printf (" %X",routeadd.addr_128b[i]);  
-					// }
-					//printf ("\n");
+                                        printf ("** Child-Address.. ");
+					for (i=0;i<LENGTH_ADDR128b;i++) {
+					    printf (" %X",routeadd.addr_128b[i]);  
+					}
+					printf ("\n");
 					
 					printf ("...Before Register .. %X\n",routes_getNumRoutes());
                                
@@ -402,11 +403,10 @@ void icmpv6rpl_receive(OpenQueueEntry_t* msg) {
 	
 					printf ("...After Register .. %X\n",routes_getNumRoutes());
 					
-					
 					posi=posi+LENGTH_ADDR128b+1; 
 					pposi = &(msg->payload[posi]);
 				
-					// printf ("** Ultimo %X \n",msg->payload[posi]);
+					// printf ("** Next Byte %X \n",msg->payload[posi]);
 				
 					break;
 				
@@ -434,8 +434,6 @@ void icmpv6rpl_receive(OpenQueueEntry_t* msg) {
 					
 					posi=posi+sizeof(icmpv6rpl_dao_transit_ht)-1; 
 					pposi = &(msg->payload[posi]);
-	
-					// printf ("** Posicion %X \n",posi);
 				
 					if ((((icmpv6rpl_dao_transit_ht*)(pposi))->optionLength)==0){
 						printf ("** Storing-Mode.. (No Parent Address)\n");   
@@ -450,12 +448,12 @@ void icmpv6rpl_receive(OpenQueueEntry_t* msg) {
 					posi=posi+LENGTH_ADDR128b+1; 
 					pposi = &(msg->payload[posi]);
 				
-					//printf ("** Ultimo %X \n",msg->payload[posi]);
+					//printf ("** Next Byte %X \n",msg->payload[posi]);
 	
 					break;
 				
 				default:  
-					printf ("##### FIN DAO %X \n",msg->payload[posi]);
+					printf ("##### END DAO %X \n",msg->payload[posi]);
 					posi=0;
 					break;
 				
@@ -991,7 +989,7 @@ uint8_t routes_getNumRoutes() {
 
 bool ThisRowMatch(open_addr_t* address, uint8_t rowNumber) {
 
-         return routes_vars.routes[rowNumber].used &&
-                packetfunctions_equalAddress(address,&routes_vars.routes[rowNumber].destination);
+    return routes_vars.routes[rowNumber].used &&
+           packetfunctions_equalAddress(address,&routes_vars.routes[rowNumber].destination);
 
 }
