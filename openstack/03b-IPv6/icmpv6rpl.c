@@ -722,12 +722,12 @@ void sendDAO() {
        if (routes_vars.routes[nbrIdx].used==TRUE) {
            
            
-            printf("### Routing-Ruta-Destino -- ");
+            printf("### Routing-IPv6-Destiny(Child) -- ");
             for (i=0;i<LENGTH_ADDR128b;i++) {
                 printf (" %X",routes_vars.routes[nbrIdx].destination.addr_128b[i]);  
             }
             printf ("\n"); 
-            printf("### Routing-Publicante -- ");
+            printf("### Routing-IPv6-Publisher -- ");
             for (i=0;i<LENGTH_ADDR128b;i++) {
                 printf (" %X",routes_vars.routes[nbrIdx].addr_128b.addr_128b[i]);  
             }
