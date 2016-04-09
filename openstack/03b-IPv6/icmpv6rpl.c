@@ -151,7 +151,7 @@ void icmpv6rpl_init() {
    
 }
 
-void routing_table_init() {
+void routingtable_init() {
    // clear module variables
    memset(&routes_vars,0,sizeof(routes_vars_t));
 }
@@ -231,23 +231,8 @@ void icmpv6rpl_receive(OpenQueueEntry_t* msg) {
    icmpv6code      = (((ICMPv6_ht*)(msg->payload))->code);
    
    printf ("\n");
-   if (routes_vars.initated == 0){
-        printf("### INITIATING-ROUTING...\n");
-        memcpy(
-            &routes_vars.macmote,
-            &idmanager_vars.my64bID,
-            sizeof(idmanager_vars.my64bID)
-        );
-        routes_vars.initated = 1; 
-   }
 
-   //printf("### MAC-MOTE -- ");
-   //for (i=0;i<LENGTH_ADDR64b;i++) {
-   //     //printf(" %X",(&idmanager_vars.my64bID)->addr_64b[i]);  
-   //     printf(" %X",(&routes_vars.macmote)->addr_64b[i]); 
-   //}
-   //printf ("\n");
-   
+   // retrieve ID of the MOTE
    printf("### ID-MOTE -- ");
    for (i=0;i<LENGTH_ADDR64b;i++) {
         printf(" %X",(&idmanager_vars.my64bID)->addr_64b[i]);  
@@ -258,7 +243,6 @@ void icmpv6rpl_receive(OpenQueueEntry_t* msg) {
    packetfunctions_tossHeader(msg,sizeof(ICMPv6_ht));
    
    // IPv6 destination
-   
    printf("### MSG-Destination-IPv6 -- ");
    for (i=0;i<LENGTH_ADDR128b;i++) {
         printf (" %X",msg->l3_destinationAdd.addr_128b[i]);  
@@ -323,10 +307,10 @@ void icmpv6rpl_receive(OpenQueueEntry_t* msg) {
 			printf ("/////////////////////////////////////////\n");
 			printf ("--SRC-Add.. ");
 			
-                        //memcpy(&origipv6.addr_128b,&(msg->l3_sourceAdd.addr_128b),sizeof(msg->l3_sourceAdd.addr_128b));
+            //memcpy(&origipv6.addr_128b,&(msg->l3_sourceAdd.addr_128b),sizeof(msg->l3_sourceAdd.addr_128b));
 			memcpy(&origipv6,&(msg->l3_sourceAdd),sizeof(msg->l3_sourceAdd));
 			
-                        packetfunctions_ip128bToMac64b(&origipv6,&origpref,&origmac);
+            packetfunctions_ip128bToMac64b(&origipv6,&origpref,&origmac);
 			//for (i=LENGTH_ADDR64b;i<LENGTH_ADDR128b;i++) {
 			//		origmac.addr_64b[i-8] = origipv6.addr_128b[i];
 			//}
@@ -886,9 +870,9 @@ void registerRoute(open_addr_t*     destaddress,
                    uint8_t          PathS,
                    uint8_t          PathL) {
    uint8_t  i,posi;
-   bool     isneworig;
+
    printf("Registering route process....\n");
-   
+   // printf("IPv6 type....%u\n",IPv6->type); 
    // add this Route
    if (isRoute(destaddress)==FALSE) {
       printf("The route is not on the table...\n");
@@ -906,7 +890,7 @@ void registerRoute(open_addr_t*     destaddress,
             routes_vars.routes[i].PathSequence              = PathS;
             routes_vars.routes[i].PathLifetime              = PathL;
             memcpy(&routes_vars.routes[i].destination,destaddress,sizeof(open_addr_t));
- 
+
             break;
          }
          i++;
@@ -922,11 +906,25 @@ void registerRoute(open_addr_t*     destaddress,
         // Obtain position of route
         posi = posRoute(destaddress);
         // Is new the address of publisher
-        isneworig = packetfunctions_equalAddress(IPv6,&routes_vars.routes[posi].addr_128b);
+
         // In case of error and no position is bigger than MAX_ROUTE_NUM
         if (posi <= MAX_ROUTE_NUM){
             // Looking for update in the info of routing, in case of new info updates route
-            if ((routes_vars.routes[posi].DAOSequence != DAOS) || (routes_vars.routes[posi].PathSequence != PathS) || isneworig){
+            if ((routes_vars.routes[posi].DAOSequence != DAOS) || (routes_vars.routes[posi].PathSequence != PathS) || !(packetfunctions_sameAddress(IPv6,&(routes_vars.routes[posi].addr_128b)))){
+				
+				
+				if (routes_vars.routes[posi].DAOSequence != DAOS){
+					printf("+++ New DAOSequence...\n");
+				}
+				
+				if (routes_vars.routes[posi].PathSequence != PathS){
+					printf("+++ New PathSequence...\n");
+				}
+				
+				if (!(packetfunctions_sameAddress(IPv6,&(routes_vars.routes[posi].addr_128b)))){
+					printf("+++ New Orig-Publisher...\n");
+				}
+				
                 printf("Updating Route...\n");
                 // update this route
                 routes_vars.routes[posi].used                      = TRUE;
@@ -994,6 +992,7 @@ uint8_t routes_getNumRoutes() {
 bool ThisRowMatch(open_addr_t* address, uint8_t rowNumber) {
 
     return routes_vars.routes[rowNumber].used &&
-           packetfunctions_equalAddress(address,&routes_vars.routes[rowNumber].destination);
+		   packetfunctions_sameAddress(address,&routes_vars.routes[rowNumber].destination);
+		   //packetfunctions_equalAddress(address,&routes_vars.routes[rowNumber].destination);
 
 }

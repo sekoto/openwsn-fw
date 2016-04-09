@@ -29,7 +29,6 @@ bool     packetfunctions_isBroadcastMulticast(open_addr_t* address);
 bool     packetfunctions_isAllRoutersMulticast(open_addr_t* address);
 bool     packetfunctions_isAllHostsMulticast(open_addr_t* address);
 bool     packetfunctions_sameAddress(open_addr_t* address_1, open_addr_t* address_2);
-bool     packetfunctions_equalAddress(open_addr_t* address_1, open_addr_t* address_2);
 
 // read/write addresses to/from packets
 void     packetfunctions_readAddress(uint8_t* payload, uint8_t type, open_addr_t* writeToAddress, bool littleEndian);

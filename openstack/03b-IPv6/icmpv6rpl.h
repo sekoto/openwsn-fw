@@ -67,8 +67,10 @@
 #define MAX_TARGET_PARENTS        0x01
 
 // max number of routes in a Mote 
-
 #define MAX_ROUTE_NUM              0x20
+
+// max number of routes in a Mote 
+#define MAX_MOTES_NUM              0x20
 
 enum{
   OPTION_ROUTE_INFORMATION_TYPE   = 0x03,
@@ -154,7 +156,7 @@ END_PACK
 BEGIN_PACK
 typedef struct {
    bool             used;
-   uint8_t          advertneighinf; // Advertising Neighbor Information (Not in use yet)
+   uint8_t          advertneighinf; // Advertising Neighbor Information
    open_addr_t      addr_128b; // IPv6 from the announcer
    open_addr_t      addr_64b; // Interface ID to which DAO parents has this entry been reported
    uint8_t          retcount; // Retry counter
@@ -193,6 +195,7 @@ typedef struct {
    uint8_t              initated; // To block changes and to know if is initiated
 } routes_vars_t;
 
+
 //=========================== prototypes ======================================
 
 void     icmpv6rpl_init(void);
@@ -207,7 +210,6 @@ void     icmpv6rpl_setDAOPeriod(uint16_t daoPeriod);
 \}
 \}
 */
-
-void     routing_table_init(void);
+void     routingtable_init(void);
 
 #endif

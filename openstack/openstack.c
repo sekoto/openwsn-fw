@@ -72,6 +72,7 @@ void openstack_init(void) {
    icmpv6_init();
    icmpv6echo_init();
    icmpv6rpl_init();
+   routingtable_init();  //Routing Table (Storing Mode)
    //-- 04-TRAN
    opentcp_init();
    openudp_init();

@@ -177,28 +177,18 @@ bool packetfunctions_sameAddress(open_addr_t* address_1, open_addr_t* address_2)
       case ADDR_PREFIX:
          address_length = 8;
          break;
+	  case 128:
       case ADDR_128B:
       case ADDR_ANYCAST:
          address_length = 16;
          break;
-    
+		 
       default:
          openserial_printCritical(COMPONENT_PACKETFUNCTIONS,ERR_WRONG_ADDR_TYPE,
                                (errorparameter_t)address_1->type,
                                (errorparameter_t)5);
          return FALSE;
    }
-   if (memcmp((void*)address_1->addr_128b,(void*)address_2->addr_128b,address_length)==0) {
-      return TRUE;
-   }
-   return FALSE;
-}
-
-bool packetfunctions_equalAddress(open_addr_t* address_1, open_addr_t* address_2) {
-   uint8_t address_length;
-   
-   address_length = 16;
-
    if (memcmp((void*)address_1->addr_128b,(void*)address_2->addr_128b,address_length)==0) {
       return TRUE;
    }

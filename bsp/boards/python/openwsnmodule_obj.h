@@ -215,6 +215,7 @@ struct OpenMote {
    // l4
    icmpv6echo_vars_t    icmpv6echo_vars;
    icmpv6rpl_vars_t     icmpv6rpl_vars;
+   routes_vars_t        routes_vars;
    opencoap_vars_t      opencoap_vars;
    tcp_vars_t           tcp_vars;
    // l3
