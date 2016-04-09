@@ -149,19 +149,19 @@ typedef struct {
 END_PACK
         
 /**
-\Routing tables for RPL Storing mode
+\Routing Table for RPL Storing mode
 */       
 BEGIN_PACK
 typedef struct {
    bool             used;
-   uint8_t          advertneighinf; //Advertising Neighbor Information
-   open_addr_t      addr_128b; //IPv6 from the announcer
+   uint8_t          advertneighinf; // Advertising Neighbor Information (Not in use yet)
+   open_addr_t      addr_128b; // IPv6 from the announcer
    open_addr_t      addr_64b; // Interface ID to which DAO parents has this entry been reported
    uint8_t          retcount; // Retry counter
    uint8_t          DAOSequence; // DAO-Sequence
-   uint8_t          PathSequence;   
-   uint8_t          PathLifetime; 
-   open_addr_t      destination; //Destination Prefix (or address or Mcast Group) 
+   uint8_t          PathSequence;  // Path-Sequence 
+   uint8_t          PathLifetime; // Path-Lifetime 
+   open_addr_t      destination; // Destination Prefix (or address or Mcast Group) 
 } routeRow_t;
 END_PACK
 
@@ -190,7 +190,7 @@ typedef struct {
    routeRow_t           routes[MAX_ROUTE_NUM];
    icmpv6rpl_dio_ht*    rplOptions; // To see the RPL options
    open_addr_t          macmote; // MAC of the MOTE
-   uint8_t              initated; 
+   uint8_t              initated; // To block changes and to know if is initiated
 } routes_vars_t;
 
 //=========================== prototypes ======================================
@@ -208,6 +208,6 @@ void     icmpv6rpl_setDAOPeriod(uint16_t daoPeriod);
 \}
 */
 
-void          routing_table_init(void);
+void     routing_table_init(void);
 
 #endif

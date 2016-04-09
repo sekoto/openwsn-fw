@@ -706,31 +706,35 @@ void sendDAO() {
    One or more Transit Information options MUST be preceded by one or
    more RPL Target options.   
    */
-   // Routes announced -- Storing-Mode
-   printf ("\n");
-   printf("### Mounting DAO-Target-Option -- \n");
    
-   printf("### ID-MOTE -- ");
-   for (i=0;i<LENGTH_ADDR64b;i++) {
-        printf(" %X",(&idmanager_vars.my64bID)->addr_64b[i]);  
-   }
-   printf ("\n");
+   if (RPLMODE==1){ 
+       
+        // Routes announced -- Storing-Mode
+        printf ("\n");
+        printf("### Mounting DAO-Target-Option -- \n");
    
-   for (nbrIdx=0;nbrIdx<MAX_ROUTE_NUM;nbrIdx++) {
-       if (routes_vars.routes[nbrIdx].used==TRUE) {
-           
-           
-            printf("### Routing-IPv6-Destiny(Child) -- ");
-            for (i=0;i<LENGTH_ADDR128b;i++) {
-                printf (" %X",routes_vars.routes[nbrIdx].destination.addr_128b[i]);  
+        printf("### ID-MOTE -- ");
+        for (i=0;i<LENGTH_ADDR64b;i++) {
+            printf(" %X",(&idmanager_vars.my64bID)->addr_64b[i]);  
+        }
+        printf ("\n");
+   
+        for (nbrIdx=0;nbrIdx<MAX_ROUTE_NUM;nbrIdx++) {
+            if (routes_vars.routes[nbrIdx].used==TRUE) {
+                 printf ("|-----Route(%u)------\n",nbrIdx);
+                 printf("|### Routing-IPv6-Destiny(Child) -- ");
+                for (i=0;i<LENGTH_ADDR128b;i++) {
+                    printf (" %X",routes_vars.routes[nbrIdx].destination.addr_128b[i]);  
+                }
+                printf ("\n"); 
+                printf("|### Routing-IPv6-Publisher -- ");
+                for (i=0;i<LENGTH_ADDR128b;i++) {
+                    printf (" %X",routes_vars.routes[nbrIdx].addr_128b.addr_128b[i]);  
+                }
+                printf ("\n"); 
+                printf ("|-------------------\n");
             }
-            printf ("\n"); 
-            printf("### Routing-IPv6-Publisher -- ");
-            for (i=0;i<LENGTH_ADDR128b;i++) {
-                printf (" %X",routes_vars.routes[nbrIdx].addr_128b.addr_128b[i]);  
-            }
-            printf ("\n"); 
-       }
+        }
    }
    
    // Direct Child of the MOTE
