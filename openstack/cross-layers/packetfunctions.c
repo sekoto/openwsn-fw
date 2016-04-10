@@ -18,6 +18,7 @@ void packetfunctions_ip128bToMac64b(
       open_addr_t* prefix64btoWrite,
       open_addr_t* mac64btoWrite) {
    if (ip128b->type!=ADDR_128B) {
+      printf("Error en la division de la IPv6\n");
       openserial_printCritical(COMPONENT_PACKETFUNCTIONS,ERR_WRONG_ADDR_TYPE,
                             (errorparameter_t)ip128b->type,
                             (errorparameter_t)0);
@@ -177,13 +178,14 @@ bool packetfunctions_sameAddress(open_addr_t* address_1, open_addr_t* address_2)
       case ADDR_PREFIX:
          address_length = 8;
          break;
-	  case 128:
+	  //case 128:
       case ADDR_128B:
       case ADDR_ANYCAST:
          address_length = 16;
          break;
 		 
       default:
+         printf("Error en la comparacion de IPs\n");
          openserial_printCritical(COMPONENT_PACKETFUNCTIONS,ERR_WRONG_ADDR_TYPE,
                                (errorparameter_t)address_1->type,
                                (errorparameter_t)5);
@@ -247,21 +249,25 @@ void packetfunctions_writeAddress(OpenQueueEntry_t* msg, open_addr_t* address, b
          address_length = 16;
          break;
       default:
+         printf("!!! Error packetfunctions_writeAddress!!! %u\n",address->type); 
          openserial_printCritical(COMPONENT_PACKETFUNCTIONS,ERR_WRONG_ADDR_TYPE,
                                (errorparameter_t)address->type,
                                (errorparameter_t)7);
          return;
    }
-   
+   //printf("*** packetfunctions_writeAddress -- ");
    for (i=0;i<address_length;i++) {
       msg->payload      -= sizeof(uint8_t);
       msg->length       += sizeof(uint8_t);
       if (littleEndian) {
          *((uint8_t*)(msg->payload)) = address->addr_128b[i];
+         //printf("%X ",address->addr_128b[i]);
       } else {
          *((uint8_t*)(msg->payload)) = address->addr_128b[address_length-1-i];
+         //printf("%X ",address->addr_128b[address_length-1-i]);
       }
    }
+   //printf("\n");
 }
 
 //======= reserving/tossing headers
@@ -269,7 +275,11 @@ void packetfunctions_writeAddress(OpenQueueEntry_t* msg, open_addr_t* address, b
 void packetfunctions_reserveHeaderSize(OpenQueueEntry_t* pkt, uint8_t header_length) {
    pkt->payload -= header_length;
    pkt->length  += header_length;
+   //printf ("!!! pkt->payload %X || pkt->packet %X\n",(uint8_t*)(pkt->payload),(uint8_t*)(pkt->packet));
    if ( (uint8_t*)(pkt->payload) < (uint8_t*)(pkt->packet) ) {
+      printf ("!!! Error packetfunctions_reserveHeaderSize!!!\n");
+       //printf ("!!! pkt->payload %X\n",(uint8_t*)(pkt->payload));
+       //printf ("!!! pkt->packet %X\n",(uint8_t*)(pkt->packet));
       openserial_printCritical(COMPONENT_PACKETFUNCTIONS,ERR_HEADER_TOO_LONG,
                             (errorparameter_t)0,
                             (errorparameter_t)pkt->length);
@@ -280,6 +290,7 @@ void packetfunctions_tossHeader(OpenQueueEntry_t* pkt, uint8_t header_length) {
    pkt->payload += header_length;
    pkt->length  -= header_length;
    if ( (uint8_t*)(pkt->payload) > (uint8_t*)(pkt->packet+126) ) {
+      printf ("!!! Error packetfunctions_tossHeader!!!\n");
       openserial_printError(COMPONENT_PACKETFUNCTIONS,ERR_HEADER_TOO_LONG,
                             (errorparameter_t)1,
                             (errorparameter_t)pkt->length);

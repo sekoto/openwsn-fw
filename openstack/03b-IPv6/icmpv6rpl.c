@@ -307,10 +307,10 @@ void icmpv6rpl_receive(OpenQueueEntry_t* msg) {
 			printf ("/////////////////////////////////////////\n");
 			printf ("--SRC-Add.. ");
 			
-            //memcpy(&origipv6.addr_128b,&(msg->l3_sourceAdd.addr_128b),sizeof(msg->l3_sourceAdd.addr_128b));
+                        //memcpy(&origipv6.addr_128b,&(msg->l3_sourceAdd.addr_128b),sizeof(msg->l3_sourceAdd.addr_128b));
 			memcpy(&origipv6,&(msg->l3_sourceAdd),sizeof(msg->l3_sourceAdd));
 			
-            packetfunctions_ip128bToMac64b(&origipv6,&origpref,&origmac);
+                        packetfunctions_ip128bToMac64b(&origipv6,&origpref,&origmac);
 			//for (i=LENGTH_ADDR64b;i<LENGTH_ADDR128b;i++) {
 			//		origmac.addr_64b[i-8] = origipv6.addr_128b[i];
 			//}
@@ -374,7 +374,10 @@ void icmpv6rpl_receive(OpenQueueEntry_t* msg) {
 					//for (i=0;i<LENGTH_ADDR128b;i++) {
 					//	routeadd.addr_128b[i] = ((open_addr_t*)(pposi))->addr_128b[i];
 					//}
-					
+                                        routeadd.type=ADDR_128B;
+                                        origipv6.type=ADDR_128B;
+					origmac.type=ADDR_64B;
+                                                
                                         printf ("** Child-Address.. ");
 					for (i=0;i<LENGTH_ADDR128b;i++) {
 					    printf (" %X",routeadd.addr_128b[i]);  
@@ -623,6 +626,12 @@ void sendDAO() {
    open_addr_t          address;
    open_addr_t*         prefix;
    uint8_t              i;
+   open_addr_t          rtpref;
+   open_addr_t          rtadd;
+   int16_t              ccount;
+   uint8_t              posi;
+   bool                 selected;
+   bool                 onetarget;
    
    if (ieee154e_isSynch()==FALSE) {
       // I'm not sync'ed 
@@ -691,11 +700,18 @@ void sendDAO() {
    more RPL Target options.   
    */
    
-   if (RPLMODE==1){ 
+   printf ("\n");
+   printf("### Mounting DAO-Target-Option -- \n");
+   // Limit onlye one Target Option
+   onetarget=FALSE;
+   
+   if ( ( RPLMODE == 1 ) || ( routes_vars.tosend == TRUE ) ){ 
        
         // Routes announced -- Storing-Mode
-        printf ("\n");
-        printf("### Mounting DAO-Target-Option -- \n");
+        //Predefined values for controlling send
+        ccount=65535;
+        posi=0;
+        selected=FALSE;
    
         printf("### ID-MOTE -- ");
         for (i=0;i<LENGTH_ADDR64b;i++) {
@@ -705,8 +721,16 @@ void sendDAO() {
    
         for (nbrIdx=0;nbrIdx<MAX_ROUTE_NUM;nbrIdx++) {
             if (routes_vars.routes[nbrIdx].used==TRUE) {
-                 printf ("|-----Route(%u)------\n",nbrIdx);
-                 printf("|### Routing-IPv6-Destiny(Child) -- ");
+                
+                if ( (routes_vars.routes[nbrIdx].tosend==TRUE) || (ccount > routes_vars.routes[nbrIdx].scount) ) {
+                    selected=TRUE; 
+                    posi=nbrIdx;
+                    ccount=routes_vars.routes[nbrIdx].scount;
+                }    
+                
+                //printf ("+++ Type IPv6 registered - %u\n",routes_vars.routes[nbrIdx].destination.type);
+                printf ("|-----Route(%u)------\n",nbrIdx);
+                printf("|### Routing-IPv6-Destiny(Child) -- ");
                 for (i=0;i<LENGTH_ADDR128b;i++) {
                     printf (" %X",routes_vars.routes[nbrIdx].destination.addr_128b[i]);  
                 }
@@ -717,47 +741,76 @@ void sendDAO() {
                 }
                 printf ("\n"); 
                 printf ("|-------------------\n");
+                
+                printf ("...Vuelta\n");
             }
+            
         }
+            
+        if ( selected == TRUE ){
+            onetarget=TRUE;
+            routes_vars.tosend=FALSE;
+            routes_vars.routes[posi].scount=routes_vars.routes[posi].scount+1;
+            
+            packetfunctions_ip128bToMac64b(&(routes_vars.routes[posi].destination),&rtpref,&rtadd);
+            packetfunctions_writeAddress(msg,&rtadd,OW_BIG_ENDIAN);
+            packetfunctions_writeAddress(msg,&rtpref,OW_BIG_ENDIAN);
+            // target info fields 
+            icmpv6rpl_vars.dao_target.optionLength  = LENGTH_ADDR128b +sizeof(icmpv6rpl_dao_target_ht) - 2; //no header type and length
+            icmpv6rpl_vars.dao_target.type  = OPTION_TARGET_INFORMATION_TYPE;
+            icmpv6rpl_vars.dao_target.flags  = 0;       //must be 0
+            icmpv6rpl_vars.dao_target.prefixLength = 128; //128 leading bits  -- full address.
+            // write target info in packet
+            packetfunctions_reserveHeaderSize(msg,sizeof(icmpv6rpl_dao_target_ht));
+            memcpy(
+                ((icmpv6rpl_dao_target_ht*)(msg->payload)),
+                &(icmpv6rpl_vars.dao_target),
+                sizeof(icmpv6rpl_dao_target_ht)
+            );
+        }
+
    }
    
-   // Direct Child of the MOTE
-    numTargetParents                        = 0;
-    for (nbrIdx=0;nbrIdx<MAXNUMNEIGHBORS;nbrIdx++) {
-      if ((neighbors_isNeighborWithHigherDAGrank(nbrIdx))==TRUE) {
-         // this neighbor is of higher DAGrank as I am. so it is my child
-         
-         // write it's address in DAO RFC6550 page 80 check point 1.
-         neighbors_getNeighbor(&address,ADDR_64B,nbrIdx); 
-         packetfunctions_writeAddress(msg,&address,OW_BIG_ENDIAN);
-         prefix=idmanager_getMyID(ADDR_PREFIX);
-         packetfunctions_writeAddress(msg,prefix,OW_BIG_ENDIAN);
+   if ( onetarget == FALSE ){
+        // Direct Child of the MOTE
+        numTargetParents                        = 0;
+        for (nbrIdx=0;nbrIdx<MAXNUMNEIGHBORS;nbrIdx++) {
+            if ((neighbors_isNeighborWithHigherDAGrank(nbrIdx))==TRUE) {
+                // this neighbor is of higher DAGrank as I am. so it is my child
+                printf("*** Writing Target Address -- OW_BIG_ENDIAN ");
+                // write it's address in DAO RFC6550 page 80 check point 1.
+                neighbors_getNeighbor(&address,ADDR_64B,nbrIdx); 
+                packetfunctions_writeAddress(msg,&address,OW_BIG_ENDIAN);
+                prefix=idmanager_getMyID(ADDR_PREFIX);
+                packetfunctions_writeAddress(msg,prefix,OW_BIG_ENDIAN);
         
-         // update target info fields 
-         // from rfc6550 p.55 -- Variable, length of the option in octets excluding the Type and Length fields.
-         // poipoi xv: assuming that type and length fields refer to the 2 first bytes of the header
-         icmpv6rpl_vars.dao_target.optionLength  = LENGTH_ADDR128b +sizeof(icmpv6rpl_dao_target_ht) - 2; //no header type and length
-         icmpv6rpl_vars.dao_target.type  = OPTION_TARGET_INFORMATION_TYPE;
-         icmpv6rpl_vars.dao_target.flags  = 0;       //must be 0
-         icmpv6rpl_vars.dao_target.prefixLength = 128; //128 leading bits  -- full address.
+                // update target info fields 
+                // from rfc6550 p.55 -- Variable, length of the option in octets excluding the Type and Length fields.
+                // poipoi xv: assuming that type and length fields refer to the 2 first bytes of the header
+                icmpv6rpl_vars.dao_target.optionLength  = LENGTH_ADDR128b +sizeof(icmpv6rpl_dao_target_ht) - 2; //no header type and length
+                icmpv6rpl_vars.dao_target.type  = OPTION_TARGET_INFORMATION_TYPE;
+                icmpv6rpl_vars.dao_target.flags  = 0;       //must be 0
+                icmpv6rpl_vars.dao_target.prefixLength = 128; //128 leading bits  -- full address.
          
-         // write transit info in packet
-         packetfunctions_reserveHeaderSize(msg,sizeof(icmpv6rpl_dao_target_ht));
-         memcpy(
-               ((icmpv6rpl_dao_target_ht*)(msg->payload)),
-               &(icmpv6rpl_vars.dao_target),
-               sizeof(icmpv6rpl_dao_target_ht)
-         );
-         
-         // remember I found it
-         numTargetParents++;
-      }  
-      //limit to MAX_TARGET_PARENTS the number of DAO target addresses to send
-      //section 8.2.1 pag 67 RFC6550 -- using a subset
-      // poipoi TODO base selection on ETX rather than first X.
-      if (numTargetParents>=MAX_TARGET_PARENTS) break;
+                // write transit info in packet
+                packetfunctions_reserveHeaderSize(msg,sizeof(icmpv6rpl_dao_target_ht));
+                memcpy(
+                    ((icmpv6rpl_dao_target_ht*)(msg->payload)),
+                    &(icmpv6rpl_vars.dao_target),
+                    sizeof(icmpv6rpl_dao_target_ht)
+                );
+                printf ("...Target Real\n");
+                // remember I found it
+                numTargetParents++;
+            }  
+            //limit to MAX_TARGET_PARENTS the number of DAO target addresses to send
+            //section 8.2.1 pag 67 RFC6550 -- using a subset
+            // poipoi TODO base selection on ETX rather than first X.
+            if (numTargetParents>=MAX_TARGET_PARENTS) break;
+        }
+        onetarget=TRUE;
+        routes_vars.tosend=TRUE;
    }
-   
     
    // TRANSIT OPTION
    //NOTE: limit to preferrred parent only the number of DAO transit addresses to send
@@ -824,18 +877,21 @@ void sendDAO() {
       sizeof(icmpv6rpl_dao_ht)
    );
    
+   printf ("...Mounting DAO ICMPv6 header\n");
    //=== ICMPv6 header
    packetfunctions_reserveHeaderSize(msg,sizeof(ICMPv6_ht));
    ((ICMPv6_ht*)(msg->payload))->type       = msg->l4_sourcePortORicmpv6Type;
    ((ICMPv6_ht*)(msg->payload))->code       = IANA_ICMPv6_RPL_DAO;
    packetfunctions_calculateChecksum(msg,(uint8_t*)&(((ICMPv6_ht*)(msg->payload))->checksum)); //call last
    
+   printf ("...Sending DAO\n");
    //===== send
    if (icmpv6_send(msg)==E_SUCCESS) {
       icmpv6rpl_vars.busySending = TRUE;
    } else {
       openqueue_freePacketBuffer(msg);
    }
+   printf ("...Sended DAO\n");
 }
 
 void icmpv6rpl_setDIOPeriod(uint16_t dioPeriod){
@@ -890,6 +946,8 @@ void registerRoute(open_addr_t*     destaddress,
             routes_vars.routes[i].PathSequence              = PathS;
             routes_vars.routes[i].PathLifetime              = PathL;
             memcpy(&routes_vars.routes[i].destination,destaddress,sizeof(open_addr_t));
+            routes_vars.routes[i].tosend                    = TRUE;
+            routes_vars.routes[i].scount                    = 0;
 
             break;
          }
@@ -936,6 +994,7 @@ void registerRoute(open_addr_t*     destaddress,
                 routes_vars.routes[posi].PathSequence              = PathS;
                 routes_vars.routes[posi].PathLifetime              = PathL;
                 memcpy(&routes_vars.routes[posi].destination,destaddress,sizeof(open_addr_t));
+                routes_vars.routes[posi].tosend                    = TRUE;
             }
         }  
         return;
@@ -972,6 +1031,8 @@ void removeRoute(uint8_t routeIndex) {
    routes_vars.routes[routeIndex].PathSequence              = 0;
    routes_vars.routes[routeIndex].PathLifetime              = 0;
    routes_vars.routes[routeIndex].destination.type          = ADDR_NONE;
+   routes_vars.routes[routeIndex].tosend                          = TRUE;
+   routes_vars.routes[routeIndex].scount                    = 0;
 }
 
 uint8_t routes_getNumRoutes() {

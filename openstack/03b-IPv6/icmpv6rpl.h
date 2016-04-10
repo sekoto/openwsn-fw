@@ -64,13 +64,13 @@
 // max number of parents and children to send in DAO
 //section 8.2.1 pag 67 RFC6550 -- using a subset
 //#define MAX_TARGET_PARENTS        0x01
-#define MAX_TARGET_PARENTS        0x01
+#define MAX_TARGET_PARENTS          0x01
 
 // max number of routes in a Mote 
-#define MAX_ROUTE_NUM              0x20
+#define MAX_ROUTE_NUM               0x10
 
-// max number of routes in a Mote 
-#define MAX_MOTES_NUM              0x20
+// max number of routes sended in DAO message
+#define MAX_ROUTE_SEND              0x01
 
 enum{
   OPTION_ROUTE_INFORMATION_TYPE   = 0x03,
@@ -164,6 +164,8 @@ typedef struct {
    uint8_t          PathSequence;  // Path-Sequence 
    uint8_t          PathLifetime; // Path-Lifetime 
    open_addr_t      destination; // Destination Prefix (or address or Mcast Group) 
+   bool             tosend; // Record if send this route
+   int16_t          scount; // Counting how many times sended
 } routeRow_t;
 END_PACK
 
@@ -190,9 +192,7 @@ typedef struct {
 
 typedef struct {
    routeRow_t           routes[MAX_ROUTE_NUM];
-   icmpv6rpl_dio_ht*    rplOptions; // To see the RPL options
-   open_addr_t          macmote; // MAC of the MOTE
-   uint8_t              initated; // To block changes and to know if is initiated
+   bool                 tosend; // To control if we have to send a Route Table row
 } routes_vars_t;
 
 
