@@ -357,7 +357,9 @@ void forwarding_receive(
 void forwarding_getNextHop(open_addr_t* destination128b, open_addr_t* addressToWrite64b) {
    uint8_t         i;
    open_addr_t     temp_prefix64btoWrite;
+   uint8_t     posi;
    
+   // Routing Table next hop //**
    if (packetfunctions_isBroadcastMulticast(destination128b)) {
       // IP destination is broadcast, send to 0xffffffffffffffff
       addressToWrite64b->type = ADDR_64B;
@@ -367,6 +369,10 @@ void forwarding_getNextHop(open_addr_t* destination128b, open_addr_t* addressToW
    } else if (neighbors_isStableNeighbor(destination128b)) {
       // IP destination is 1-hop neighbor, send directly
       packetfunctions_ip128bToMac64b(destination128b,&temp_prefix64btoWrite,addressToWrite64b);
+   } else if ( (isRoute(destination128b)) || (RPLMODE==1) ) {
+     // IP destination is more than 1-hop -- Routing Table -- Storing Mode
+     posi = posRoute(destination128b);
+     memcpy(addressToWrite64b,&routes_vars.routes[posi].addr_64b,LENGTH_ADDR64b);
    } else {
       // destination is remote, send to preferred parent
       neighbors_getPreferredParentEui64(addressToWrite64b);
