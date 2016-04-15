@@ -12,8 +12,7 @@
 //=========================== variables =======================================
 
 static const uint8_t dagroot[]   = {0x03,
-   0xbb, 0xbb, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00,
-   0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x01
+   0xbb, 0xbb, 0x00, 0x00, 0x00, 0x00, 0x00, 0x0b
 }; 
 
 //=========================== prototypes ======================================
@@ -68,7 +67,7 @@ owerror_t iphc_sendFromForwarding(
     open_addr_t  temp_dest_prefix;
     open_addr_t  temp_dest_mac64b; 
     open_addr_t  temp_src_prefix;
-    open_addr_t  temp_src_mac64b; 
+    open_addr_t  temp_src_mac64b;
     uint8_t      sam;
     // take ownership over the packet
     msg->owner = COMPONENT_IPHC;
@@ -86,6 +85,7 @@ owerror_t iphc_sendFromForwarding(
     if (ipv6_outer_header->src.type != ADDR_NONE){
         // there is IPinIP check hop limit in ip in ip encapsulation
         if (ipv6_outer_header->hop_limit==0){
+            printf("## IPCH -- HOP_LIMIT_REACHED\n");
             openserial_printError(COMPONENT_IPHC,ERR_HOP_LIMIT_REACHED,
                                 (errorparameter_t)0,
                                 (errorparameter_t)0);
@@ -136,7 +136,7 @@ owerror_t iphc_sendFromForwarding(
                 ) || 
                 (
                   ipv6_outer_header->src.type != ADDR_NONE &&
-                  packetfunctions_sameAddress(&(ipv6_outer_header->src),(open_addr_t*)dagroot)
+                  packetfunctions_sameAddress(&(ipv6_outer_header->src),(open_addr_t*)dagroot)  
                  )
             ){
                 // hop limit
@@ -175,6 +175,7 @@ owerror_t iphc_sendFromForwarding(
         rpl_option->optionType==RPL_HOPBYHOP_HEADER_OPTION_TYPE && 
         packetfunctions_isBroadcastMulticast(&(msg->l3_destinationAdd))==FALSE
     ){
+        printf ("*** RPL_HOPBYHOP_HEADER_OPTION_TYPE\n");      
         iphc_prependIPv6HopByHopHeader(msg, msg->l4_protocol, rpl_option);
     }
     
@@ -1026,6 +1027,8 @@ void iphc_prependIPv6HopByHopHeader(
    ){
    uint8_t temp_8b;
    
+   printf("** IPHC -- prependIPv6HopByHopHeader\n");
+   
    if ((rpl_option->flags & K_FLAG) == 0){
       packetfunctions_reserveHeaderSize(msg,sizeof(uint16_t));
       msg->payload[0] = (uint8_t)((rpl_option->senderRank&0xFF00)>>8);
@@ -1035,14 +1038,20 @@ void iphc_prependIPv6HopByHopHeader(
       *((uint8_t*)(msg->payload)) = (uint8_t)((rpl_option->senderRank&0xFF00)>>8);
    }
    
+   printf("** IPHC -- prependIPv6HopByHopHeader -- I_FLAG \n");
+   
    if ((rpl_option->flags & I_FLAG) == 0){
       packetfunctions_reserveHeaderSize(msg,sizeof(uint8_t));
       *((uint8_t*)(msg->payload)) = rpl_option->rplInstanceID;  
    }
    
+   printf("** IPHC -- prependIPv6HopByHopHeader -- RPI_6LOTH_TYPE\n");
+   
    packetfunctions_reserveHeaderSize(msg,sizeof(uint8_t));
    *((uint8_t*)(msg->payload)) = RPI_6LOTH_TYPE;
        
+   printf("** IPHC -- prependIPv6HopByHopHeader -- temp_8b\n");
+   
    temp_8b = CRITICAL_6LORH | rpl_option->flags; 
    packetfunctions_reserveHeaderSize(msg,sizeof(uint8_t));
    *((uint8_t*)(msg->payload)) = temp_8b;

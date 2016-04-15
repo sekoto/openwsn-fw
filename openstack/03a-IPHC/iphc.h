@@ -136,6 +136,17 @@ enum IPINIP_LEN_6LORH_enums {
     IPINIP_TYPE_6LORH        = 0x06,
 };
 
+//     +-----------+----------------------+
+//     |   6LoRH   | Length of compressed |
+//     |   Type    | IPv6 address (bytes) |
+//     +-----------+----------------------+
+//     |    0      |       1              |
+//     |    1      |       2              |
+//     |    2      |       4              |
+//     |    3      |       8              |
+//     |    4      |      16              |
+//     +-----------+----------------------+
+
 enum TYPE_6LORH_enums{
     RH3_6LOTH_TYPE_0         = 0x00, 
     RH3_6LOTH_TYPE_1         = 0x01,

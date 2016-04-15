@@ -40,6 +40,15 @@ void      forwarding_createRplOption(
    uint8_t              flags
 );
 
+// Declaration of outer functions
+
+bool isRoute(open_addr_t* destinadd);
+uint8_t posRoute(open_addr_t* destinadd);
+
+uint8_t iphc_retrieveIPv6HopByHopHeader(
+   OpenQueueEntry_t*    msg,
+   rpl_option_ht*       rpl_option
+);
 
 //=========================== public ==========================================
 
@@ -230,10 +239,11 @@ void forwarding_receive(
     ) {
     uint8_t flags;
     uint16_t senderRank;
+    uint8_t i;
    
     // take ownership
     msg->owner                     = COMPONENT_FORWARDING;
-   
+    
     // determine L4 protocol
     // get information from ipv6_header
     msg->l4_protocol            = ipv6_inner_header->next_header;
@@ -242,6 +252,35 @@ void forwarding_receive(
     // populate packets metadata with L3 information
     memcpy(&(msg->l3_destinationAdd),&ipv6_inner_header->dest, sizeof(open_addr_t));
     memcpy(&(msg->l3_sourceAdd),     &ipv6_inner_header->src,  sizeof(open_addr_t));
+    
+    // retrieve ID of the MOTE
+    printf("** Forwarding ### ID-MOTE -- ");
+    for (i=0;i<LENGTH_ADDR64b;i++) {
+        printf(" %X",(&idmanager_vars.my64bID)->addr_64b[i]);  
+    }
+    printf("\n");
+    
+    printf("** Forwarding -- Packet-Recieved.. \n");
+    
+    printf("** Forwarding -- Printing PACKET -");
+    for (i=0;i<130;i++) {
+        printf(" %X",msg->packet[i]);  
+    }
+    printf ("\n");
+    
+    printf("** Forwarding -Recieved- -- Printing MSG PAYLOAD -");
+    for (i=0;i<msg->length;i++) {
+        printf(" %X",msg->payload[i]);  
+    }
+    printf ("\n");
+    
+    printf("** Forwarding -- l3_destinationAddress.. ");
+    for (i=0;i<LENGTH_ADDR128b;i++) {
+        printf(" %X",msg->l3_destinationAdd.addr_128b[i]);  
+    }
+    printf("\n");
+    
+    printf("** Forwarding -- l4_sourcePortORicmpv6Type.. %X\n",((ICMPv6_ht*)(msg->payload))->type);
    
     if (
         (
@@ -252,11 +291,17 @@ void forwarding_receive(
         &&
         ipv6_outer_header->next_header!=IANA_IPv6ROUTE
     ) {
+        printf("** Forwarding -- THIS IS FOR ME!!!!\n");
+        
         if (ipv6_outer_header->src.type != ADDR_NONE){
             packetfunctions_tossHeader(msg,ipv6_outer_header->header_length);
         }
+              
         // this packet is for me, no source routing header // toss iphc inner header
         packetfunctions_tossHeader(msg,ipv6_inner_header->header_length);
+
+        //printf("** Forwarding -- l4_sourcePortORicmpv6Type.. %X\n",((ICMPv6_ht*)(msg->payload))->type);
+        
         // indicate received packet to upper layer
         switch(msg->l4_protocol) {
         case IANA_TCP:
@@ -281,7 +326,7 @@ void forwarding_receive(
         }
     } else {
         // this packet is not for me: relay
-      
+        printf("** Forwarding -- Packet-Recieved..RELAYING \n");
         // change the creator of the packet
         msg->creator = COMPONENT_FORWARDING;
       
@@ -312,6 +357,7 @@ void forwarding_receive(
             }
             forwarding_createRplOption(rpl_option, rpl_option->flags);
             // resend as if from upper layer
+            printf ("** Forwarding -- Packet-Recieved..resend as if from upper layer -- Routing-Table\n");
             if (
                 forwarding_send_internal_RoutingTable(
                     msg,
@@ -325,6 +371,7 @@ void forwarding_receive(
                 openqueue_freePacketBuffer(msg);
             }
         } else {
+            printf ("** Forwarding -- Packet-Recieved..Reading Source-Routing \n");
             // source routing header present
             if (
                 forwarding_send_internal_SourceRouting(
@@ -342,6 +389,7 @@ void forwarding_receive(
                     (errorparameter_t)0
                 );
             }
+            
         }
     }
 }
@@ -357,7 +405,7 @@ void forwarding_receive(
 void forwarding_getNextHop(open_addr_t* destination128b, open_addr_t* addressToWrite64b) {
    uint8_t         i;
    open_addr_t     temp_prefix64btoWrite;
-   uint8_t     posi;
+   uint8_t         posi;
    
    // Routing Table next hop //**
    if (packetfunctions_isBroadcastMulticast(destination128b)) {
@@ -368,12 +416,29 @@ void forwarding_getNextHop(open_addr_t* destination128b, open_addr_t* addressToW
       }
    } else if (neighbors_isStableNeighbor(destination128b)) {
       // IP destination is 1-hop neighbor, send directly
+       printf("** Forwarding -- FORWARDING-HEY-NEIGHBOR!!!\n");
       packetfunctions_ip128bToMac64b(destination128b,&temp_prefix64btoWrite,addressToWrite64b);
-   } else if ( (isRoute(destination128b)) || (RPLMODE==1) ) {
+      
+   } else if ((isRoute(destination128b)) && (RPLMODE==1)) {
+     printf("** Forwarding -- ROUTING-STORING-MODE!!!\n");
      // IP destination is more than 1-hop -- Routing Table -- Storing Mode
      posi = posRoute(destination128b);
-     memcpy(addressToWrite64b,&routes_vars.routes[posi].addr_64b,LENGTH_ADDR64b);
+     addressToWrite64b->type = ADDR_64B;
+     printf("** Forwarding -- ROUTING-STORING-MODE -Next-Hop- ");
+     for (i=0;i<LENGTH_ADDR64b;i++) {
+        printf(" %X",(&routes_vars.routes[posi].addr_64b)->addr_64b[i]);  
+        addressToWrite64b->addr_64b[i]=(&routes_vars.routes[posi].addr_64b)->addr_64b[i];
+     }
+     printf ("\n");
+     printf("** Forwarding -- ROUTING-STORING-MODE -Destination- ");
+     for (i=0;i<LENGTH_ADDR128b;i++) {
+        printf(" %X",(&routes_vars.routes[posi].destination)->addr_128b[i]);  
+     }
+     printf ("\n");
+     //memcpy(addressToWrite64b,(&routes_vars.routes[posi].addr_64b),LENGTH_ADDR64b);
+     
    } else {
+       printf("** Forwarding -- FORWARDING-COME-UP!!!\n");
       // destination is remote, send to preferred parent
       neighbors_getPreferredParentEui64(addressToWrite64b);
    }
@@ -397,10 +462,22 @@ owerror_t forwarding_send_internal_RoutingTable(
       uint32_t*              flow_label,
       uint8_t                fw_SendOrfw_Rcv
    ) {
+   uint8_t          i;
    
+   //**
    // retrieve the next hop from the routing table
+   printf ("## Forwarding -- getNextHop\n");
+   
+   printf ("## Forwarding -- getNextHop -- msg->l3_destinationAdd .. ");
+   for (i=0;i<LENGTH_ADDR128b;i++) {
+        printf (" %X",(&msg->l3_destinationAdd)->addr_128b[i]);
+   }
+   printf ("\n");
+   
    forwarding_getNextHop(&(msg->l3_destinationAdd),&(msg->l2_nextORpreviousHop));
+   
    if (msg->l2_nextORpreviousHop.type==ADDR_NONE) {
+       printf("ERROR FORWARDING NEXT-HOP--- %X!!!!\n",msg->l2_nextORpreviousHop.type);
       openserial_printError(
          COMPONENT_FORWARDING,
          ERR_NO_NEXTHOP,
@@ -410,10 +487,17 @@ owerror_t forwarding_send_internal_RoutingTable(
       return E_FAIL;
    }
    
+   printf ("** Forwarding -- Next-HOP.. ");
+   for (i=0;i<LENGTH_ADDR64b;i++) {
+        printf (" %X",(&msg->l2_nextORpreviousHop)->addr_64b[i]);
+   }
+   printf ("  --Type.. %X",(&msg->l2_nextORpreviousHop)->type);
+   printf ("\n");
+
    if (ipv6_outer_header->src.type != ADDR_NONE){
       packetfunctions_tossHeader(msg,ipv6_outer_header->header_length);
    }
-   
+  
    // send to next lower layer
    return iphc_sendFromForwarding(
       msg,
@@ -462,8 +546,12 @@ owerror_t forwarding_send_internal_SourceRouting(
     uint8_t              RH3_copy[127];
     uint8_t              RH3_length;
     
+    uint8_t              i,posi;
+    
+    printf ("** Forwarding -- forwarding_send_internal_SourceRouting\n");
+    
     memset(&RH3_copy[0],0,127);
-    RH3_length = 0;
+    RH3_length = 0;     
     memcpy(&msg->l3_destinationAdd,&ipv6_inner_header->dest,sizeof(open_addr_t));
     memcpy(&msg->l3_sourceAdd,&ipv6_inner_header->src,sizeof(open_addr_t));
     
@@ -540,6 +628,13 @@ owerror_t forwarding_send_internal_SourceRouting(
                 memcpy(&nextAddr.addr_128b[0],msg->payload+2,16);
                 break;
             }
+            
+            printf("** Forwarding -- Next-Hop-Source-Routing---- ");
+            for (i=0;i<LENGTH_ADDR64b;i++) {
+               printf(" %X",(&nextAddr)->addr_128b[8+i]);  
+            }
+            printf ("\n");
+                
             packetfunctions_ip128bToMac64b(
                 &nextAddr,
                 &temp_prefix,
@@ -637,16 +732,56 @@ owerror_t forwarding_send_internal_SourceRouting(
                         &firstAddr,
                         &temp_prefix,
                         &msg->l2_nextORpreviousHop
+                
                     );
                 }
+                printf("** Forwarding -- Next-Hop-Source-Routing---- ");
+                for (i=0;i<LENGTH_ADDR64b;i++) {
+                    printf(" %X",(&nextAddr)->addr_128b[8+i]);  
+                }
+                printf ("\n");
+                
             } else {
-                // there is no next RH3-6loRH, remove current one
-                packetfunctions_tossHeader(msg,hlen);
-                packetfunctions_ip128bToMac64b(
-                    &msg->l3_destinationAdd,
-                    &temp_prefix,
-                    &msg->l2_nextORpreviousHop
-                );
+                
+                if (RPLMODE==1) {
+                    printf ("## Forwarding -- there is no next RH3-6loRH - Trying Adding Route\n");
+                    
+                    if (neighbors_isStableNeighbor(&msg->l3_destinationAdd)) {
+                        // IP destination is 1-hop neighbor, send directly
+                         printf("** Forwarding -- there is no next RH3-6loRH -- FORWARDING-HEY-NEIGHBOR!!!\n");
+                         packetfunctions_ip128bToMac64b(&msg->l3_destinationAdd,&temp_prefix,&msg->l2_nextORpreviousHop);
+                    } else if (isRoute(&msg->l3_destinationAdd)) {
+                        printf("** Forwarding -- there is no next RH3-6loRH -- ROUTING-STORING-MODE!!!\n");
+                        // IP destination is more than 1-hop -- Routing Table -- Storing Mode
+                        posi = posRoute(&msg->l3_destinationAdd);
+                        printf("** Forwarding -- there is no next RH3-6loRH -- ROUTING-STORING-MODE -Next-Hop- ");
+                        for (i=0;i<LENGTH_ADDR64b;i++) {
+                            printf(" %X",(&routes_vars.routes[posi].addr_64b)->addr_64b[i]);  
+                            (&msg->l2_nextORpreviousHop)->addr_64b[i]=(&routes_vars.routes[posi].addr_64b)->addr_64b[i];
+                        }
+                        printf ("\n");
+                    }else{
+                        printf("** Forwarding -- there is no next RH3-6loRH -- FORWARDING-COME-UP!!!\n");
+                        // destination is remote, send to preferred parent
+                        neighbors_getPreferredParentEui64(&msg->l2_nextORpreviousHop);
+                    }
+                    
+                    printf ("## Forwarding -- there is no next RH3-6loRH, remove current one\n");
+                    // there is no next RH3-6loRH, remove current one
+                    packetfunctions_tossHeader(msg,hlen);
+
+                }else{
+                    
+                    printf ("## Forwarding -- there is no next RH3-6loRH, remove current one\n");
+                    // there is no next RH3-6loRH, remove current one
+                    packetfunctions_tossHeader(msg,hlen);
+                    packetfunctions_ip128bToMac64b(
+                        &msg->l3_destinationAdd,
+                        &temp_prefix,
+                        &msg->l2_nextORpreviousHop
+                    );
+                
+                }
             }
         }
     } else {

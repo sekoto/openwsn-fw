@@ -43,7 +43,7 @@ void icmpv6_sendDone(OpenQueueEntry_t* msg, owerror_t error) {
 
 void icmpv6_receive(OpenQueueEntry_t* msg) {
    msg->owner = COMPONENT_ICMPv6;
-   msg->l4_sourcePortORicmpv6Type = ((ICMPv6_ht*)(msg->payload))->type;
+   msg->l4_sourcePortORicmpv6Type = ((ICMPv6_ht*)(msg->payload))->type;       
    switch (msg->l4_sourcePortORicmpv6Type) {
       case IANA_ICMPv6_ECHO_REQUEST:
       case IANA_ICMPv6_ECHO_REPLY:
