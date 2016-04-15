@@ -153,8 +153,23 @@ void icmpv6rpl_init() {
 }
 
 void routingtable_init() {
+    open_addr_t      prefparent;
+    
    // clear module variables
    memset(&routes_vars,0,sizeof(routes_vars_t));
+   
+   neighbors_getPreferredParentEui64(&prefparent);
+        
+   // Deafult route initialization
+   routes_vars.routes[0].used                      = TRUE;
+   memcpy(&routes_vars.routes[0].addr_64b,&prefparent,sizeof(open_addr_t));
+   routes_vars.routes[0].advertneighinf            = 0;
+   routes_vars.routes[0].retcount                  = 0;
+   routes_vars.routes[0].DAOSequence               = 0;
+   routes_vars.routes[0].PathSequence              = 0;
+   routes_vars.routes[0].PathLifetime              = 0;
+   routes_vars.routes[0].tosend                    = FALSE;
+   routes_vars.routes[0].scount                    = 0;
 }
 
 void  icmpv6rpl_writeDODAGid(uint8_t* dodagid) {
@@ -216,7 +231,7 @@ void icmpv6rpl_sendDone(OpenQueueEntry_t* msg, owerror_t error) {
 void icmpv6rpl_receive(OpenQueueEntry_t* msg) {
    uint8_t          icmpv6code;
    open_addr_t      myPrefix;
-   uint8_t          i;
+   //uint8_t          i;
    uint8_t          daooptioncode;
    uint8_t          posi;
    uint8_t*         pposi;
@@ -231,33 +246,33 @@ void icmpv6rpl_receive(OpenQueueEntry_t* msg) {
    // retrieve ICMPv6 code
    icmpv6code      = (((ICMPv6_ht*)(msg->payload))->code);
    
-   printf ("\n");
+   //printf ("\n");
 
    // retrieve ID of the MOTE
-   printf("### ID-MOTE -- ");
-   for (i=0;i<LENGTH_ADDR64b;i++) {
-        printf(" %X",(&idmanager_vars.my64bID)->addr_64b[i]);  
-   }
-   printf ("\n");
+   //printf("### ID-MOTE -- ");
+   //for (i=0;i<LENGTH_ADDR64b;i++) {
+   //     printf(" %X",(&idmanager_vars.my64bID)->addr_64b[i]);  
+   //}
+   //printf ("\n");
    
    // toss ICMPv6 header
    packetfunctions_tossHeader(msg,sizeof(ICMPv6_ht));
    
    // IPv6 destination
-   printf("### MSG-Destination-IPv6 -- ");
-   for (i=0;i<LENGTH_ADDR128b;i++) {
-        printf (" %X",msg->l3_destinationAdd.addr_128b[i]);  
-   }
-   printf ("\n");
+   //printf("### MSG-Destination-IPv6 -- ");
+   //for (i=0;i<LENGTH_ADDR128b;i++) {
+   //     printf (" %X",msg->l3_destinationAdd.addr_128b[i]);  
+   //}
+   //printf ("\n");
    
    // handle message
    switch (icmpv6code) {
       case IANA_ICMPv6_RPL_DIS:
-         printf("+++++ DIS-Message \n");
+         //printf("+++++ DIS-Message \n");
          icmpv6rpl_timer_DIO_task();
          break;
       case IANA_ICMPv6_RPL_DIO:
-         printf("+++++ DIO-Message \n");
+         //printf("+++++ DIO-Message \n");
          if (idmanager_getIsDAGroot()==TRUE) {
             // stop here if I'm in the DAG root
             break; // break, don't return
@@ -287,7 +302,7 @@ void icmpv6rpl_receive(OpenQueueEntry_t* msg) {
          break;
       
       case IANA_ICMPv6_RPL_DAO:
-        printf("+++++ DAO-Message \n");
+        //printf("+++++ DAO-Message \n");
        	if (RPLMODE==0){ 
 		
             // this should never happen
@@ -303,8 +318,8 @@ void icmpv6rpl_receive(OpenQueueEntry_t* msg) {
 		sizeof(icmpv6rpl_dao_ht)
             );
 			
-            printf ("/////////////////////////////////////////\n");
-            printf ("--SRC-Add.. ");
+            //printf ("/////////////////////////////////////////\n");
+            //printf ("--SRC-Add.. ");
 			
             //memcpy(&origipv6.addr_128b,&(msg->l3_sourceAdd.addr_128b),sizeof(msg->l3_sourceAdd.addr_128b));
             memcpy(&origipv6,&(msg->l3_sourceAdd),sizeof(msg->l3_sourceAdd));
@@ -314,23 +329,23 @@ void icmpv6rpl_receive(OpenQueueEntry_t* msg) {
             //		origmac.addr_64b[i-8] = origipv6.addr_128b[i];
             //}
 			
-            for (i=0;i<LENGTH_ADDR128b;i++) {
-                //printf (" %X",msg->l3_sourceAdd.addr_128b[i]);  
-                printf (" %X",origipv6.addr_128b[i]);
-            }
-            printf ("\n");
+            //for (i=0;i<LENGTH_ADDR128b;i++) {
+           //     //printf (" %X",msg->l3_sourceAdd.addr_128b[i]);  
+           //     printf (" %X",origipv6.addr_128b[i]);
+           // }
+           // printf ("\n");
 	
-            printf ("--SRC-MAC64.. ");
-            for (i=0;i<LENGTH_ADDR64b;i++) {
-                printf (" %X",origmac.addr_64b[i]);
-            }
-            printf ("\n");
+            //printf ("--SRC-MAC64.. ");
+            //for (i=0;i<LENGTH_ADDR64b;i++) {
+            //    printf (" %X",origmac.addr_64b[i]);
+            //}
+            //printf ("\n");
 			
-            printf ("-- Payload.. ");
-            for (i=0;i<120;i++) {
-                printf (" %X",msg->payload[i]);  
-            }
-            printf ("\n");
+            //printf ("-- Payload.. ");
+            //for (i=0;i<120;i++) {
+            //    printf (" %X",msg->payload[i]);  
+            //}
+            //printf ("\n");
 			
             // retrieve DAO option code
             daooptioncode      = msg->payload[sizeof(icmpv6rpl_dao_ht)];
@@ -350,7 +365,7 @@ void icmpv6rpl_receive(OpenQueueEntry_t* msg) {
 			
                     case OPTION_TARGET_INFORMATION_TYPE:    
 					
-                        printf ("##### Target Option \n");
+                        //printf ("##### Target Option \n");
                         //printf ("** type %X \n",((icmpv6rpl_dao_target_ht*)(pposi))->type);
                         //printf ("** OptionLength %X \n",((icmpv6rpl_dao_target_ht*)(pposi))->optionLength);
                         //printf ("** Flags %X \n",((icmpv6rpl_dao_target_ht*)(pposi))->flags);
@@ -376,15 +391,15 @@ void icmpv6rpl_receive(OpenQueueEntry_t* msg) {
                         origipv6.type=ADDR_128B;
                         origmac.type=ADDR_64B;
                                                 
-                        printf ("** Child-Address.. ");
-                        for (i=0;i<LENGTH_ADDR128b;i++) {
-                            printf (" %X",routeadd.addr_128b[i]);  
-                        }
-                        printf ("\n");
+                        //printf ("** Child-Address.. ");
+                        //for (i=0;i<LENGTH_ADDR128b;i++) {
+                        //    printf (" %X",routeadd.addr_128b[i]);  
+                        //}
+                        //printf ("\n");
 					
-                        printf ("...Before Register .. %X\n",routes_getNumRoutes()); 
+                        //printf ("...Before Register .. %X\n",routes_getNumRoutes()); 
                         registerRoute(&routeadd,&origipv6,&origmac,(&icmpv6rpl_vars.dao)->DAOSequence,(&icmpv6rpl_vars.dao_transit)->PathSequence,(&icmpv6rpl_vars.dao_transit)->PathLifetime);
-                        printf ("...After Register .. %X\n",routes_getNumRoutes());
+                        //printf ("...After Register .. %X\n",routes_getNumRoutes());
 					
                         posi=posi+LENGTH_ADDR128b+1; 
                         pposi = &(msg->payload[posi]);
@@ -394,7 +409,7 @@ void icmpv6rpl_receive(OpenQueueEntry_t* msg) {
                         break;
 				
                     case OPTION_TRANSIT_INFORMATION_TYPE:    
-                        printf ("##### Transit Option \n");
+                        //printf ("##### Transit Option \n");
                         //printf ("** type %X \n",((icmpv6rpl_dao_transit_ht*)(pposi))->type);
                         //printf ("** optionLength %X \n",((icmpv6rpl_dao_transit_ht*)(pposi))->optionLength);
                         //printf ("** E_flags %X \n",((icmpv6rpl_dao_transit_ht*)(pposi))->E_flags);
@@ -418,15 +433,15 @@ void icmpv6rpl_receive(OpenQueueEntry_t* msg) {
                         posi=posi+sizeof(icmpv6rpl_dao_transit_ht)-1; 
                         pposi = &(msg->payload[posi]);
 				
-                        if ((((icmpv6rpl_dao_transit_ht*)(pposi))->optionLength)==0){
-                            printf ("** Storing-Mode.. (No Parent Address)\n");   
-                        }else{
-                            printf ("** Parent-Address  ");
-                            for (i=0;i<LENGTH_ADDR128b;i++) {
-                                printf (" %X",((open_addr_t*)(pposi))->addr_128b[i]);  
-                            }
-                            printf ("\n");
-                        }
+                        //if ((((icmpv6rpl_dao_transit_ht*)(pposi))->optionLength)==0){
+                        //     printf ("** Storing-Mode.. (No Parent Address)\n");   
+                        //}else{
+                        //    printf ("** Parent-Address  ");
+                        //    for (i=0;i<LENGTH_ADDR128b;i++) {
+                        //        printf (" %X",((open_addr_t*)(pposi))->addr_128b[i]);  
+                        //    }
+                        //    printf ("\n");
+                        //}
 	
                         posi=posi+LENGTH_ADDR128b+1; 
                         pposi = &(msg->payload[posi]);
@@ -436,7 +451,7 @@ void icmpv6rpl_receive(OpenQueueEntry_t* msg) {
                         break;
 				
                     default:  
-                        printf ("##### END DAO %X \n",msg->payload[posi]);
+                        //printf ("##### END DAO %X \n",msg->payload[posi]);
                         posi=0;
                         break;
 				
@@ -696,8 +711,8 @@ void sendDAO() {
    more RPL Target options.   
    */
    
-   printf ("\n");
-   printf("### Mounting DAO-Target-Option -- \n");
+   //printf ("\n");
+   //printf("### Mounting DAO-Target-Option -- \n");
    // Limit onlye one Target Option
    onetarget=FALSE;
    
@@ -709,11 +724,11 @@ void sendDAO() {
         posi=0;
         selected=FALSE;
    
-        printf("### ID-MOTE -- ");
-        for (i=0;i<LENGTH_ADDR64b;i++) {
-            printf(" %X",(&idmanager_vars.my64bID)->addr_64b[i]);  
-        }
-        printf ("\n");
+        //printf("### ID-MOTE -- ");
+        //for (i=0;i<LENGTH_ADDR64b;i++) {
+        //    printf(" %X",(&idmanager_vars.my64bID)->addr_64b[i]);  
+        //}
+        //printf ("\n");
    
         for (nbrIdx=0;nbrIdx<MAX_ROUTE_NUM;nbrIdx++) {
             if (routes_vars.routes[nbrIdx].used==TRUE) {
@@ -725,20 +740,20 @@ void sendDAO() {
                 }    
                 
                 //printf ("+++ Type IPv6 registered - %u\n",routes_vars.routes[nbrIdx].destination.type);
-                printf ("|-----Route(%u)------\n",nbrIdx);
-                printf("|### Routing-IPv6-Destiny(Child) -- ");
-                for (i=0;i<LENGTH_ADDR128b;i++) {
-                    printf (" %X",routes_vars.routes[nbrIdx].destination.addr_128b[i]);  
-                }
-                printf ("\n"); 
-                printf("|### Routing-IPv6-Publisher -- ");
-                for (i=0;i<LENGTH_ADDR128b;i++) {
-                    printf (" %X",routes_vars.routes[nbrIdx].addr_128b.addr_128b[i]);  
-                }
-                printf ("\n"); 
-                printf ("|-------------------\n");
-                
-                printf ("...Vuelta\n");
+                //printf ("|-----Route(%u)------\n",nbrIdx);
+                //printf("|### Routing-IPv6-Destiny(Child) -- ");
+                //for (i=0;i<LENGTH_ADDR128b;i++) {
+                //    printf (" %X",routes_vars.routes[nbrIdx].destination.addr_128b[i]);  
+                //}
+                //printf ("\n"); 
+                //printf("|### Routing-IPv6-Publisher -- ");
+                //for (i=0;i<LENGTH_ADDR128b;i++) {
+                //    printf (" %X",routes_vars.routes[nbrIdx].addr_128b.addr_128b[i]);  
+                //}
+                //printf ("\n"); 
+                //printf ("|-------------------\n");
+                //
+                //printf ("...Vuelta\n");
             }
             
         }
@@ -773,7 +788,7 @@ void sendDAO() {
         for (nbrIdx=0;nbrIdx<MAXNUMNEIGHBORS;nbrIdx++) {
             if ((neighbors_isNeighborWithHigherDAGrank(nbrIdx))==TRUE) {
                 // this neighbor is of higher DAGrank as I am. so it is my child
-                printf("*** Writing Target Address -- OW_BIG_ENDIAN ");
+                //printf("*** Writing Target Address -- OW_BIG_ENDIAN ");
                 // write it's address in DAO RFC6550 page 80 check point 1.
                 neighbors_getNeighbor(&address,ADDR_64B,nbrIdx); 
                 packetfunctions_writeAddress(msg,&address,OW_BIG_ENDIAN);
@@ -795,7 +810,7 @@ void sendDAO() {
                     &(icmpv6rpl_vars.dao_target),
                     sizeof(icmpv6rpl_dao_target_ht)
                 );
-                printf ("...Target Real\n");
+                //printf ("...Target Real\n");
                 // remember I found it
                 numTargetParents++;
             }  
@@ -825,9 +840,9 @@ void sendDAO() {
 		// Unassigned bits of the Transit Information option are reserved.  
 		// They MUST be set to zero on transmission and MUST be ignored on reception.
 		for (i=0;i<LENGTH_ADDR128b;i++) {
-			msg->payload      -= sizeof(uint8_t);
-			msg->length       += sizeof(uint8_t);
-			*((uint8_t*)(msg->payload)) = 0;
+                    msg->payload      -= sizeof(uint8_t);
+                    msg->length       += sizeof(uint8_t);
+                    *((uint8_t*)(msg->payload)) = 0;
 		}
    }
 
@@ -873,21 +888,21 @@ void sendDAO() {
       sizeof(icmpv6rpl_dao_ht)
    );
    
-   printf ("...Mounting DAO ICMPv6 header\n");
+   //printf ("...Mounting DAO ICMPv6 header\n");
    //=== ICMPv6 header
    packetfunctions_reserveHeaderSize(msg,sizeof(ICMPv6_ht));
    ((ICMPv6_ht*)(msg->payload))->type       = msg->l4_sourcePortORicmpv6Type;
    ((ICMPv6_ht*)(msg->payload))->code       = IANA_ICMPv6_RPL_DAO;
    packetfunctions_calculateChecksum(msg,(uint8_t*)&(((ICMPv6_ht*)(msg->payload))->checksum)); //call last
    
-   printf ("...Sending DAO\n");
+   //printf ("...Sending DAO\n");
    //===== send
    if (icmpv6_send(msg)==E_SUCCESS) {
       icmpv6rpl_vars.busySending = TRUE;
    } else {
       openqueue_freePacketBuffer(msg);
    }
-   printf ("...Sended DAO\n");
+   //printf ("...Sended DAO\n");
 }
 
 void icmpv6rpl_setDIOPeriod(uint16_t dioPeriod){
@@ -923,15 +938,15 @@ void registerRoute(open_addr_t*     destaddress,
                    uint8_t          PathL) {
    uint8_t  i,posi;
 
-   printf("Registering route process....\n");
+   //printf("Registering route process....\n");
    // printf("IPv6 type....%u\n",IPv6->type); 
    // add this Route
    if (isRoute(destaddress)==FALSE) {
-      printf("The route is not on the table...\n");
+      //printf("The route is not on the table...\n");
       i=0;
       while(i<MAX_ROUTE_NUM) {
          if (routes_vars.routes[i].used==FALSE) {
-             printf("Adding route...\n");
+             //printf("Adding route...\n");
             // add this route
             routes_vars.routes[i].used                      = TRUE;
             routes_vars.routes[i].advertneighinf            = 0;
@@ -956,7 +971,7 @@ void registerRoute(open_addr_t*     destaddress,
          return;
       }
    }else{
-       printf("The route is in the table already...\n");
+       //printf("The route is in the table already...\n");
         // Obtain position of route
         posi = posRoute(destaddress);
         // Is new the address of publisher
@@ -968,18 +983,18 @@ void registerRoute(open_addr_t*     destaddress,
 				
 				
 		if (routes_vars.routes[posi].DAOSequence != DAOS){
-                    printf("+++ New DAOSequence...\n");
+                    //printf("+++ New DAOSequence...\n");
                 }
 				
                 if (routes_vars.routes[posi].PathSequence != PathS){
-                    printf("+++ New PathSequence...\n");
+                    //printf("+++ New PathSequence...\n");
                 }
 				
                 if (!(packetfunctions_sameAddress(IPv6,&(routes_vars.routes[posi].addr_128b)))){
-                    printf("+++ New Orig-Publisher...\n");
+                    //printf("+++ New Orig-Publisher...\n");
                 }
 				
-                printf("Updating Route...\n");
+                //printf("Updating Route...\n");
                 // update this route
                 routes_vars.routes[posi].used                      = TRUE;
                 routes_vars.routes[posi].advertneighinf            = 0;
