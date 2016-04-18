@@ -50,6 +50,7 @@ uint8_t iphc_retrieveIPv6HopByHopHeader(
    rpl_option_ht*       rpl_option
 );
 
+
 //=========================== public ==========================================
 
 /**
@@ -282,6 +283,15 @@ void forwarding_receive(
     
     printf("** Forwarding -- l4_sourcePortORicmpv6Type.. %X\n",((ICMPv6_ht*)(msg->payload))->type);
    
+    // retrieve ID of the MOTE
+    printf("### ID-MOTE -- ");
+    for (i=0;i<LENGTH_ADDR64b;i++) {
+        printf(" %X",(&idmanager_vars.my64bID)->addr_64b[i]);  
+    }
+    printf ("\n");
+    
+    printf ("** Packet-Recieved.. \n");
+    
     if (
         (
             idmanager_isMyAddress(&(msg->l3_destinationAdd))
@@ -296,7 +306,13 @@ void forwarding_receive(
         if (ipv6_outer_header->src.type != ADDR_NONE){
             packetfunctions_tossHeader(msg,ipv6_outer_header->header_length);
         }
-              
+        
+        printf ("** Forwarding -- l3_destinationAddress.. ");
+        for (i=0;i<LENGTH_ADDR128b;i++) {
+            printf (" %X",msg->l3_destinationAdd.addr_128b[i]);  
+        }
+        printf ("\n");
+
         // this packet is for me, no source routing header // toss iphc inner header
         packetfunctions_tossHeader(msg,ipv6_inner_header->header_length);
 
@@ -416,7 +432,7 @@ void forwarding_getNextHop(open_addr_t* destination128b, open_addr_t* addressToW
       }
    } else if (neighbors_isStableNeighbor(destination128b)) {
       // IP destination is 1-hop neighbor, send directly
-       printf("** Forwarding -- FORWARDING-HEY-NEIGHBOR!!!\n");
+      printf("** Forwarding -- FORWARDING-HEY-NEIGHBOR!!!\n");
       packetfunctions_ip128bToMac64b(destination128b,&temp_prefix64btoWrite,addressToWrite64b);
       
    } else if ((isRoute(destination128b)) && (RPLMODE==1)) {
@@ -463,7 +479,6 @@ owerror_t forwarding_send_internal_RoutingTable(
       uint8_t                fw_SendOrfw_Rcv
    ) {
    uint8_t          i;
-   
    //**
    // retrieve the next hop from the routing table
    printf ("## Forwarding -- getNextHop\n");
