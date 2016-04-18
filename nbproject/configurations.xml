@@ -1,0 +1,4231 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<configurationDescriptor version="97">
+  <logicalFolder name="root" displayName="root" projectFiles="true" kind="ROOT">
+    <df root="." name="0">
+      <df name="bootloader">
+        <df name="k20">
+          <df name="bootloader">
+            <in>Boot_loader_task.c</in>
+            <in>Loader.c</in>
+            <in>RealTimerCounter_kinetis.c</in>
+          </df>
+          <df name="disk_flash_utils">
+            <in>FAT16.c</in>
+            <in>SD_kinetis.c</in>
+            <in>SPI_kinetis.c</in>
+            <in>disk.c</in>
+            <in>flash_FTFL.c</in>
+          </df>
+          <df name="startup">
+            <in>kinetis_sysinit.c</in>
+            <in>vectors.c</in>
+          </df>
+          <df name="usb">
+            <in>usb_class.c</in>
+            <in>usb_dci_kinetis.c</in>
+            <in>usb_descriptor.c</in>
+            <in>usb_driver.c</in>
+            <in>usb_framework.c</in>
+            <in>usb_msc.c</in>
+            <in>usb_msc_scsi.c</in>
+          </df>
+          <in>main_kinetis.c</in>
+          <in>wdt_kinetis.c</in>
+        </df>
+      </df>
+      <df name="bsp">
+        <df name="boards">
+          <df name="agilefox">
+            <df name="configure">
+              <in>stm32f10x_it.c</in>
+            </df>
+            <df name="ewarm">
+              <in>cortexm3_macro.s</in>
+              <in>stm32f10x_vector.c</in>
+            </df>
+            <df name="library">
+              <df name="src">
+                <in>stm32f10x_adc.c</in>
+                <in>stm32f10x_bkp.c</in>
+                <in>stm32f10x_can.c</in>
+                <in>stm32f10x_crc.c</in>
+                <in>stm32f10x_dac.c</in>
+                <in>stm32f10x_dbgmcu.c</in>
+                <in>stm32f10x_dma.c</in>
+                <in>stm32f10x_exti.c</in>
+                <in>stm32f10x_flash.c</in>
+                <in>stm32f10x_fsmc.c</in>
+                <in>stm32f10x_gpio.c</in>
+                <in>stm32f10x_i2c.c</in>
+                <in>stm32f10x_iwdg.c</in>
+                <in>stm32f10x_lib.c</in>
+                <in>stm32f10x_nvic.c</in>
+                <in>stm32f10x_pwr.c</in>
+                <in>stm32f10x_rcc.c</in>
+                <in>stm32f10x_rtc.c</in>
+                <in>stm32f10x_sdio.c</in>
+                <in>stm32f10x_spi.c</in>
+                <in>stm32f10x_systick.c</in>
+                <in>stm32f10x_tim.c</in>
+                <in>stm32f10x_usart.c</in>
+                <in>stm32f10x_wwdg.c</in>
+              </df>
+            </df>
+            <in>Systick.c</in>
+            <in>board.c</in>
+            <in>bsp_timer.c</in>
+            <in>debugpins.c</in>
+            <in>eui64.c</in>
+            <in>exi.c</in>
+            <in>flash.c</in>
+            <in>gpio.c</in>
+            <in>leds.c</in>
+            <in>nvic.c</in>
+            <in>radiotimer.c</in>
+            <in>rcc.c</in>
+            <in>rtc_timer.c</in>
+            <in>spi.c</in>
+            <in>uart.c</in>
+          </df>
+          <df name="common">
+            <in>abstimer.c</in>
+            <in>abstimers2.c</in>
+            <in>aes_cbc.c</in>
+            <in>aes_ccms.c</in>
+            <in>aes_ctr.c</in>
+            <in>aes_ecb.c</in>
+            <in>dummy_crypto_engine.c</in>
+            <in>firmware_crypto_engine.c</in>
+          </df>
+          <df name="derfmega">
+            <in>board.c</in>
+            <in>bsp_timer.c</in>
+            <in>debugpins.c</in>
+            <in>eui64.c</in>
+            <in>leds.c</in>
+            <in>radio.c</in>
+            <in>radiotimer.c</in>
+            <in>sctimer_mac.c</in>
+            <in>sctimer_tmr2.c</in>
+            <in>uart.c</in>
+          </df>
+          <df name="eldorado">
+            <in>Vectors.c</in>
+            <in>board.c</in>
+            <in>leds.c</in>
+            <in>main.c</in>
+            <in>radio.c</in>
+            <in>spi.c</in>
+            <in>uart.c</in>
+          </df>
+          <df name="ez430-rf2500">
+            <in>board.c</in>
+            <in>bsp_timer.c</in>
+            <in>debugpins.c</in>
+            <in>eui64.c</in>
+            <in>leds.c</in>
+            <in>radiotimer.c</in>
+            <in>sctimer.c</in>
+            <in>spi.c</in>
+            <in>uart.c</in>
+          </df>
+          <df name="gina">
+            <in>board.c</in>
+            <in>bsp_timer.c</in>
+            <in>debugpins.c</in>
+            <in>eui64.c</in>
+            <in>i2c.c</in>
+            <in>leds.c</in>
+            <in>radiotimer.c</in>
+            <in>sctimer.c</in>
+            <in>spi.c</in>
+            <in>uart.c</in>
+          </df>
+          <df name="iot-lab_A8-M3">
+            <df name="configure">
+              <in>stm32f10x_it.c</in>
+            </df>
+            <df name="library">
+              <df name="STM32F10x_StdPeriph_Lib_V3.5.0">
+                <df name="Libraries">
+                  <df name="CMSIS">
+                    <df name="CM3">
+                      <df name="CoreSupport">
+                        <in>core_cm3.c</in>
+                      </df>
+                      <df name="DeviceSupport">
+                        <df name="ST">
+                          <df name="STM32F10x">
+                            <df name="startup">
+                              <df name="arm">
+                                <in>startup_stm32f10x_cl.s</in>
+                                <in>startup_stm32f10x_hd.s</in>
+                                <in>startup_stm32f10x_hd_vl.s</in>
+                                <in>startup_stm32f10x_ld.s</in>
+                                <in>startup_stm32f10x_ld_vl.s</in>
+                                <in>startup_stm32f10x_md.s</in>
+                                <in>startup_stm32f10x_md_vl.s</in>
+                                <in>startup_stm32f10x_xl.s</in>
+                              </df>
+                              <df name="gcc_ride7">
+                                <in>startup_stm32f10x_cl.s</in>
+                                <in>startup_stm32f10x_hd.s</in>
+                                <in>startup_stm32f10x_hd_vl.s</in>
+                                <in>startup_stm32f10x_ld.s</in>
+                                <in>startup_stm32f10x_ld_vl.s</in>
+                                <in>startup_stm32f10x_md.s</in>
+                                <in>startup_stm32f10x_md_vl.s</in>
+                                <in>startup_stm32f10x_xl.s</in>
+                              </df>
+                              <df name="iar">
+                                <in>startup_stm32f10x_cl.s</in>
+                                <in>startup_stm32f10x_hd.s</in>
+                                <in>startup_stm32f10x_hd_vl.s</in>
+                                <in>startup_stm32f10x_ld.s</in>
+                                <in>startup_stm32f10x_ld_vl.s</in>
+                                <in>startup_stm32f10x_md.s</in>
+                                <in>startup_stm32f10x_md_vl.s</in>
+                                <in>startup_stm32f10x_xl.s</in>
+                              </df>
+                              <df name="TrueSTUDIO">
+                                <in>startup_stm32f10x_cl.s</in>
+                                <in>startup_stm32f10x_hd.s</in>
+                                <in>startup_stm32f10x_hd_vl.s</in>
+                                <in>startup_stm32f10x_ld.s</in>
+                                <in>startup_stm32f10x_ld_vl.s</in>
+                                <in>startup_stm32f10x_md.s</in>
+                                <in>startup_stm32f10x_md_vl.s</in>
+                                <in>startup_stm32f10x_xl.s</in>
+                              </df>
+                            </df>
+                            <in>system_stm32f10x.c</in>
+                          </df>
+                        </df>
+                      </df>
+                    </df>
+                  </df>
+                  <df name="STM32F10x_StdPeriph_Driver">
+                    <df name="src">
+                      <in>misc.c</in>
+                      <in>stm32f10x_adc.c</in>
+                      <in>stm32f10x_bkp.c</in>
+                      <in>stm32f10x_can.c</in>
+                      <in>stm32f10x_cec.c</in>
+                      <in>stm32f10x_crc.c</in>
+                      <in>stm32f10x_dac.c</in>
+                      <in>stm32f10x_dbgmcu.c</in>
+                      <in>stm32f10x_dma.c</in>
+                      <in>stm32f10x_exti.c</in>
+                      <in>stm32f10x_flash.c</in>
+                      <in>stm32f10x_fsmc.c</in>
+                      <in>stm32f10x_gpio.c</in>
+                      <in>stm32f10x_i2c.c</in>
+                      <in>stm32f10x_iwdg.c</in>
+                      <in>stm32f10x_pwr.c</in>
+                      <in>stm32f10x_rcc.c</in>
+                      <in>stm32f10x_rtc.c</in>
+                      <in>stm32f10x_sdio.c</in>
+                      <in>stm32f10x_spi.c</in>
+                      <in>stm32f10x_tim.c</in>
+                      <in>stm32f10x_usart.c</in>
+                      <in>stm32f10x_wwdg.c</in>
+                    </df>
+                  </df>
+                </df>
+              </df>
+            </df>
+            <in>Systick.c</in>
+            <in>board.c</in>
+            <in>bsp_timer.c</in>
+            <in>debugpins.c</in>
+            <in>eui64.c</in>
+            <in>exti.c</in>
+            <in>gpio.c</in>
+            <in>leds.c</in>
+            <in>nvic.c</in>
+            <in>radiotimer.c</in>
+            <in>rcc.c</in>
+            <in>rtc_timer.c</in>
+            <in>spi.c</in>
+            <in>startup.s</in>
+            <in>uart.c</in>
+          </df>
+          <df name="iot-lab_M3">
+            <df name="configure">
+              <in>stm32f10x_it.c</in>
+            </df>
+            <df name="library">
+              <df name="STM32F10x_StdPeriph_Lib_V3.5.0">
+                <df name="Libraries">
+                  <df name="CMSIS">
+                    <df name="CM3">
+                      <df name="CoreSupport">
+                        <in>core_cm3.c</in>
+                      </df>
+                      <df name="DeviceSupport">
+                        <df name="ST">
+                          <df name="STM32F10x">
+                            <df name="startup">
+                              <df name="arm">
+                                <in>startup_stm32f10x_cl.s</in>
+                                <in>startup_stm32f10x_hd.s</in>
+                                <in>startup_stm32f10x_hd_vl.s</in>
+                                <in>startup_stm32f10x_ld.s</in>
+                                <in>startup_stm32f10x_ld_vl.s</in>
+                                <in>startup_stm32f10x_md.s</in>
+                                <in>startup_stm32f10x_md_vl.s</in>
+                                <in>startup_stm32f10x_xl.s</in>
+                              </df>
+                              <df name="gcc_ride7">
+                                <in>startup_stm32f10x_cl.s</in>
+                                <in>startup_stm32f10x_hd.s</in>
+                                <in>startup_stm32f10x_hd_vl.s</in>
+                                <in>startup_stm32f10x_ld.s</in>
+                                <in>startup_stm32f10x_ld_vl.s</in>
+                                <in>startup_stm32f10x_md.s</in>
+                                <in>startup_stm32f10x_md_vl.s</in>
+                                <in>startup_stm32f10x_xl.s</in>
+                              </df>
+                              <df name="iar">
+                                <in>startup_stm32f10x_cl.s</in>
+                                <in>startup_stm32f10x_hd.s</in>
+                                <in>startup_stm32f10x_hd_vl.s</in>
+                                <in>startup_stm32f10x_ld.s</in>
+                                <in>startup_stm32f10x_ld_vl.s</in>
+                                <in>startup_stm32f10x_md.s</in>
+                                <in>startup_stm32f10x_md_vl.s</in>
+                                <in>startup_stm32f10x_xl.s</in>
+                              </df>
+                              <df name="TrueSTUDIO">
+                                <in>startup_stm32f10x_cl.s</in>
+                                <in>startup_stm32f10x_hd.s</in>
+                                <in>startup_stm32f10x_hd_vl.s</in>
+                                <in>startup_stm32f10x_ld.s</in>
+                                <in>startup_stm32f10x_ld_vl.s</in>
+                                <in>startup_stm32f10x_md.s</in>
+                                <in>startup_stm32f10x_md_vl.s</in>
+                                <in>startup_stm32f10x_xl.s</in>
+                              </df>
+                            </df>
+                            <in>system_stm32f10x.c</in>
+                          </df>
+                        </df>
+                      </df>
+                    </df>
+                  </df>
+                  <df name="STM32F10x_StdPeriph_Driver">
+                    <df name="src">
+                      <in>misc.c</in>
+                      <in>stm32f10x_adc.c</in>
+                      <in>stm32f10x_bkp.c</in>
+                      <in>stm32f10x_can.c</in>
+                      <in>stm32f10x_cec.c</in>
+                      <in>stm32f10x_crc.c</in>
+                      <in>stm32f10x_dac.c</in>
+                      <in>stm32f10x_dbgmcu.c</in>
+                      <in>stm32f10x_dma.c</in>
+                      <in>stm32f10x_exti.c</in>
+                      <in>stm32f10x_flash.c</in>
+                      <in>stm32f10x_fsmc.c</in>
+                      <in>stm32f10x_gpio.c</in>
+                      <in>stm32f10x_i2c.c</in>
+                      <in>stm32f10x_iwdg.c</in>
+                      <in>stm32f10x_pwr.c</in>
+                      <in>stm32f10x_rcc.c</in>
+                      <in>stm32f10x_rtc.c</in>
+                      <in>stm32f10x_sdio.c</in>
+                      <in>stm32f10x_spi.c</in>
+                      <in>stm32f10x_tim.c</in>
+                      <in>stm32f10x_usart.c</in>
+                      <in>stm32f10x_wwdg.c</in>
+                    </df>
+                  </df>
+                </df>
+              </df>
+            </df>
+            <in>Systick.c</in>
+            <in>board.c</in>
+            <in>bsp_timer.c</in>
+            <in>debugpins.c</in>
+            <in>eui64.c</in>
+            <in>exti.c</in>
+            <in>gpio.c</in>
+            <in>leds.c</in>
+            <in>nvic.c</in>
+            <in>radiotimer.c</in>
+            <in>rcc.c</in>
+            <in>rtc_timer.c</in>
+            <in>spi.c</in>
+            <in>startup.s</in>
+            <in>uart.c</in>
+          </df>
+          <df name="k20">
+            <df name="bsp">
+              <in>board.c</in>
+              <in>bsp_timer.c</in>
+              <in>debugpins.c</in>
+              <in>eui64.c</in>
+              <in>flextimer.c</in>
+              <in>led.c</in>
+              <in>leds.c</in>
+              <in>radiotimer.c</in>
+              <in>sctimer.c</in>
+              <in>spi.c</in>
+              <in>uart.c</in>
+            </df>
+            <df name="bsp_ext">
+              <in>adc16.c</in>
+              <in>llwu.c</in>
+              <in>lptmr.c</in>
+              <in>mcg.c</in>
+              <in>pmc.c</in>
+              <in>rcm.c</in>
+              <in>rtc.c</in>
+              <in>sai.c</in>
+              <in>smc.c</in>
+              <in>wdog.c</in>
+            </df>
+            <df name="common">
+              <in>startup.c</in>
+            </df>
+            <df name="cpu">
+              <in>arm_cm4.c</in>
+              <in>crt0.s</in>
+              <in>cw_crt0.s</in>
+              <in>start.c</in>
+              <in>sysinit.c</in>
+              <in>vectors.c</in>
+            </df>
+          </df>
+          <df name="OpenMote-CC2538">
+            <df name="source">
+              <in>adc.c</in>
+              <in>aes.c</in>
+              <in>ccm.c</in>
+              <in>cpu.c</in>
+              <in>debug.c</in>
+              <in>flash.c</in>
+              <in>gpio.c</in>
+              <in>gptimer.c</in>
+              <in>i2c_lib.c</in>
+              <in>interrupt.c</in>
+              <in>ioc.c</in>
+              <in>pka.c</in>
+              <in>sha256.c</in>
+              <in>sleepmode.c</in>
+              <in>ssi.c</in>
+              <in>sys_ctrl.c</in>
+              <in>systick.c</in>
+              <in>uarthal.c</in>
+              <in>udma.c</in>
+              <in>watchdog.c</in>
+            </df>
+            <in>adc_sensor.c</in>
+            <in>board.c</in>
+            <in>bsp_timer.c</in>
+            <in>cc2538_crypto_engine.c</in>
+            <in>debugpins.c</in>
+            <in>eui64.c</in>
+            <in>i2c.c</in>
+            <in>leds.c</in>
+            <in>radio.c</in>
+            <in>radiotimer.c</in>
+            <in>sensors.c</in>
+            <in>startup_gcc.c</in>
+            <in>startup_iar.c</in>
+            <in>uart.c</in>
+          </df>
+          <df name="openmotestm">
+            <df name="configure">
+              <in>cortexm3_macro.s</in>
+              <in>stm32f10x_it.c</in>
+            </df>
+            <df name="ewarm">
+              <in>cortexm3_macro.s</in>
+              <in>stm32f10x_vector.c</in>
+            </df>
+            <df name="library">
+              <df name="src">
+                <in>stm32f10x_adc.c</in>
+                <in>stm32f10x_bkp.c</in>
+                <in>stm32f10x_can.c</in>
+                <in>stm32f10x_crc.c</in>
+                <in>stm32f10x_dac.c</in>
+                <in>stm32f10x_dbgmcu.c</in>
+                <in>stm32f10x_dma.c</in>
+                <in>stm32f10x_exti.c</in>
+                <in>stm32f10x_flash.c</in>
+                <in>stm32f10x_fsmc.c</in>
+                <in>stm32f10x_gpio.c</in>
+                <in>stm32f10x_i2c.c</in>
+                <in>stm32f10x_iwdg.c</in>
+                <in>stm32f10x_lib.c</in>
+                <in>stm32f10x_nvic.c</in>
+                <in>stm32f10x_pwr.c</in>
+                <in>stm32f10x_rcc.c</in>
+                <in>stm32f10x_rtc.c</in>
+                <in>stm32f10x_sdio.c</in>
+                <in>stm32f10x_spi.c</in>
+                <in>stm32f10x_systick.c</in>
+                <in>stm32f10x_tim.c</in>
+                <in>stm32f10x_usart.c</in>
+                <in>stm32f10x_wwdg.c</in>
+              </df>
+            </df>
+            <in>Systick.c</in>
+            <in>board.c</in>
+            <in>bsp_timer.c</in>
+            <in>debugpins.c</in>
+            <in>eui64.c</in>
+            <in>exi.c</in>
+            <in>flash.c</in>
+            <in>gpio.c</in>
+            <in>leds.c</in>
+            <in>nvic.c</in>
+            <in>radiotimer.c</in>
+            <in>rcc.c</in>
+            <in>rtc_timer.c</in>
+            <in>spi.c</in>
+            <in>startup.s</in>
+            <in>uart.c</in>
+          </df>
+          <df name="python">
+            <in>board_obj.c</in>
+            <in>bsp_timer_obj.c</in>
+            <in>debugpins_obj.c</in>
+            <in>eui64_obj.c</in>
+            <in>leds_obj.c</in>
+            <in>openwsnmodule.c</in>
+            <in>radio_obj.c</in>
+            <in>radiotimer_obj.c</in>
+            <in>supply_obj.c</in>
+            <in>uart_obj.c</in>
+          </df>
+          <df name="samr21_xpro">
+            <df name="drivers">
+              <df name="src">
+                <in>cm0_handler.c</in>
+                <in>cm0plus_interrupt.c</in>
+                <in>samr21_extint.c</in>
+                <in>samr21_flash.c</in>
+                <in>samr21_gclk.c</in>
+                <in>samr21_gpio.c</in>
+                <in>samr21_spi.c</in>
+                <in>samr21_sysctrl.c</in>
+                <in>samr21_timer.c</in>
+                <in>samr21_uart.c</in>
+              </df>
+            </df>
+            <in>board.c</in>
+            <in>bsp_timer.c</in>
+            <in>debug_pins.c</in>
+            <in>eui64.c</in>
+            <in>flash.c</in>
+            <in>gpio.c</in>
+            <in>leds.c</in>
+            <in>radio_timer.c</in>
+            <in>rtc.c</in>
+            <in>spi_drv.c</in>
+            <in>uart.c</in>
+          </df>
+          <df name="telosb">
+            <in>board.c</in>
+            <in>board_crypto_engine.c</in>
+            <in>bsp_timer.c</in>
+            <in>debugpins.c</in>
+            <in>eui64.c</in>
+            <in>leds.c</in>
+            <in>radiotimer.c</in>
+            <in>spi.c</in>
+            <in>uart.c</in>
+          </df>
+          <df name="wsn430v13b">
+            <in>board.c</in>
+            <in>bsp_timer.c</in>
+            <in>debugpins.c</in>
+            <in>eui64.c</in>
+            <in>leds.c</in>
+            <in>radiotimer.c</in>
+            <in>spi.c</in>
+            <in>uart.c</in>
+          </df>
+          <df name="wsn430v14">
+            <in>board.c</in>
+            <in>bsp_timer.c</in>
+            <in>debugpins.c</in>
+            <in>eui64.c</in>
+            <in>leds.c</in>
+            <in>radiotimer.c</in>
+            <in>spi.c</in>
+            <in>uart.c</in>
+          </df>
+          <df name="xpressohack">
+            <in>board.c</in>
+            <in>bsp_timer.c</in>
+            <in>clkpwr.c</in>
+            <in>debugpins.c</in>
+            <in>eui64.c</in>
+            <in>iap.c</in>
+            <in>leds.c</in>
+            <in>lpc17xx_i2c.c</in>
+            <in>lpc17xx_pinsel.c</in>
+            <in>lpc17xx_uart.c</in>
+            <in>radiotimer.c</in>
+            <in>spi.c</in>
+            <in>ssp.c</in>
+            <in>ssp_spi_wrapper.c</in>
+            <in>timer.c</in>
+            <in>uart.c</in>
+          </df>
+          <df name="z1">
+            <in>board.c</in>
+            <in>bsp_timer.c</in>
+            <in>debugpins.c</in>
+            <in>eui64.c</in>
+            <in>i2c.c</in>
+            <in>leds.c</in>
+            <in>radiotimer.c</in>
+            <in>sctimer.c</in>
+            <in>spi.c</in>
+            <in>uart.c</in>
+          </df>
+        </df>
+        <df name="chips">
+          <df name="adxl346">
+            <in>adxl346.c</in>
+          </df>
+          <df name="at86rf231">
+            <in>radio.c</in>
+          </df>
+          <df name="at86rf233">
+            <in>radio.c</in>
+          </df>
+          <df name="cc1101">
+            <in>radio.c</in>
+          </df>
+          <df name="cc2420">
+            <in>cc2420.c</in>
+            <in>cc2420_crypto.c</in>
+            <in>radio.c</in>
+          </df>
+          <df name="max44009">
+            <in>max44009.c</in>
+          </df>
+          <df name="sht21">
+            <in>sht21.c</in>
+          </df>
+        </df>
+      </df>
+      <df name="build">
+        <df name="python_gcc">
+          <df name="bsp">
+            <df name="boards">
+              <df name="common">
+                <in>aes_cbc.c</in>
+                <in>aes_ccms.c</in>
+                <in>aes_ctr.c</in>
+                <in>aes_ecb.c</in>
+                <in>dummy_crypto_engine.c</in>
+                <in>firmware_crypto_engine.c</in>
+              </df>
+              <df name="python">
+                <in>board_obj.c</in>
+                <in>bsp_timer_obj.c</in>
+                <in>debugpins_obj.c</in>
+                <in>eui64_obj.c</in>
+                <in>leds_obj.c</in>
+                <in>radio_obj.c</in>
+                <in>radiotimer_obj.c</in>
+                <in>supply_obj.c</in>
+                <in>uart_obj.c</in>
+              </df>
+            </df>
+          </df>
+          <df name="drivers">
+            <df name="common">
+              <in>openhdlc.c</in>
+              <in>openhdlc_obj.c</in>
+              <in>opensensors.c</in>
+              <in>opensensors_obj.c</in>
+              <in>openserial.c</in>
+              <in>openserial_obj.c</in>
+              <in>opentimers.c</in>
+              <in>opentimers_obj.c</in>
+            </df>
+          </df>
+          <df name="kernel">
+            <df name="openos">
+              <in>scheduler.c</in>
+              <in>scheduler_obj.c</in>
+            </df>
+          </df>
+          <df name="openapps">
+            <df name="c6t">
+              <in>c6t.c</in>
+              <in>c6t_obj.c</in>
+            </df>
+            <df name="cexample">
+              <in>cexample.c</in>
+              <in>cexample_obj.c</in>
+            </df>
+            <df name="cinfo">
+              <in>cinfo.c</in>
+              <in>cinfo_obj.c</in>
+            </df>
+            <df name="cleds">
+              <in>cleds.c</in>
+              <in>cleds_obj.c</in>
+            </df>
+            <df name="cstorm">
+              <in>cstorm.c</in>
+              <in>cstorm_obj.c</in>
+            </df>
+            <df name="cwellknown">
+              <in>cwellknown.c</in>
+              <in>cwellknown_obj.c</in>
+            </df>
+            <df name="rrt">
+              <in>rrt.c</in>
+              <in>rrt_obj.c</in>
+            </df>
+            <df name="techo">
+              <in>techo.c</in>
+              <in>techo_obj.c</in>
+            </df>
+            <df name="uecho">
+              <in>uecho.c</in>
+              <in>uecho_obj.c</in>
+            </df>
+            <df name="uinject">
+              <in>uinject.c</in>
+              <in>uinject_obj.c</in>
+            </df>
+            <in>openapps.c</in>
+            <in>openapps_obj.c</in>
+          </df>
+          <df name="openstack">
+            <df name="02a-MAClow">
+              <in>IEEE802154.c</in>
+              <in>IEEE802154E.c</in>
+              <in>IEEE802154E_obj.c</in>
+              <in>IEEE802154_dummy_security.c</in>
+              <in>IEEE802154_dummy_security_obj.c</in>
+              <in>IEEE802154_obj.c</in>
+              <in>IEEE802154_security.c</in>
+              <in>IEEE802154_security_obj.c</in>
+              <in>adaptive_sync.c</in>
+              <in>adaptive_sync_obj.c</in>
+              <in>topology.c</in>
+              <in>topology_obj.c</in>
+            </df>
+            <df name="02b-MAChigh">
+              <in>neighbors.c</in>
+              <in>neighbors_obj.c</in>
+              <in>otf.c</in>
+              <in>otf_obj.c</in>
+              <in>processIE.c</in>
+              <in>processIE_obj.c</in>
+              <in>schedule.c</in>
+              <in>schedule_obj.c</in>
+              <in>sixtop.c</in>
+              <in>sixtop_obj.c</in>
+            </df>
+            <df name="03a-IPHC">
+              <in>iphc.c</in>
+              <in>iphc_obj.c</in>
+              <in>openbridge.c</in>
+              <in>openbridge_obj.c</in>
+            </df>
+            <df name="03b-IPv6">
+              <in>forwarding.c</in>
+              <in>forwarding_obj.c</in>
+              <in>icmpv6.c</in>
+              <in>icmpv6_obj.c</in>
+              <in>icmpv6echo.c</in>
+              <in>icmpv6echo_obj.c</in>
+              <in>icmpv6rpl.c</in>
+              <in>icmpv6rpl_obj.c</in>
+            </df>
+            <df name="04-TRAN">
+              <in>opencoap.c</in>
+              <in>opencoap_obj.c</in>
+              <in>opentcp.c</in>
+              <in>opentcp_obj.c</in>
+              <in>openudp.c</in>
+              <in>openudp_obj.c</in>
+            </df>
+            <df name="cross-layers">
+              <in>idmanager.c</in>
+              <in>idmanager_obj.c</in>
+              <in>openqueue.c</in>
+              <in>openqueue_obj.c</in>
+              <in>openrandom.c</in>
+              <in>openrandom_obj.c</in>
+              <in>packetfunctions.c</in>
+              <in>packetfunctions_obj.c</in>
+            </df>
+            <in>openstack.c</in>
+            <in>openstack_obj.c</in>
+          </df>
+          <df name="projects">
+            <df name="common">
+              <df name="03oos_openwsn">
+                <in>03oos_openwsn.c</in>
+                <in>03oos_openwsn_obj.c</in>
+                <in>openwsnmodule.c</in>
+                <in>openwsnmodule_obj.c</in>
+              </df>
+            </df>
+          </df>
+        </df>
+      </df>
+      <df name="drivers">
+        <df name="common">
+          <in>openhdlc.c</in>
+          <in>opensensors.c</in>
+          <in>openserial.c</in>
+          <in>opentimers.c</in>
+        </df>
+        <df name="gina">
+          <in>ADC_Channel.c</in>
+          <in>button.c</in>
+          <in>fuelgauge.c</in>
+          <in>gyro.c</in>
+          <in>heli.c</in>
+          <in>large_range_accel.c</in>
+          <in>magnetometer.c</in>
+          <in>pwm.c</in>
+          <in>sensitive_accel_temperature.c</in>
+        </df>
+        <df name="z1">
+          <in>tmp102.c</in>
+        </df>
+      </df>
+      <df name="kernel">
+        <df name="freertos">
+          <df name="FreeRTOSV8.1.2">
+            <df name="FreeRTOS">
+              <df name="Source">
+                <df name="portable">
+                  <df name="GCC">
+                    <df name="ARM_CM3">
+                      <in>port.c</in>
+                    </df>
+                    <df name="ARM_CM4F">
+                      <in>port.c</in>
+                    </df>
+                    <df name="MSP430F449">
+                      <in>port.c</in>
+                    </df>
+                  </df>
+                  <df name="IAR">
+                    <df name="ARM_CM3">
+                      <in>port.c</in>
+                      <in>portasm.s</in>
+                    </df>
+                    <df name="ARM_CM4F">
+                      <in>port.c</in>
+                      <in>portasm.s</in>
+                    </df>
+                    <df name="MSP430">
+                      <in>port.c</in>
+                    </df>
+                  </df>
+                  <df name="MemMang">
+                    <in>heap_1.c</in>
+                    <in>heap_2.c</in>
+                    <in>heap_3.c</in>
+                    <in>heap_4.c</in>
+                    <in>heap_5.c</in>
+                  </df>
+                </df>
+                <in>croutine.c</in>
+                <in>event_groups.c</in>
+                <in>list.c</in>
+                <in>queue.c</in>
+                <in>tasks.c</in>
+                <in>timers.c</in>
+              </df>
+            </df>
+          </df>
+          <in>scheduler.c</in>
+        </df>
+        <df name="openos">
+          <in>scheduler.c</in>
+        </df>
+      </df>
+      <df name="openapps">
+        <df name="c6t">
+          <in>c6t.c</in>
+        </df>
+        <df name="cexample">
+          <in>cexample.c</in>
+        </df>
+        <df name="cinfo">
+          <in>cinfo.c</in>
+        </df>
+        <df name="cleds">
+          <in>cleds.c</in>
+        </df>
+        <df name="csensors">
+          <in>csensors.c</in>
+        </df>
+        <df name="cstorm">
+          <in>cstorm.c</in>
+        </df>
+        <df name="cwellknown">
+          <in>cwellknown.c</in>
+        </df>
+        <df name="rrt">
+          <in>rrt.c</in>
+        </df>
+        <df name="techo">
+          <in>techo.c</in>
+        </df>
+        <df name="tohlone">
+          <in>tohlone.c</in>
+          <in>tohlone_webpages.c</in>
+        </df>
+        <df name="uecho">
+          <in>uecho.c</in>
+        </df>
+        <df name="uinject">
+          <in>uinject.c</in>
+        </df>
+        <in>openapps.c</in>
+      </df>
+      <df name="openstack">
+        <df name="02a-MAClow">
+          <in>IEEE802154.c</in>
+          <in>IEEE802154E.c</in>
+          <in>IEEE802154_dummy_security.c</in>
+          <in>IEEE802154_security.c</in>
+          <in>adaptive_sync.c</in>
+          <in>topology.c</in>
+        </df>
+        <df name="02b-MAChigh">
+          <in>neighbors.c</in>
+          <in>otf.c</in>
+          <in>processIE.c</in>
+          <in>schedule.c</in>
+          <in>sixtop.c</in>
+        </df>
+        <df name="03a-IPHC">
+          <in>iphc.c</in>
+          <in>openbridge.c</in>
+        </df>
+        <df name="03b-IPv6">
+          <df name="MEDIO-STORING">
+            <in>icmpv6rpl.c</in>
+          </df>
+          <df name="NON-STORING">
+            <in>icmpv6rpl.c</in>
+          </df>
+          <df name="STORING">
+            <in>icmpv6rpl.c</in>
+          </df>
+          <in>forwarding.c</in>
+          <in>icmpv6.c</in>
+          <in>icmpv6echo.c</in>
+          <in>icmpv6rpl.c</in>
+        </df>
+        <df name="04-TRAN">
+          <in>opencoap.c</in>
+          <in>opentcp.c</in>
+          <in>openudp.c</in>
+        </df>
+        <df name="cross-layers">
+          <in>idmanager.c</in>
+          <in>openqueue.c</in>
+          <in>openrandom.c</in>
+          <in>packetfunctions.c</in>
+        </df>
+        <in>openstack.c</in>
+      </df>
+      <df name="projects">
+        <df name="agilefox">
+          <df name="00std_low_power_mode">
+            <in>00std_low_power_mode.c</in>
+            <in>configureRadio.c</in>
+          </df>
+          <df name="01bsp_flash">
+            <df name="application">
+              <in>01bsp_flash.c</in>
+            </df>
+          </df>
+        </df>
+        <df name="common">
+          <df name="01bsp_bothtimers">
+            <in>01bsp_bothtimers.c</in>
+          </df>
+          <df name="01bsp_bsp_timer">
+            <in>01bsp_bsp_timer.c</in>
+          </df>
+          <df name="01bsp_closetimers">
+            <in>01bsp_closetimers.c</in>
+          </df>
+          <df name="01bsp_cryptoengine">
+            <in>01bsp_cryptoengine.c</in>
+          </df>
+          <df name="01bsp_debugpins">
+            <in>01bsp_debugpins.c</in>
+          </df>
+          <df name="01bsp_eui64">
+            <in>01bsp_eui64.c</in>
+          </df>
+          <df name="01bsp_leds">
+            <in>01bsp_leds.c</in>
+          </df>
+          <df name="01bsp_radio">
+            <in>01bsp_radio.c</in>
+          </df>
+          <df name="01bsp_radio_rx">
+            <in>01bsp_radio_rx.c</in>
+          </df>
+          <df name="01bsp_radio_tx">
+            <in>01bsp_radio_tx.c</in>
+          </df>
+          <df name="01bsp_radiotimer">
+            <in>01bsp_radiotimer.c</in>
+          </df>
+          <df name="01bsp_spi">
+            <in>01bsp_spi.c</in>
+          </df>
+          <df name="01bsp_uart">
+            <in>01bsp_uart.c</in>
+          </df>
+          <df name="02drv_openserial">
+            <in>02drv_openserial.c</in>
+          </df>
+          <df name="02drv_opentimers">
+            <in>02drv_opentimers.c</in>
+          </df>
+          <df name="02drv_sensors">
+            <in>02drv_sensors.c</in>
+          </df>
+          <df name="03oos_macpong">
+            <in>03oos_macpong.c</in>
+          </df>
+          <df name="03oos_mercator">
+            <in>03oos_mercator.c</in>
+          </df>
+          <df name="03oos_openwsn">
+            <in>03oos_openwsn.c</in>
+          </df>
+          <df name="03oos_sniffer">
+            <in>03oos_sniffer.c</in>
+          </df>
+        </df>
+        <df name="gina">
+          <df name="00std_eui64">
+            <in>00std_eui64.c</in>
+          </df>
+          <df name="00std_leds_xtal">
+            <in>00std_leds_xtal.c</in>
+          </df>
+          <df name="00std_timers">
+            <in>00std_timers.c</in>
+          </df>
+          <df name="00std_uart">
+            <in>00std_uart.c</in>
+          </df>
+          <df name="02drv_headsup">
+            <in>02drv_headsup.c</in>
+          </df>
+          <df name="old">
+            <in>imu_loop.c</in>
+            <in>intersection.c</in>
+            <in>test_fuelgauge.c</in>
+            <in>test_gyro.c</in>
+            <in>test_hybrid_arq.c</in>
+            <in>test_i2c_connnected_slaves.c</in>
+            <in>test_imu.c</in>
+            <in>test_imu_radio.c</in>
+            <in>test_large_range_accel.c</in>
+            <in>test_magnetometer.c</in>
+            <in>test_pwm.c</in>
+            <in>test_radio.c</in>
+            <in>test_sensitive_accel_temperature.c</in>
+          </df>
+        </df>
+        <df name="openmotestm">
+          <df name="00std_low_power_mode">
+            <in>00std_low_power_mode.c</in>
+          </df>
+          <df name="01bsp_flash">
+            <df name="application">
+              <in>01bsp_flash.c</in>
+            </df>
+          </df>
+        </df>
+        <df name="samr21_xpro">
+          <df name="00std_low_power_mode">
+            <df name="cmsis">
+              <df name="src">
+                <in>startup_samr21.c</in>
+                <in>system_samr21.c</in>
+              </df>
+            </df>
+            <in>00std_low_power_mode.c</in>
+            <in>configureRadio.c</in>
+          </df>
+          <df name="01bsp_bothtimers">
+            <df name="cmsis">
+              <df name="src">
+                <in>startup_samr21.c</in>
+                <in>system_samr21.c</in>
+              </df>
+            </df>
+          </df>
+          <df name="01bsp_closetimers">
+            <df name="cmsis">
+              <df name="src">
+                <in>startup_samr21.c</in>
+                <in>system_samr21.c</in>
+              </df>
+            </df>
+          </df>
+          <df name="01bsp_flash">
+            <df name="cmsis">
+              <df name="src">
+                <in>startup_samr21.c</in>
+                <in>system_samr21.c</in>
+              </df>
+            </df>
+            <in>01bsp_flash.c</in>
+          </df>
+          <df name="01bsp_leds">
+            <df name="cmsis">
+              <df name="src">
+                <in>startup_samr21.c</in>
+                <in>system_samr21.c</in>
+              </df>
+            </df>
+          </df>
+          <df name="01bsp_radio">
+            <df name="cmsis">
+              <df name="src">
+                <in>startup_samr21.c</in>
+                <in>system_samr21.c</in>
+              </df>
+            </df>
+          </df>
+          <df name="01bsp_radio_rx">
+            <df name="cmsis">
+              <df name="src">
+                <in>startup_samr21.c</in>
+                <in>system_samr21.c</in>
+              </df>
+            </df>
+          </df>
+          <df name="01bsp_radio_tx">
+            <df name="cmsis">
+              <df name="src">
+                <in>startup_samr21.c</in>
+                <in>system_samr21.c</in>
+              </df>
+            </df>
+          </df>
+          <df name="01bsp_radiotimer">
+            <df name="cmsis">
+              <df name="src">
+                <in>startup_samr21.c</in>
+                <in>system_samr21.c</in>
+              </df>
+            </df>
+          </df>
+          <df name="01bsp_spi">
+            <df name="cmsis">
+              <df name="src">
+                <in>startup_samr21.c</in>
+                <in>system_samr21.c</in>
+              </df>
+            </df>
+          </df>
+          <df name="01bsp_timer">
+            <df name="cmsis">
+              <df name="src">
+                <in>startup_samr21.c</in>
+                <in>system_samr21.c</in>
+              </df>
+            </df>
+          </df>
+          <df name="01bsp_uart">
+            <df name="cmsis">
+              <df name="src">
+                <in>startup_samr21.c</in>
+                <in>system_samr21.c</in>
+              </df>
+            </df>
+          </df>
+          <df name="02drv_opentimers">
+            <df name="cmsis">
+              <df name="src">
+                <in>startup_samr21.c</in>
+                <in>system_samr21.c</in>
+              </df>
+            </df>
+          </df>
+          <df name="03oos_macpong">
+            <df name="cmsis">
+              <df name="src">
+                <in>startup_samr21.c</in>
+                <in>system_samr21.c</in>
+              </df>
+            </df>
+          </df>
+          <df name="03oos_openwsn">
+            <df name="cmsis">
+              <df name="src">
+                <in>startup_samr21.c</in>
+                <in>system_samr21.c</in>
+              </df>
+            </df>
+          </df>
+        </df>
+        <df name="telosb">
+          <df name="00std_button">
+            <in>00std_button.c</in>
+          </df>
+          <df name="00std_chromatic">
+            <in>00std_chromatic.c</in>
+          </df>
+          <df name="00std_clocks">
+            <in>00std_clocks.c</in>
+          </df>
+          <df name="00std_eui64">
+            <in>00std_eui64.c</in>
+          </df>
+          <df name="00std_i2c">
+            <in>00std_i2c.c</in>
+          </df>
+          <df name="00std_leds_xtal">
+            <in>00std_leds_xtal.c</in>
+          </df>
+          <df name="00std_spi">
+            <in>00std_spi.c</in>
+          </df>
+          <df name="00std_uart">
+            <in>00std_uart.c</in>
+          </df>
+          <df name="00std_uart0">
+            <in>00std_uart0.c</in>
+          </df>
+        </df>
+        <df name="wsn430v13b">
+          <df name="00std_button">
+            <in>00std_button.c</in>
+          </df>
+          <df name="00std_clocks">
+            <in>00std_clocks.c</in>
+          </df>
+          <df name="00std_eui64">
+            <in>00std_eui64.c</in>
+          </df>
+          <df name="00std_i2c">
+            <in>00std_i2c.c</in>
+          </df>
+          <df name="00std_leds_xtal">
+            <in>00std_leds_xtal.c</in>
+          </df>
+          <df name="00std_spi">
+            <in>00std_spi.c</in>
+          </df>
+          <df name="00std_uart">
+            <in>00std_uart.c</in>
+          </df>
+        </df>
+        <df name="wsn430v14">
+          <df name="00std_clocks">
+            <in>00std_clocks.c</in>
+          </df>
+          <df name="00std_eui64">
+            <in>00std_eui64.c</in>
+          </df>
+          <df name="00std_leds_xtal">
+            <in>00std_leds_xtal.c</in>
+          </df>
+          <df name="00std_spi">
+            <in>00std_spi.c</in>
+          </df>
+          <df name="00std_uart">
+            <in>00std_uart.c</in>
+          </df>
+        </df>
+        <df name="xpressohack">
+          <df name="00std_eui64b">
+            <df name="src">
+              <in>cr_startup_lpc176x.c</in>
+              <in>main1.c</in>
+            </df>
+          </df>
+          <df name="00std_spi">
+            <df name="src">
+              <in>cr_startup_lpc176x.c</in>
+              <in>main.c</in>
+            </df>
+          </df>
+          <df name="01bsp_leds">
+            <df name="application">
+              <in>cr_startup_lpc176x.c</in>
+            </df>
+          </df>
+          <df name="01bsp_radio">
+            <df name="application">
+              <in>cr_startup_lpc176x.c</in>
+            </df>
+          </df>
+          <df name="01bsp_spi">
+            <df name="application">
+              <in>cr_startup_lpc176x.c</in>
+            </df>
+          </df>
+          <df name="01bsp_timers">
+            <df name="application">
+              <in>cr_startup_lpc176x.c</in>
+            </df>
+          </df>
+          <df name="OpenWSN_OS">
+            <df name="src">
+              <df name="OpenAL">
+                <df name="internal">
+                  <in>openal_app_manager.c</in>
+                  <in>openal_event_manager.c</in>
+                  <in>openmote_pindefs.c</in>
+                </df>
+                <in>events.c</in>
+                <in>pins.c</in>
+              </df>
+              <in>cr_startup_lpc17.c</in>
+              <in>main.c</in>
+            </df>
+          </df>
+        </df>
+      </df>
+    </df>
+    <logicalFolder name="ExternalFiles"
+                   displayName="Important Files"
+                   projectFiles="false"
+                   kind="IMPORTANT_FILES_FOLDER">
+      <itemPath>SConstruct</itemPath>
+      <itemPath>nbproject/private/launcher.properties</itemPath>
+    </logicalFolder>
+  </logicalFolder>
+  <sourceFolderFilter>^(nbproject)$</sourceFolderFilter>
+  <sourceRootList>
+    <Elem>.</Elem>
+  </sourceRootList>
+  <projectmakefile>SConstruct</projectmakefile>
+  <confs>
+    <conf name="Default" type="0">
+      <toolsSet>
+        <compilerSet>default</compilerSet>
+        <dependencyChecking>false</dependencyChecking>
+        <rebuildPropChanged>false</rebuildPropChanged>
+      </toolsSet>
+      <codeAssistance>
+      </codeAssistance>
+      <makefileType>
+        <makeTool>
+          <buildCommandWorkingDir>.</buildCommandWorkingDir>
+          <buildCommand>scons -i</buildCommand>
+          <cleanCommand>scons --clean</cleanCommand>
+          <executablePath></executablePath>
+        </makeTool>
+        <preBuild>
+          <preBuildCommandWorkingDir>.</preBuildCommandWorkingDir>
+          <preBuildCommand></preBuildCommand>
+        </preBuild>
+      </makefileType>
+      <item path="bootloader/k20/bootloader/Boot_loader_task.c"
+            ex="false"
+            tool="0"
+            flavor2="0">
+      </item>
+      <item path="bootloader/k20/bootloader/Loader.c" ex="false" tool="0" flavor2="0">
+      </item>
+      <item path="bootloader/k20/bootloader/RealTimerCounter_kinetis.c"
+            ex="false"
+            tool="0"
+            flavor2="0">
+      </item>
+      <item path="bootloader/k20/disk_flash_utils/FAT16.c"
+            ex="false"
+            tool="0"
+            flavor2="0">
+      </item>
+      <item path="bootloader/k20/disk_flash_utils/SD_kinetis.c"
+            ex="false"
+            tool="0"
+            flavor2="0">
+      </item>
+      <item path="bootloader/k20/disk_flash_utils/SPI_kinetis.c"
+            ex="false"
+            tool="0"
+            flavor2="0">
+      </item>
+      <item path="bootloader/k20/disk_flash_utils/disk.c"
+            ex="false"
+            tool="0"
+            flavor2="0">
+      </item>
+      <item path="bootloader/k20/disk_flash_utils/flash_FTFL.c"
+            ex="false"
+            tool="0"
+            flavor2="0">
+      </item>
+      <item path="bootloader/k20/main_kinetis.c" ex="false" tool="0" flavor2="0">
+      </item>
+      <item path="bootloader/k20/startup/kinetis_sysinit.c"
+            ex="false"
+            tool="0"
+            flavor2="0">
+      </item>
+      <item path="bootloader/k20/startup/vectors.c" ex="false" tool="0" flavor2="0">
+      </item>
+      <item path="bootloader/k20/usb/usb_class.c" ex="false" tool="0" flavor2="0">
+      </item>
+      <item path="bootloader/k20/usb/usb_dci_kinetis.c"
+            ex="false"
+            tool="0"
+            flavor2="0">
+      </item>
+      <item path="bootloader/k20/usb/usb_descriptor.c"
+            ex="false"
+            tool="0"
+            flavor2="0">
+      </item>
+      <item path="bootloader/k20/usb/usb_driver.c" ex="false" tool="0" flavor2="0">
+      </item>
+      <item path="bootloader/k20/usb/usb_framework.c" ex="false" tool="0" flavor2="0">
+      </item>
+      <item path="bootloader/k20/usb/usb_msc.c" ex="false" tool="0" flavor2="0">
+      </item>
+      <item path="bootloader/k20/usb/usb_msc_scsi.c" ex="false" tool="0" flavor2="0">
+      </item>
+      <item path="bootloader/k20/wdt_kinetis.c" ex="false" tool="0" flavor2="0">
+      </item>
+      <item path="bsp/boards/OpenMote-CC2538/adc_sensor.c"
+            ex="false"
+            tool="0"
+            flavor2="0">
+      </item>
+      <item path="bsp/boards/OpenMote-CC2538/board.c" ex="false" tool="0" flavor2="0">
+      </item>
+      <item path="bsp/boards/OpenMote-CC2538/bsp_timer.c"
+            ex="false"
+            tool="0"
+            flavor2="0">
+      </item>
+      <item path="bsp/boards/OpenMote-CC2538/cc2538_crypto_engine.c"
+            ex="false"
+            tool="0"
+            flavor2="0">
+      </item>
+      <item path="bsp/boards/OpenMote-CC2538/debugpins.c"
+            ex="false"
+            tool="0"
+            flavor2="0">
+      </item>
+      <item path="bsp/boards/OpenMote-CC2538/eui64.c" ex="false" tool="0" flavor2="0">
+      </item>
+      <item path="bsp/boards/OpenMote-CC2538/i2c.c" ex="false" tool="0" flavor2="0">
+      </item>
+      <item path="bsp/boards/OpenMote-CC2538/leds.c" ex="false" tool="0" flavor2="0">
+      </item>
+      <item path="bsp/boards/OpenMote-CC2538/radio.c" ex="false" tool="0" flavor2="0">
+      </item>
+      <item path="bsp/boards/OpenMote-CC2538/radiotimer.c"
+            ex="false"
+            tool="0"
+            flavor2="0">
+      </item>
+      <item path="bsp/boards/OpenMote-CC2538/sensors.c"
+            ex="false"
+            tool="0"
+            flavor2="0">
+      </item>
+      <item path="bsp/boards/OpenMote-CC2538/source/adc.c"
+            ex="false"
+            tool="0"
+            flavor2="0">
+      </item>
+      <item path="bsp/boards/OpenMote-CC2538/source/aes.c"
+            ex="false"
+            tool="0"
+            flavor2="0">
+      </item>
+      <item path="bsp/boards/OpenMote-CC2538/source/ccm.c"
+            ex="false"
+            tool="0"
+            flavor2="0">
+      </item>
+      <item path="bsp/boards/OpenMote-CC2538/source/cpu.c"
+            ex="false"
+            tool="0"
+            flavor2="0">
+      </item>
+      <item path="bsp/boards/OpenMote-CC2538/source/debug.c"
+            ex="false"
+            tool="0"
+            flavor2="0">
+      </item>
+      <item path="bsp/boards/OpenMote-CC2538/source/flash.c"
+            ex="false"
+            tool="0"
+            flavor2="0">
+      </item>
+      <item path="bsp/boards/OpenMote-CC2538/source/gpio.c"
+            ex="false"
+            tool="0"
+            flavor2="0">
+      </item>
+      <item path="bsp/boards/OpenMote-CC2538/source/gptimer.c"
+            ex="false"
+            tool="0"
+            flavor2="0">
+      </item>
+      <item path="bsp/boards/OpenMote-CC2538/source/i2c_lib.c"
+            ex="false"
+            tool="0"
+            flavor2="0">
+      </item>
+      <item path="bsp/boards/OpenMote-CC2538/source/interrupt.c"
+            ex="false"
+            tool="0"
+            flavor2="0">
+      </item>
+      <item path="bsp/boards/OpenMote-CC2538/source/ioc.c"
+            ex="false"
+            tool="0"
+            flavor2="0">
+      </item>
+      <item path="bsp/boards/OpenMote-CC2538/source/pka.c"
+            ex="false"
+            tool="0"
+            flavor2="0">
+      </item>
+      <item path="bsp/boards/OpenMote-CC2538/source/sha256.c"
+            ex="false"
+            tool="0"
+            flavor2="0">
+      </item>
+      <item path="bsp/boards/OpenMote-CC2538/source/sleepmode.c"
+            ex="false"
+            tool="0"
+            flavor2="0">
+      </item>
+      <item path="bsp/boards/OpenMote-CC2538/source/ssi.c"
+            ex="false"
+            tool="0"
+            flavor2="0">
+      </item>
+      <item path="bsp/boards/OpenMote-CC2538/source/sys_ctrl.c"
+            ex="false"
+            tool="0"
+            flavor2="0">
+      </item>
+      <item path="bsp/boards/OpenMote-CC2538/source/systick.c"
+            ex="false"
+            tool="0"
+            flavor2="0">
+      </item>
+      <item path="bsp/boards/OpenMote-CC2538/source/uarthal.c"
+            ex="false"
+            tool="0"
+            flavor2="0">
+      </item>
+      <item path="bsp/boards/OpenMote-CC2538/source/udma.c"
+            ex="false"
+            tool="0"
+            flavor2="0">
+      </item>
+      <item path="bsp/boards/OpenMote-CC2538/source/watchdog.c"
+            ex="false"
+            tool="0"
+            flavor2="0">
+      </item>
+      <item path="bsp/boards/OpenMote-CC2538/startup_gcc.c"
+            ex="false"
+            tool="0"
+            flavor2="0">
+      </item>
+      <item path="bsp/boards/OpenMote-CC2538/startup_iar.c"
+            ex="false"
+            tool="0"
+            flavor2="0">
+      </item>
+      <item path="bsp/boards/OpenMote-CC2538/uart.c" ex="false" tool="0" flavor2="0">
+      </item>
+      <item path="bsp/boards/agilefox/Systick.c" ex="false" tool="0" flavor2="0">
+      </item>
+      <item path="bsp/boards/agilefox/board.c" ex="false" tool="0" flavor2="0">
+      </item>
+      <item path="bsp/boards/agilefox/bsp_timer.c" ex="false" tool="0" flavor2="0">
+      </item>
+      <item path="bsp/boards/agilefox/configure/stm32f10x_it.c"
+            ex="false"
+            tool="0"
+            flavor2="0">
+      </item>
+      <item path="bsp/boards/agilefox/debugpins.c" ex="false" tool="0" flavor2="0">
+      </item>
+      <item path="bsp/boards/agilefox/eui64.c" ex="false" tool="0" flavor2="0">
+      </item>
+      <item path="bsp/boards/agilefox/ewarm/cortexm3_macro.s"
+            ex="false"
+            tool="4"
+            flavor2="0">
+      </item>
+      <item path="bsp/boards/agilefox/ewarm/stm32f10x_vector.c"
+            ex="false"
+            tool="0"
+            flavor2="0">
+      </item>
+      <item path="bsp/boards/agilefox/exi.c" ex="false" tool="0" flavor2="0">
+      </item>
+      <item path="bsp/boards/agilefox/flash.c" ex="false" tool="0" flavor2="0">
+      </item>
+      <item path="bsp/boards/agilefox/gpio.c" ex="false" tool="0" flavor2="0">
+      </item>
+      <item path="bsp/boards/agilefox/leds.c" ex="false" tool="0" flavor2="0">
+      </item>
+      <item path="bsp/boards/agilefox/library/src/stm32f10x_adc.c"
+            ex="false"
+            tool="0"
+            flavor2="0">
+      </item>
+      <item path="bsp/boards/agilefox/library/src/stm32f10x_bkp.c"
+            ex="false"
+            tool="0"
+            flavor2="0">
+      </item>
+      <item path="bsp/boards/agilefox/library/src/stm32f10x_can.c"
+            ex="false"
+            tool="0"
+            flavor2="0">
+      </item>
+      <item path="bsp/boards/agilefox/library/src/stm32f10x_crc.c"
+            ex="false"
+            tool="0"
+            flavor2="0">
+      </item>
+      <item path="bsp/boards/agilefox/library/src/stm32f10x_dac.c"
+            ex="false"
+            tool="0"
+            flavor2="0">
+      </item>
+      <item path="bsp/boards/agilefox/library/src/stm32f10x_dbgmcu.c"
+            ex="false"
+            tool="0"
+            flavor2="0">
+      </item>
+      <item path="bsp/boards/agilefox/library/src/stm32f10x_dma.c"
+            ex="false"
+            tool="0"
+            flavor2="0">
+      </item>
+      <item path="bsp/boards/agilefox/library/src/stm32f10x_exti.c"
+            ex="false"
+            tool="0"
+            flavor2="0">
+      </item>
+      <item path="bsp/boards/agilefox/library/src/stm32f10x_flash.c"
+            ex="false"
+            tool="0"
+            flavor2="0">
+      </item>
+      <item path="bsp/boards/agilefox/library/src/stm32f10x_fsmc.c"
+            ex="false"
+            tool="0"
+            flavor2="0">
+      </item>
+      <item path="bsp/boards/agilefox/library/src/stm32f10x_gpio.c"
+            ex="false"
+            tool="0"
+            flavor2="0">
+      </item>
+      <item path="bsp/boards/agilefox/library/src/stm32f10x_i2c.c"
+            ex="false"
+            tool="0"
+            flavor2="0">
+      </item>
+      <item path="bsp/boards/agilefox/library/src/stm32f10x_iwdg.c"
+            ex="false"
+            tool="0"
+            flavor2="0">
+      </item>
+      <item path="bsp/boards/agilefox/library/src/stm32f10x_lib.c"
+            ex="false"
+            tool="0"
+            flavor2="0">
+      </item>
+      <item path="bsp/boards/agilefox/library/src/stm32f10x_nvic.c"
+            ex="false"
+            tool="0"
+            flavor2="0">
+      </item>
+      <item path="bsp/boards/agilefox/library/src/stm32f10x_pwr.c"
+            ex="false"
+            tool="0"
+            flavor2="0">
+      </item>
+      <item path="bsp/boards/agilefox/library/src/stm32f10x_rcc.c"
+            ex="false"
+            tool="0"
+            flavor2="0">
+      </item>
+      <item path="bsp/boards/agilefox/library/src/stm32f10x_rtc.c"
+            ex="false"
+            tool="0"
+            flavor2="0">
+      </item>
+      <item path="bsp/boards/agilefox/library/src/stm32f10x_sdio.c"
+            ex="false"
+            tool="0"
+            flavor2="0">
+      </item>
+      <item path="bsp/boards/agilefox/library/src/stm32f10x_spi.c"
+            ex="false"
+            tool="0"
+            flavor2="0">
+      </item>
+      <item path="bsp/boards/agilefox/library/src/stm32f10x_systick.c"
+            ex="false"
+            tool="0"
+            flavor2="0">
+      </item>
+      <item path="bsp/boards/agilefox/library/src/stm32f10x_tim.c"
+            ex="false"
+            tool="0"
+            flavor2="0">
+      </item>
+      <item path="bsp/boards/agilefox/library/src/stm32f10x_usart.c"
+            ex="false"
+            tool="0"
+            flavor2="0">
+      </item>
+      <item path="bsp/boards/agilefox/library/src/stm32f10x_wwdg.c"
+            ex="false"
+            tool="0"
+            flavor2="0">
+      </item>
+      <item path="bsp/boards/agilefox/nvic.c" ex="false" tool="0" flavor2="0">
+      </item>
+      <item path="bsp/boards/agilefox/radiotimer.c" ex="false" tool="0" flavor2="0">
+      </item>
+      <item path="bsp/boards/agilefox/rcc.c" ex="false" tool="0" flavor2="0">
+      </item>
+      <item path="bsp/boards/agilefox/rtc_timer.c" ex="false" tool="0" flavor2="0">
+      </item>
+      <item path="bsp/boards/agilefox/spi.c" ex="false" tool="0" flavor2="0">
+      </item>
+      <item path="bsp/boards/agilefox/uart.c" ex="false" tool="0" flavor2="0">
+      </item>
+      <item path="bsp/boards/common/abstimer.c" ex="false" tool="0" flavor2="0">
+      </item>
+      <item path="bsp/boards/common/abstimers2.c" ex="false" tool="0" flavor2="0">
+      </item>
+      <item path="bsp/boards/common/aes_cbc.c" ex="false" tool="0" flavor2="0">
+      </item>
+      <item path="bsp/boards/common/aes_ccms.c" ex="false" tool="0" flavor2="0">
+      </item>
+      <item path="bsp/boards/common/aes_ctr.c" ex="false" tool="0" flavor2="0">
+      </item>
+      <item path="bsp/boards/common/aes_ecb.c" ex="false" tool="0" flavor2="0">
+      </item>
+      <item path="bsp/boards/common/dummy_crypto_engine.c"
+            ex="false"
+            tool="0"
+            flavor2="0">
+      </item>
+      <item path="bsp/boards/common/firmware_crypto_engine.c"
+            ex="false"
+            tool="0"
+            flavor2="0">
+      </item>
+      <item path="bsp/boards/derfmega/board.c" ex="false" tool="0" flavor2="0">
+      </item>
+      <item path="bsp/boards/derfmega/bsp_timer.c" ex="false" tool="0" flavor2="0">
+      </item>
+      <item path="bsp/boards/derfmega/debugpins.c" ex="false" tool="0" flavor2="0">
+      </item>
+      <item path="bsp/boards/derfmega/eui64.c" ex="false" tool="0" flavor2="0">
+      </item>
+      <item path="bsp/boards/derfmega/leds.c" ex="false" tool="0" flavor2="0">
+      </item>
+      <item path="bsp/boards/derfmega/radio.c" ex="false" tool="0" flavor2="0">
+      </item>
+      <item path="bsp/boards/derfmega/radiotimer.c" ex="false" tool="0" flavor2="0">
+      </item>
+      <item path="bsp/boards/derfmega/sctimer_mac.c" ex="false" tool="0" flavor2="0">
+      </item>
+      <item path="bsp/boards/derfmega/sctimer_tmr2.c" ex="false" tool="0" flavor2="0">
+      </item>
+      <item path="bsp/boards/derfmega/uart.c" ex="false" tool="0" flavor2="0">
+      </item>
+      <item path="bsp/boards/eldorado/Vectors.c" ex="false" tool="0" flavor2="0">
+      </item>
+      <item path="bsp/boards/eldorado/board.c" ex="false" tool="0" flavor2="0">
+      </item>
+      <item path="bsp/boards/eldorado/leds.c" ex="false" tool="0" flavor2="0">
+      </item>
+      <item path="bsp/boards/eldorado/main.c" ex="false" tool="0" flavor2="0">
+      </item>
+      <item path="bsp/boards/eldorado/radio.c" ex="false" tool="0" flavor2="0">
+      </item>
+      <item path="bsp/boards/eldorado/spi.c" ex="false" tool="0" flavor2="0">
+      </item>
+      <item path="bsp/boards/eldorado/uart.c" ex="false" tool="0" flavor2="0">
+      </item>
+      <item path="bsp/boards/ez430-rf2500/board.c" ex="false" tool="0" flavor2="0">
+      </item>
+      <item path="bsp/boards/ez430-rf2500/bsp_timer.c"
+            ex="false"
+            tool="0"
+            flavor2="0">
+      </item>
+      <item path="bsp/boards/ez430-rf2500/debugpins.c"
+            ex="false"
+            tool="0"
+            flavor2="0">
+      </item>
+      <item path="bsp/boards/ez430-rf2500/eui64.c" ex="false" tool="0" flavor2="0">
+      </item>
+      <item path="bsp/boards/ez430-rf2500/leds.c" ex="false" tool="0" flavor2="0">
+      </item>
+      <item path="bsp/boards/ez430-rf2500/radiotimer.c"
+            ex="false"
+            tool="0"
+            flavor2="0">
+      </item>
+      <item path="bsp/boards/ez430-rf2500/sctimer.c" ex="false" tool="0" flavor2="0">
+      </item>
+      <item path="bsp/boards/ez430-rf2500/spi.c" ex="false" tool="0" flavor2="0">
+      </item>
+      <item path="bsp/boards/ez430-rf2500/uart.c" ex="false" tool="0" flavor2="0">
+      </item>
+      <item path="bsp/boards/gina/board.c" ex="false" tool="0" flavor2="0">
+      </item>
+      <item path="bsp/boards/gina/bsp_timer.c" ex="false" tool="0" flavor2="0">
+      </item>
+      <item path="bsp/boards/gina/debugpins.c" ex="false" tool="0" flavor2="0">
+      </item>
+      <item path="bsp/boards/gina/eui64.c" ex="false" tool="0" flavor2="0">
+      </item>
+      <item path="bsp/boards/gina/i2c.c" ex="false" tool="0" flavor2="0">
+      </item>
+      <item path="bsp/boards/gina/leds.c" ex="false" tool="0" flavor2="0">
+      </item>
+      <item path="bsp/boards/gina/radiotimer.c" ex="false" tool="0" flavor2="0">
+      </item>
+      <item path="bsp/boards/gina/sctimer.c" ex="false" tool="0" flavor2="0">
+      </item>
+      <item path="bsp/boards/gina/spi.c" ex="false" tool="0" flavor2="0">
+      </item>
+      <item path="bsp/boards/gina/uart.c" ex="false" tool="0" flavor2="0">
+      </item>
+      <item path="bsp/boards/iot-lab_A8-M3/Systick.c" ex="false" tool="0" flavor2="0">
+      </item>
+      <item path="bsp/boards/iot-lab_A8-M3/board.c" ex="false" tool="0" flavor2="0">
+      </item>
+      <item path="bsp/boards/iot-lab_A8-M3/bsp_timer.c"
+            ex="false"
+            tool="0"
+            flavor2="0">
+      </item>
+      <item path="bsp/boards/iot-lab_A8-M3/configure/stm32f10x_it.c"
+            ex="false"
+            tool="0"
+            flavor2="0">
+      </item>
+      <item path="bsp/boards/iot-lab_A8-M3/debugpins.c"
+            ex="false"
+            tool="0"
+            flavor2="0">
+      </item>
+      <item path="bsp/boards/iot-lab_A8-M3/eui64.c" ex="false" tool="0" flavor2="0">
+      </item>
+      <item path="bsp/boards/iot-lab_A8-M3/exti.c" ex="false" tool="0" flavor2="0">
+      </item>
+      <item path="bsp/boards/iot-lab_A8-M3/gpio.c" ex="false" tool="0" flavor2="0">
+      </item>
+      <item path="bsp/boards/iot-lab_A8-M3/leds.c" ex="false" tool="0" flavor2="0">
+      </item>
+      <item path="bsp/boards/iot-lab_A8-M3/library/STM32F10x_StdPeriph_Lib_V3.5.0/Libraries/CMSIS/CM3/CoreSupport/core_cm3.c"
+            ex="false"
+            tool="0"
+            flavor2="0">
+      </item>
+      <item path="bsp/boards/iot-lab_A8-M3/library/STM32F10x_StdPeriph_Lib_V3.5.0/Libraries/CMSIS/CM3/DeviceSupport/ST/STM32F10x/startup/TrueSTUDIO/startup_stm32f10x_cl.s"
+            ex="false"
+            tool="4"
+            flavor2="0">
+      </item>
+      <item path="bsp/boards/iot-lab_A8-M3/library/STM32F10x_StdPeriph_Lib_V3.5.0/Libraries/CMSIS/CM3/DeviceSupport/ST/STM32F10x/startup/TrueSTUDIO/startup_stm32f10x_hd.s"
+            ex="false"
+            tool="4"
+            flavor2="0">
+      </item>
+      <item path="bsp/boards/iot-lab_A8-M3/library/STM32F10x_StdPeriph_Lib_V3.5.0/Libraries/CMSIS/CM3/DeviceSupport/ST/STM32F10x/startup/TrueSTUDIO/startup_stm32f10x_hd_vl.s"
+            ex="false"
+            tool="4"
+            flavor2="0">
+      </item>
+      <item path="bsp/boards/iot-lab_A8-M3/library/STM32F10x_StdPeriph_Lib_V3.5.0/Libraries/CMSIS/CM3/DeviceSupport/ST/STM32F10x/startup/TrueSTUDIO/startup_stm32f10x_ld.s"
+            ex="false"
+            tool="4"
+            flavor2="0">
+      </item>
+      <item path="bsp/boards/iot-lab_A8-M3/library/STM32F10x_StdPeriph_Lib_V3.5.0/Libraries/CMSIS/CM3/DeviceSupport/ST/STM32F10x/startup/TrueSTUDIO/startup_stm32f10x_ld_vl.s"
+            ex="false"
+            tool="4"
+            flavor2="0">
+      </item>
+      <item path="bsp/boards/iot-lab_A8-M3/library/STM32F10x_StdPeriph_Lib_V3.5.0/Libraries/CMSIS/CM3/DeviceSupport/ST/STM32F10x/startup/TrueSTUDIO/startup_stm32f10x_md.s"
+            ex="false"
+            tool="4"
+            flavor2="0">
+      </item>
+      <item path="bsp/boards/iot-lab_A8-M3/library/STM32F10x_StdPeriph_Lib_V3.5.0/Libraries/CMSIS/CM3/DeviceSupport/ST/STM32F10x/startup/TrueSTUDIO/startup_stm32f10x_md_vl.s"
+            ex="false"
+            tool="4"
+            flavor2="0">
+      </item>
+      <item path="bsp/boards/iot-lab_A8-M3/library/STM32F10x_StdPeriph_Lib_V3.5.0/Libraries/CMSIS/CM3/DeviceSupport/ST/STM32F10x/startup/TrueSTUDIO/startup_stm32f10x_xl.s"
+            ex="false"
+            tool="4"
+            flavor2="0">
+      </item>
+      <item path="bsp/boards/iot-lab_A8-M3/library/STM32F10x_StdPeriph_Lib_V3.5.0/Libraries/CMSIS/CM3/DeviceSupport/ST/STM32F10x/startup/arm/startup_stm32f10x_cl.s"
+            ex="false"
+            tool="4"
+            flavor2="0">
+      </item>
+      <item path="bsp/boards/iot-lab_A8-M3/library/STM32F10x_StdPeriph_Lib_V3.5.0/Libraries/CMSIS/CM3/DeviceSupport/ST/STM32F10x/startup/arm/startup_stm32f10x_hd.s"
+            ex="false"
+            tool="4"
+            flavor2="0">
+      </item>
+      <item path="bsp/boards/iot-lab_A8-M3/library/STM32F10x_StdPeriph_Lib_V3.5.0/Libraries/CMSIS/CM3/DeviceSupport/ST/STM32F10x/startup/arm/startup_stm32f10x_hd_vl.s"
+            ex="false"
+            tool="4"
+            flavor2="0">
+      </item>
+      <item path="bsp/boards/iot-lab_A8-M3/library/STM32F10x_StdPeriph_Lib_V3.5.0/Libraries/CMSIS/CM3/DeviceSupport/ST/STM32F10x/startup/arm/startup_stm32f10x_ld.s"
+            ex="false"
+            tool="4"
+            flavor2="0">
+      </item>
+      <item path="bsp/boards/iot-lab_A8-M3/library/STM32F10x_StdPeriph_Lib_V3.5.0/Libraries/CMSIS/CM3/DeviceSupport/ST/STM32F10x/startup/arm/startup_stm32f10x_ld_vl.s"
+            ex="false"
+            tool="4"
+            flavor2="0">
+      </item>
+      <item path="bsp/boards/iot-lab_A8-M3/library/STM32F10x_StdPeriph_Lib_V3.5.0/Libraries/CMSIS/CM3/DeviceSupport/ST/STM32F10x/startup/arm/startup_stm32f10x_md.s"
+            ex="false"
+            tool="4"
+            flavor2="0">
+      </item>
+      <item path="bsp/boards/iot-lab_A8-M3/library/STM32F10x_StdPeriph_Lib_V3.5.0/Libraries/CMSIS/CM3/DeviceSupport/ST/STM32F10x/startup/arm/startup_stm32f10x_md_vl.s"
+            ex="false"
+            tool="4"
+            flavor2="0">
+      </item>
+      <item path="bsp/boards/iot-lab_A8-M3/library/STM32F10x_StdPeriph_Lib_V3.5.0/Libraries/CMSIS/CM3/DeviceSupport/ST/STM32F10x/startup/arm/startup_stm32f10x_xl.s"
+            ex="false"
+            tool="4"
+            flavor2="0">
+      </item>
+      <item path="bsp/boards/iot-lab_A8-M3/library/STM32F10x_StdPeriph_Lib_V3.5.0/Libraries/CMSIS/CM3/DeviceSupport/ST/STM32F10x/startup/gcc_ride7/startup_stm32f10x_cl.s"
+            ex="false"
+            tool="4"
+            flavor2="0">
+      </item>
+      <item path="bsp/boards/iot-lab_A8-M3/library/STM32F10x_StdPeriph_Lib_V3.5.0/Libraries/CMSIS/CM3/DeviceSupport/ST/STM32F10x/startup/gcc_ride7/startup_stm32f10x_hd.s"
+            ex="false"
+            tool="4"
+            flavor2="0">
+      </item>
+      <item path="bsp/boards/iot-lab_A8-M3/library/STM32F10x_StdPeriph_Lib_V3.5.0/Libraries/CMSIS/CM3/DeviceSupport/ST/STM32F10x/startup/gcc_ride7/startup_stm32f10x_hd_vl.s"
+            ex="false"
+            tool="4"
+            flavor2="0">
+      </item>
+      <item path="bsp/boards/iot-lab_A8-M3/library/STM32F10x_StdPeriph_Lib_V3.5.0/Libraries/CMSIS/CM3/DeviceSupport/ST/STM32F10x/startup/gcc_ride7/startup_stm32f10x_ld.s"
+            ex="false"
+            tool="4"
+            flavor2="0">
+      </item>
+      <item path="bsp/boards/iot-lab_A8-M3/library/STM32F10x_StdPeriph_Lib_V3.5.0/Libraries/CMSIS/CM3/DeviceSupport/ST/STM32F10x/startup/gcc_ride7/startup_stm32f10x_ld_vl.s"
+            ex="false"
+            tool="4"
+            flavor2="0">
+      </item>
+      <item path="bsp/boards/iot-lab_A8-M3/library/STM32F10x_StdPeriph_Lib_V3.5.0/Libraries/CMSIS/CM3/DeviceSupport/ST/STM32F10x/startup/gcc_ride7/startup_stm32f10x_md.s"
+            ex="false"
+            tool="4"
+            flavor2="0">
+      </item>
+      <item path="bsp/boards/iot-lab_A8-M3/library/STM32F10x_StdPeriph_Lib_V3.5.0/Libraries/CMSIS/CM3/DeviceSupport/ST/STM32F10x/startup/gcc_ride7/startup_stm32f10x_md_vl.s"
+            ex="false"
+            tool="4"
+            flavor2="0">
+      </item>
+      <item path="bsp/boards/iot-lab_A8-M3/library/STM32F10x_StdPeriph_Lib_V3.5.0/Libraries/CMSIS/CM3/DeviceSupport/ST/STM32F10x/startup/gcc_ride7/startup_stm32f10x_xl.s"
+            ex="false"
+            tool="4"
+            flavor2="0">
+      </item>
+      <item path="bsp/boards/iot-lab_A8-M3/library/STM32F10x_StdPeriph_Lib_V3.5.0/Libraries/CMSIS/CM3/DeviceSupport/ST/STM32F10x/startup/iar/startup_stm32f10x_cl.s"
+            ex="false"
+            tool="4"
+            flavor2="0">
+      </item>
+      <item path="bsp/boards/iot-lab_A8-M3/library/STM32F10x_StdPeriph_Lib_V3.5.0/Libraries/CMSIS/CM3/DeviceSupport/ST/STM32F10x/startup/iar/startup_stm32f10x_hd.s"
+            ex="false"
+            tool="4"
+            flavor2="0">
+      </item>
+      <item path="bsp/boards/iot-lab_A8-M3/library/STM32F10x_StdPeriph_Lib_V3.5.0/Libraries/CMSIS/CM3/DeviceSupport/ST/STM32F10x/startup/iar/startup_stm32f10x_hd_vl.s"
+            ex="false"
+            tool="4"
+            flavor2="0">
+      </item>
+      <item path="bsp/boards/iot-lab_A8-M3/library/STM32F10x_StdPeriph_Lib_V3.5.0/Libraries/CMSIS/CM3/DeviceSupport/ST/STM32F10x/startup/iar/startup_stm32f10x_ld.s"
+            ex="false"
+            tool="4"
+            flavor2="0">
+      </item>
+      <item path="bsp/boards/iot-lab_A8-M3/library/STM32F10x_StdPeriph_Lib_V3.5.0/Libraries/CMSIS/CM3/DeviceSupport/ST/STM32F10x/startup/iar/startup_stm32f10x_ld_vl.s"
+            ex="false"
+            tool="4"
+            flavor2="0">
+      </item>
+      <item path="bsp/boards/iot-lab_A8-M3/library/STM32F10x_StdPeriph_Lib_V3.5.0/Libraries/CMSIS/CM3/DeviceSupport/ST/STM32F10x/startup/iar/startup_stm32f10x_md.s"
+            ex="false"
+            tool="4"
+            flavor2="0">
+      </item>
+      <item path="bsp/boards/iot-lab_A8-M3/library/STM32F10x_StdPeriph_Lib_V3.5.0/Libraries/CMSIS/CM3/DeviceSupport/ST/STM32F10x/startup/iar/startup_stm32f10x_md_vl.s"
+            ex="false"
+            tool="4"
+            flavor2="0">
+      </item>
+      <item path="bsp/boards/iot-lab_A8-M3/library/STM32F10x_StdPeriph_Lib_V3.5.0/Libraries/CMSIS/CM3/DeviceSupport/ST/STM32F10x/startup/iar/startup_stm32f10x_xl.s"
+            ex="false"
+            tool="4"
+            flavor2="0">
+      </item>
+      <item path="bsp/boards/iot-lab_A8-M3/library/STM32F10x_StdPeriph_Lib_V3.5.0/Libraries/CMSIS/CM3/DeviceSupport/ST/STM32F10x/system_stm32f10x.c"
+            ex="false"
+            tool="0"
+            flavor2="0">
+      </item>
+      <item path="bsp/boards/iot-lab_A8-M3/library/STM32F10x_StdPeriph_Lib_V3.5.0/Libraries/STM32F10x_StdPeriph_Driver/src/misc.c"
+            ex="false"
+            tool="0"
+            flavor2="0">
+      </item>
+      <item path="bsp/boards/iot-lab_A8-M3/library/STM32F10x_StdPeriph_Lib_V3.5.0/Libraries/STM32F10x_StdPeriph_Driver/src/stm32f10x_adc.c"
+            ex="false"
+            tool="0"
+            flavor2="0">
+      </item>
+      <item path="bsp/boards/iot-lab_A8-M3/library/STM32F10x_StdPeriph_Lib_V3.5.0/Libraries/STM32F10x_StdPeriph_Driver/src/stm32f10x_bkp.c"
+            ex="false"
+            tool="0"
+            flavor2="0">
+      </item>
+      <item path="bsp/boards/iot-lab_A8-M3/library/STM32F10x_StdPeriph_Lib_V3.5.0/Libraries/STM32F10x_StdPeriph_Driver/src/stm32f10x_can.c"
+            ex="false"
+            tool="0"
+            flavor2="0">
+      </item>
+      <item path="bsp/boards/iot-lab_A8-M3/library/STM32F10x_StdPeriph_Lib_V3.5.0/Libraries/STM32F10x_StdPeriph_Driver/src/stm32f10x_cec.c"
+            ex="false"
+            tool="0"
+            flavor2="0">
+      </item>
+      <item path="bsp/boards/iot-lab_A8-M3/library/STM32F10x_StdPeriph_Lib_V3.5.0/Libraries/STM32F10x_StdPeriph_Driver/src/stm32f10x_crc.c"
+            ex="false"
+            tool="0"
+            flavor2="0">
+      </item>
+      <item path="bsp/boards/iot-lab_A8-M3/library/STM32F10x_StdPeriph_Lib_V3.5.0/Libraries/STM32F10x_StdPeriph_Driver/src/stm32f10x_dac.c"
+            ex="false"
+            tool="0"
+            flavor2="0">
+      </item>
+      <item path="bsp/boards/iot-lab_A8-M3/library/STM32F10x_StdPeriph_Lib_V3.5.0/Libraries/STM32F10x_StdPeriph_Driver/src/stm32f10x_dbgmcu.c"
+            ex="false"
+            tool="0"
+            flavor2="0">
+      </item>
+      <item path="bsp/boards/iot-lab_A8-M3/library/STM32F10x_StdPeriph_Lib_V3.5.0/Libraries/STM32F10x_StdPeriph_Driver/src/stm32f10x_dma.c"
+            ex="false"
+            tool="0"
+            flavor2="0">
+      </item>
+      <item path="bsp/boards/iot-lab_A8-M3/library/STM32F10x_StdPeriph_Lib_V3.5.0/Libraries/STM32F10x_StdPeriph_Driver/src/stm32f10x_exti.c"
+            ex="false"
+            tool="0"
+            flavor2="0">
+      </item>
+      <item path="bsp/boards/iot-lab_A8-M3/library/STM32F10x_StdPeriph_Lib_V3.5.0/Libraries/STM32F10x_StdPeriph_Driver/src/stm32f10x_flash.c"
+            ex="false"
+            tool="0"
+            flavor2="0">
+      </item>
+      <item path="bsp/boards/iot-lab_A8-M3/library/STM32F10x_StdPeriph_Lib_V3.5.0/Libraries/STM32F10x_StdPeriph_Driver/src/stm32f10x_fsmc.c"
+            ex="false"
+            tool="0"
+            flavor2="0">
+      </item>
+      <item path="bsp/boards/iot-lab_A8-M3/library/STM32F10x_StdPeriph_Lib_V3.5.0/Libraries/STM32F10x_StdPeriph_Driver/src/stm32f10x_gpio.c"
+            ex="false"
+            tool="0"
+            flavor2="0">
+      </item>
+      <item path="bsp/boards/iot-lab_A8-M3/library/STM32F10x_StdPeriph_Lib_V3.5.0/Libraries/STM32F10x_StdPeriph_Driver/src/stm32f10x_i2c.c"
+            ex="false"
+            tool="0"
+            flavor2="0">
+      </item>
+      <item path="bsp/boards/iot-lab_A8-M3/library/STM32F10x_StdPeriph_Lib_V3.5.0/Libraries/STM32F10x_StdPeriph_Driver/src/stm32f10x_iwdg.c"
+            ex="false"
+            tool="0"
+            flavor2="0">
+      </item>
+      <item path="bsp/boards/iot-lab_A8-M3/library/STM32F10x_StdPeriph_Lib_V3.5.0/Libraries/STM32F10x_StdPeriph_Driver/src/stm32f10x_pwr.c"
+            ex="false"
+            tool="0"
+            flavor2="0">
+      </item>
+      <item path="bsp/boards/iot-lab_A8-M3/library/STM32F10x_StdPeriph_Lib_V3.5.0/Libraries/STM32F10x_StdPeriph_Driver/src/stm32f10x_rcc.c"
+            ex="false"
+            tool="0"
+            flavor2="0">
+      </item>
+      <item path="bsp/boards/iot-lab_A8-M3/library/STM32F10x_StdPeriph_Lib_V3.5.0/Libraries/STM32F10x_StdPeriph_Driver/src/stm32f10x_rtc.c"
+            ex="false"
+            tool="0"
+            flavor2="0">
+      </item>
+      <item path="bsp/boards/iot-lab_A8-M3/library/STM32F10x_StdPeriph_Lib_V3.5.0/Libraries/STM32F10x_StdPeriph_Driver/src/stm32f10x_sdio.c"
+            ex="false"
+            tool="0"
+            flavor2="0">
+      </item>
+      <item path="bsp/boards/iot-lab_A8-M3/library/STM32F10x_StdPeriph_Lib_V3.5.0/Libraries/STM32F10x_StdPeriph_Driver/src/stm32f10x_spi.c"
+            ex="false"
+            tool="0"
+            flavor2="0">
+      </item>
+      <item path="bsp/boards/iot-lab_A8-M3/library/STM32F10x_StdPeriph_Lib_V3.5.0/Libraries/STM32F10x_StdPeriph_Driver/src/stm32f10x_tim.c"
+            ex="false"
+            tool="0"
+            flavor2="0">
+      </item>
+      <item path="bsp/boards/iot-lab_A8-M3/library/STM32F10x_StdPeriph_Lib_V3.5.0/Libraries/STM32F10x_StdPeriph_Driver/src/stm32f10x_usart.c"
+            ex="false"
+            tool="0"
+            flavor2="0">
+      </item>
+      <item path="bsp/boards/iot-lab_A8-M3/library/STM32F10x_StdPeriph_Lib_V3.5.0/Libraries/STM32F10x_StdPeriph_Driver/src/stm32f10x_wwdg.c"
+            ex="false"
+            tool="0"
+            flavor2="0">
+      </item>
+      <item path="bsp/boards/iot-lab_A8-M3/nvic.c" ex="false" tool="0" flavor2="0">
+      </item>
+      <item path="bsp/boards/iot-lab_A8-M3/radiotimer.c"
+            ex="false"
+            tool="0"
+            flavor2="0">
+      </item>
+      <item path="bsp/boards/iot-lab_A8-M3/rcc.c" ex="false" tool="0" flavor2="0">
+      </item>
+      <item path="bsp/boards/iot-lab_A8-M3/rtc_timer.c"
+            ex="false"
+            tool="0"
+            flavor2="0">
+      </item>
+      <item path="bsp/boards/iot-lab_A8-M3/spi.c" ex="false" tool="0" flavor2="0">
+      </item>
+      <item path="bsp/boards/iot-lab_A8-M3/startup.s" ex="false" tool="4" flavor2="0">
+      </item>
+      <item path="bsp/boards/iot-lab_A8-M3/uart.c" ex="false" tool="0" flavor2="0">
+      </item>
+      <item path="bsp/boards/iot-lab_M3/Systick.c" ex="false" tool="0" flavor2="0">
+      </item>
+      <item path="bsp/boards/iot-lab_M3/board.c" ex="false" tool="0" flavor2="0">
+      </item>
+      <item path="bsp/boards/iot-lab_M3/bsp_timer.c" ex="false" tool="0" flavor2="0">
+      </item>
+      <item path="bsp/boards/iot-lab_M3/configure/stm32f10x_it.c"
+            ex="false"
+            tool="0"
+            flavor2="0">
+      </item>
+      <item path="bsp/boards/iot-lab_M3/debugpins.c" ex="false" tool="0" flavor2="0">
+      </item>
+      <item path="bsp/boards/iot-lab_M3/eui64.c" ex="false" tool="0" flavor2="0">
+      </item>
+      <item path="bsp/boards/iot-lab_M3/exti.c" ex="false" tool="0" flavor2="0">
+      </item>
+      <item path="bsp/boards/iot-lab_M3/gpio.c" ex="false" tool="0" flavor2="0">
+      </item>
+      <item path="bsp/boards/iot-lab_M3/leds.c" ex="false" tool="0" flavor2="0">
+      </item>
+      <item path="bsp/boards/iot-lab_M3/library/STM32F10x_StdPeriph_Lib_V3.5.0/Libraries/CMSIS/CM3/CoreSupport/core_cm3.c"
+            ex="false"
+            tool="0"
+            flavor2="0">
+      </item>
+      <item path="bsp/boards/iot-lab_M3/library/STM32F10x_StdPeriph_Lib_V3.5.0/Libraries/CMSIS/CM3/DeviceSupport/ST/STM32F10x/startup/TrueSTUDIO/startup_stm32f10x_cl.s"
+            ex="false"
+            tool="4"
+            flavor2="0">
+      </item>
+      <item path="bsp/boards/iot-lab_M3/library/STM32F10x_StdPeriph_Lib_V3.5.0/Libraries/CMSIS/CM3/DeviceSupport/ST/STM32F10x/startup/TrueSTUDIO/startup_stm32f10x_hd.s"
+            ex="false"
+            tool="4"
+            flavor2="0">
+      </item>
+      <item path="bsp/boards/iot-lab_M3/library/STM32F10x_StdPeriph_Lib_V3.5.0/Libraries/CMSIS/CM3/DeviceSupport/ST/STM32F10x/startup/TrueSTUDIO/startup_stm32f10x_hd_vl.s"
+            ex="false"
+            tool="4"
+            flavor2="0">
+      </item>
+      <item path="bsp/boards/iot-lab_M3/library/STM32F10x_StdPeriph_Lib_V3.5.0/Libraries/CMSIS/CM3/DeviceSupport/ST/STM32F10x/startup/TrueSTUDIO/startup_stm32f10x_ld.s"
+            ex="false"
+            tool="4"
+            flavor2="0">
+      </item>
+      <item path="bsp/boards/iot-lab_M3/library/STM32F10x_StdPeriph_Lib_V3.5.0/Libraries/CMSIS/CM3/DeviceSupport/ST/STM32F10x/startup/TrueSTUDIO/startup_stm32f10x_ld_vl.s"
+            ex="false"
+            tool="4"
+            flavor2="0">
+      </item>
+      <item path="bsp/boards/iot-lab_M3/library/STM32F10x_StdPeriph_Lib_V3.5.0/Libraries/CMSIS/CM3/DeviceSupport/ST/STM32F10x/startup/TrueSTUDIO/startup_stm32f10x_md.s"
+            ex="false"
+            tool="4"
+            flavor2="0">
+      </item>
+      <item path="bsp/boards/iot-lab_M3/library/STM32F10x_StdPeriph_Lib_V3.5.0/Libraries/CMSIS/CM3/DeviceSupport/ST/STM32F10x/startup/TrueSTUDIO/startup_stm32f10x_md_vl.s"
+            ex="false"
+            tool="4"
+            flavor2="0">
+      </item>
+      <item path="bsp/boards/iot-lab_M3/library/STM32F10x_StdPeriph_Lib_V3.5.0/Libraries/CMSIS/CM3/DeviceSupport/ST/STM32F10x/startup/TrueSTUDIO/startup_stm32f10x_xl.s"
+            ex="false"
+            tool="4"
+            flavor2="0">
+      </item>
+      <item path="bsp/boards/iot-lab_M3/library/STM32F10x_StdPeriph_Lib_V3.5.0/Libraries/CMSIS/CM3/DeviceSupport/ST/STM32F10x/startup/arm/startup_stm32f10x_cl.s"
+            ex="false"
+            tool="4"
+            flavor2="0">
+      </item>
+      <item path="bsp/boards/iot-lab_M3/library/STM32F10x_StdPeriph_Lib_V3.5.0/Libraries/CMSIS/CM3/DeviceSupport/ST/STM32F10x/startup/arm/startup_stm32f10x_hd.s"
+            ex="false"
+            tool="4"
+            flavor2="0">
+      </item>
+      <item path="bsp/boards/iot-lab_M3/library/STM32F10x_StdPeriph_Lib_V3.5.0/Libraries/CMSIS/CM3/DeviceSupport/ST/STM32F10x/startup/arm/startup_stm32f10x_hd_vl.s"
+            ex="false"
+            tool="4"
+            flavor2="0">
+      </item>
+      <item path="bsp/boards/iot-lab_M3/library/STM32F10x_StdPeriph_Lib_V3.5.0/Libraries/CMSIS/CM3/DeviceSupport/ST/STM32F10x/startup/arm/startup_stm32f10x_ld.s"
+            ex="false"
+            tool="4"
+            flavor2="0">
+      </item>
+      <item path="bsp/boards/iot-lab_M3/library/STM32F10x_StdPeriph_Lib_V3.5.0/Libraries/CMSIS/CM3/DeviceSupport/ST/STM32F10x/startup/arm/startup_stm32f10x_ld_vl.s"
+            ex="false"
+            tool="4"
+            flavor2="0">
+      </item>
+      <item path="bsp/boards/iot-lab_M3/library/STM32F10x_StdPeriph_Lib_V3.5.0/Libraries/CMSIS/CM3/DeviceSupport/ST/STM32F10x/startup/arm/startup_stm32f10x_md.s"
+            ex="false"
+            tool="4"
+            flavor2="0">
+      </item>
+      <item path="bsp/boards/iot-lab_M3/library/STM32F10x_StdPeriph_Lib_V3.5.0/Libraries/CMSIS/CM3/DeviceSupport/ST/STM32F10x/startup/arm/startup_stm32f10x_md_vl.s"
+            ex="false"
+            tool="4"
+            flavor2="0">
+      </item>
+      <item path="bsp/boards/iot-lab_M3/library/STM32F10x_StdPeriph_Lib_V3.5.0/Libraries/CMSIS/CM3/DeviceSupport/ST/STM32F10x/startup/arm/startup_stm32f10x_xl.s"
+            ex="false"
+            tool="4"
+            flavor2="0">
+      </item>
+      <item path="bsp/boards/iot-lab_M3/library/STM32F10x_StdPeriph_Lib_V3.5.0/Libraries/CMSIS/CM3/DeviceSupport/ST/STM32F10x/startup/gcc_ride7/startup_stm32f10x_cl.s"
+            ex="false"
+            tool="4"
+            flavor2="0">
+      </item>
+      <item path="bsp/boards/iot-lab_M3/library/STM32F10x_StdPeriph_Lib_V3.5.0/Libraries/CMSIS/CM3/DeviceSupport/ST/STM32F10x/startup/gcc_ride7/startup_stm32f10x_hd.s"
+            ex="false"
+            tool="4"
+            flavor2="0">
+      </item>
+      <item path="bsp/boards/iot-lab_M3/library/STM32F10x_StdPeriph_Lib_V3.5.0/Libraries/CMSIS/CM3/DeviceSupport/ST/STM32F10x/startup/gcc_ride7/startup_stm32f10x_hd_vl.s"
+            ex="false"
+            tool="4"
+            flavor2="0">
+      </item>
+      <item path="bsp/boards/iot-lab_M3/library/STM32F10x_StdPeriph_Lib_V3.5.0/Libraries/CMSIS/CM3/DeviceSupport/ST/STM32F10x/startup/gcc_ride7/startup_stm32f10x_ld.s"
+            ex="false"
+            tool="4"
+            flavor2="0">
+      </item>
+      <item path="bsp/boards/iot-lab_M3/library/STM32F10x_StdPeriph_Lib_V3.5.0/Libraries/CMSIS/CM3/DeviceSupport/ST/STM32F10x/startup/gcc_ride7/startup_stm32f10x_ld_vl.s"
+            ex="false"
+            tool="4"
+            flavor2="0">
+      </item>
+      <item path="bsp/boards/iot-lab_M3/library/STM32F10x_StdPeriph_Lib_V3.5.0/Libraries/CMSIS/CM3/DeviceSupport/ST/STM32F10x/startup/gcc_ride7/startup_stm32f10x_md.s"
+            ex="false"
+            tool="4"
+            flavor2="0">
+      </item>
+      <item path="bsp/boards/iot-lab_M3/library/STM32F10x_StdPeriph_Lib_V3.5.0/Libraries/CMSIS/CM3/DeviceSupport/ST/STM32F10x/startup/gcc_ride7/startup_stm32f10x_md_vl.s"
+            ex="false"
+            tool="4"
+            flavor2="0">
+      </item>
+      <item path="bsp/boards/iot-lab_M3/library/STM32F10x_StdPeriph_Lib_V3.5.0/Libraries/CMSIS/CM3/DeviceSupport/ST/STM32F10x/startup/gcc_ride7/startup_stm32f10x_xl.s"
+            ex="false"
+            tool="4"
+            flavor2="0">
+      </item>
+      <item path="bsp/boards/iot-lab_M3/library/STM32F10x_StdPeriph_Lib_V3.5.0/Libraries/CMSIS/CM3/DeviceSupport/ST/STM32F10x/startup/iar/startup_stm32f10x_cl.s"
+            ex="false"
+            tool="4"
+            flavor2="0">
+      </item>
+      <item path="bsp/boards/iot-lab_M3/library/STM32F10x_StdPeriph_Lib_V3.5.0/Libraries/CMSIS/CM3/DeviceSupport/ST/STM32F10x/startup/iar/startup_stm32f10x_hd.s"
+            ex="false"
+            tool="4"
+            flavor2="0">
+      </item>
+      <item path="bsp/boards/iot-lab_M3/library/STM32F10x_StdPeriph_Lib_V3.5.0/Libraries/CMSIS/CM3/DeviceSupport/ST/STM32F10x/startup/iar/startup_stm32f10x_hd_vl.s"
+            ex="false"
+            tool="4"
+            flavor2="0">
+      </item>
+      <item path="bsp/boards/iot-lab_M3/library/STM32F10x_StdPeriph_Lib_V3.5.0/Libraries/CMSIS/CM3/DeviceSupport/ST/STM32F10x/startup/iar/startup_stm32f10x_ld.s"
+            ex="false"
+            tool="4"
+            flavor2="0">
+      </item>
+      <item path="bsp/boards/iot-lab_M3/library/STM32F10x_StdPeriph_Lib_V3.5.0/Libraries/CMSIS/CM3/DeviceSupport/ST/STM32F10x/startup/iar/startup_stm32f10x_ld_vl.s"
+            ex="false"
+            tool="4"
+            flavor2="0">
+      </item>
+      <item path="bsp/boards/iot-lab_M3/library/STM32F10x_StdPeriph_Lib_V3.5.0/Libraries/CMSIS/CM3/DeviceSupport/ST/STM32F10x/startup/iar/startup_stm32f10x_md.s"
+            ex="false"
+            tool="4"
+            flavor2="0">
+      </item>
+      <item path="bsp/boards/iot-lab_M3/library/STM32F10x_StdPeriph_Lib_V3.5.0/Libraries/CMSIS/CM3/DeviceSupport/ST/STM32F10x/startup/iar/startup_stm32f10x_md_vl.s"
+            ex="false"
+            tool="4"
+            flavor2="0">
+      </item>
+      <item path="bsp/boards/iot-lab_M3/library/STM32F10x_StdPeriph_Lib_V3.5.0/Libraries/CMSIS/CM3/DeviceSupport/ST/STM32F10x/startup/iar/startup_stm32f10x_xl.s"
+            ex="false"
+            tool="4"
+            flavor2="0">
+      </item>
+      <item path="bsp/boards/iot-lab_M3/library/STM32F10x_StdPeriph_Lib_V3.5.0/Libraries/CMSIS/CM3/DeviceSupport/ST/STM32F10x/system_stm32f10x.c"
+            ex="false"
+            tool="0"
+            flavor2="0">
+      </item>
+      <item path="bsp/boards/iot-lab_M3/library/STM32F10x_StdPeriph_Lib_V3.5.0/Libraries/STM32F10x_StdPeriph_Driver/src/misc.c"
+            ex="false"
+            tool="0"
+            flavor2="0">
+      </item>
+      <item path="bsp/boards/iot-lab_M3/library/STM32F10x_StdPeriph_Lib_V3.5.0/Libraries/STM32F10x_StdPeriph_Driver/src/stm32f10x_adc.c"
+            ex="false"
+            tool="0"
+            flavor2="0">
+      </item>
+      <item path="bsp/boards/iot-lab_M3/library/STM32F10x_StdPeriph_Lib_V3.5.0/Libraries/STM32F10x_StdPeriph_Driver/src/stm32f10x_bkp.c"
+            ex="false"
+            tool="0"
+            flavor2="0">
+      </item>
+      <item path="bsp/boards/iot-lab_M3/library/STM32F10x_StdPeriph_Lib_V3.5.0/Libraries/STM32F10x_StdPeriph_Driver/src/stm32f10x_can.c"
+            ex="false"
+            tool="0"
+            flavor2="0">
+      </item>
+      <item path="bsp/boards/iot-lab_M3/library/STM32F10x_StdPeriph_Lib_V3.5.0/Libraries/STM32F10x_StdPeriph_Driver/src/stm32f10x_cec.c"
+            ex="false"
+            tool="0"
+            flavor2="0">
+      </item>
+      <item path="bsp/boards/iot-lab_M3/library/STM32F10x_StdPeriph_Lib_V3.5.0/Libraries/STM32F10x_StdPeriph_Driver/src/stm32f10x_crc.c"
+            ex="false"
+            tool="0"
+            flavor2="0">
+      </item>
+      <item path="bsp/boards/iot-lab_M3/library/STM32F10x_StdPeriph_Lib_V3.5.0/Libraries/STM32F10x_StdPeriph_Driver/src/stm32f10x_dac.c"
+            ex="false"
+            tool="0"
+            flavor2="0">
+      </item>
+      <item path="bsp/boards/iot-lab_M3/library/STM32F10x_StdPeriph_Lib_V3.5.0/Libraries/STM32F10x_StdPeriph_Driver/src/stm32f10x_dbgmcu.c"
+            ex="false"
+            tool="0"
+            flavor2="0">
+      </item>
+      <item path="bsp/boards/iot-lab_M3/library/STM32F10x_StdPeriph_Lib_V3.5.0/Libraries/STM32F10x_StdPeriph_Driver/src/stm32f10x_dma.c"
+            ex="false"
+            tool="0"
+            flavor2="0">
+      </item>
+      <item path="bsp/boards/iot-lab_M3/library/STM32F10x_StdPeriph_Lib_V3.5.0/Libraries/STM32F10x_StdPeriph_Driver/src/stm32f10x_exti.c"
+            ex="false"
+            tool="0"
+            flavor2="0">
+      </item>
+      <item path="bsp/boards/iot-lab_M3/library/STM32F10x_StdPeriph_Lib_V3.5.0/Libraries/STM32F10x_StdPeriph_Driver/src/stm32f10x_flash.c"
+            ex="false"
+            tool="0"
+            flavor2="0">
+      </item>
+      <item path="bsp/boards/iot-lab_M3/library/STM32F10x_StdPeriph_Lib_V3.5.0/Libraries/STM32F10x_StdPeriph_Driver/src/stm32f10x_fsmc.c"
+            ex="false"
+            tool="0"
+            flavor2="0">
+      </item>
+      <item path="bsp/boards/iot-lab_M3/library/STM32F10x_StdPeriph_Lib_V3.5.0/Libraries/STM32F10x_StdPeriph_Driver/src/stm32f10x_gpio.c"
+            ex="false"
+            tool="0"
+            flavor2="0">
+      </item>
+      <item path="bsp/boards/iot-lab_M3/library/STM32F10x_StdPeriph_Lib_V3.5.0/Libraries/STM32F10x_StdPeriph_Driver/src/stm32f10x_i2c.c"
+            ex="false"
+            tool="0"
+            flavor2="0">
+      </item>
+      <item path="bsp/boards/iot-lab_M3/library/STM32F10x_StdPeriph_Lib_V3.5.0/Libraries/STM32F10x_StdPeriph_Driver/src/stm32f10x_iwdg.c"
+            ex="false"
+            tool="0"
+            flavor2="0">
+      </item>
+      <item path="bsp/boards/iot-lab_M3/library/STM32F10x_StdPeriph_Lib_V3.5.0/Libraries/STM32F10x_StdPeriph_Driver/src/stm32f10x_pwr.c"
+            ex="false"
+            tool="0"
+            flavor2="0">
+      </item>
+      <item path="bsp/boards/iot-lab_M3/library/STM32F10x_StdPeriph_Lib_V3.5.0/Libraries/STM32F10x_StdPeriph_Driver/src/stm32f10x_rcc.c"
+            ex="false"
+            tool="0"
+            flavor2="0">
+      </item>
+      <item path="bsp/boards/iot-lab_M3/library/STM32F10x_StdPeriph_Lib_V3.5.0/Libraries/STM32F10x_StdPeriph_Driver/src/stm32f10x_rtc.c"
+            ex="false"
+            tool="0"
+            flavor2="0">
+      </item>
+      <item path="bsp/boards/iot-lab_M3/library/STM32F10x_StdPeriph_Lib_V3.5.0/Libraries/STM32F10x_StdPeriph_Driver/src/stm32f10x_sdio.c"
+            ex="false"
+            tool="0"
+            flavor2="0">
+      </item>
+      <item path="bsp/boards/iot-lab_M3/library/STM32F10x_StdPeriph_Lib_V3.5.0/Libraries/STM32F10x_StdPeriph_Driver/src/stm32f10x_spi.c"
+            ex="false"
+            tool="0"
+            flavor2="0">
+      </item>
+      <item path="bsp/boards/iot-lab_M3/library/STM32F10x_StdPeriph_Lib_V3.5.0/Libraries/STM32F10x_StdPeriph_Driver/src/stm32f10x_tim.c"
+            ex="false"
+            tool="0"
+            flavor2="0">
+      </item>
+      <item path="bsp/boards/iot-lab_M3/library/STM32F10x_StdPeriph_Lib_V3.5.0/Libraries/STM32F10x_StdPeriph_Driver/src/stm32f10x_usart.c"
+            ex="false"
+            tool="0"
+            flavor2="0">
+      </item>
+      <item path="bsp/boards/iot-lab_M3/library/STM32F10x_StdPeriph_Lib_V3.5.0/Libraries/STM32F10x_StdPeriph_Driver/src/stm32f10x_wwdg.c"
+            ex="false"
+            tool="0"
+            flavor2="0">
+      </item>
+      <item path="bsp/boards/iot-lab_M3/nvic.c" ex="false" tool="0" flavor2="0">
+      </item>
+      <item path="bsp/boards/iot-lab_M3/radiotimer.c" ex="false" tool="0" flavor2="0">
+      </item>
+      <item path="bsp/boards/iot-lab_M3/rcc.c" ex="false" tool="0" flavor2="0">
+      </item>
+      <item path="bsp/boards/iot-lab_M3/rtc_timer.c" ex="false" tool="0" flavor2="0">
+      </item>
+      <item path="bsp/boards/iot-lab_M3/spi.c" ex="false" tool="0" flavor2="0">
+      </item>
+      <item path="bsp/boards/iot-lab_M3/startup.s" ex="false" tool="4" flavor2="0">
+      </item>
+      <item path="bsp/boards/iot-lab_M3/uart.c" ex="false" tool="0" flavor2="0">
+      </item>
+      <item path="bsp/boards/k20/bsp/board.c" ex="false" tool="0" flavor2="0">
+      </item>
+      <item path="bsp/boards/k20/bsp/bsp_timer.c" ex="false" tool="0" flavor2="0">
+      </item>
+      <item path="bsp/boards/k20/bsp/debugpins.c" ex="false" tool="0" flavor2="0">
+      </item>
+      <item path="bsp/boards/k20/bsp/eui64.c" ex="false" tool="0" flavor2="0">
+      </item>
+      <item path="bsp/boards/k20/bsp/flextimer.c" ex="false" tool="0" flavor2="0">
+      </item>
+      <item path="bsp/boards/k20/bsp/led.c" ex="false" tool="0" flavor2="0">
+      </item>
+      <item path="bsp/boards/k20/bsp/leds.c" ex="false" tool="0" flavor2="0">
+      </item>
+      <item path="bsp/boards/k20/bsp/radiotimer.c" ex="false" tool="0" flavor2="0">
+      </item>
+      <item path="bsp/boards/k20/bsp/sctimer.c" ex="false" tool="0" flavor2="0">
+      </item>
+      <item path="bsp/boards/k20/bsp/spi.c" ex="false" tool="0" flavor2="0">
+      </item>
+      <item path="bsp/boards/k20/bsp/uart.c" ex="false" tool="0" flavor2="0">
+      </item>
+      <item path="bsp/boards/k20/bsp_ext/adc16.c" ex="false" tool="0" flavor2="0">
+      </item>
+      <item path="bsp/boards/k20/bsp_ext/llwu.c" ex="false" tool="0" flavor2="0">
+      </item>
+      <item path="bsp/boards/k20/bsp_ext/lptmr.c" ex="false" tool="0" flavor2="0">
+      </item>
+      <item path="bsp/boards/k20/bsp_ext/mcg.c" ex="false" tool="0" flavor2="0">
+      </item>
+      <item path="bsp/boards/k20/bsp_ext/pmc.c" ex="false" tool="0" flavor2="0">
+      </item>
+      <item path="bsp/boards/k20/bsp_ext/rcm.c" ex="false" tool="0" flavor2="0">
+      </item>
+      <item path="bsp/boards/k20/bsp_ext/rtc.c" ex="false" tool="0" flavor2="0">
+      </item>
+      <item path="bsp/boards/k20/bsp_ext/sai.c" ex="false" tool="0" flavor2="0">
+      </item>
+      <item path="bsp/boards/k20/bsp_ext/smc.c" ex="false" tool="0" flavor2="0">
+      </item>
+      <item path="bsp/boards/k20/bsp_ext/wdog.c" ex="false" tool="0" flavor2="0">
+      </item>
+      <item path="bsp/boards/k20/common/startup.c" ex="false" tool="0" flavor2="0">
+      </item>
+      <item path="bsp/boards/k20/cpu/arm_cm4.c" ex="false" tool="0" flavor2="0">
+      </item>
+      <item path="bsp/boards/k20/cpu/crt0.s" ex="false" tool="4" flavor2="0">
+      </item>
+      <item path="bsp/boards/k20/cpu/cw_crt0.s" ex="false" tool="4" flavor2="0">
+      </item>
+      <item path="bsp/boards/k20/cpu/start.c" ex="false" tool="0" flavor2="0">
+      </item>
+      <item path="bsp/boards/k20/cpu/sysinit.c" ex="false" tool="0" flavor2="0">
+      </item>
+      <item path="bsp/boards/k20/cpu/vectors.c" ex="false" tool="0" flavor2="0">
+      </item>
+      <item path="bsp/boards/openmotestm/Systick.c" ex="false" tool="0" flavor2="0">
+      </item>
+      <item path="bsp/boards/openmotestm/board.c" ex="false" tool="0" flavor2="0">
+      </item>
+      <item path="bsp/boards/openmotestm/bsp_timer.c" ex="false" tool="0" flavor2="0">
+      </item>
+      <item path="bsp/boards/openmotestm/configure/cortexm3_macro.s"
+            ex="false"
+            tool="4"
+            flavor2="0">
+      </item>
+      <item path="bsp/boards/openmotestm/configure/stm32f10x_it.c"
+            ex="false"
+            tool="0"
+            flavor2="0">
+      </item>
+      <item path="bsp/boards/openmotestm/debugpins.c" ex="false" tool="0" flavor2="0">
+      </item>
+      <item path="bsp/boards/openmotestm/eui64.c" ex="false" tool="0" flavor2="0">
+      </item>
+      <item path="bsp/boards/openmotestm/ewarm/cortexm3_macro.s"
+            ex="false"
+            tool="4"
+            flavor2="0">
+      </item>
+      <item path="bsp/boards/openmotestm/ewarm/stm32f10x_vector.c"
+            ex="false"
+            tool="0"
+            flavor2="0">
+      </item>
+      <item path="bsp/boards/openmotestm/exi.c" ex="false" tool="0" flavor2="0">
+      </item>
+      <item path="bsp/boards/openmotestm/flash.c" ex="false" tool="0" flavor2="0">
+      </item>
+      <item path="bsp/boards/openmotestm/gpio.c" ex="false" tool="0" flavor2="0">
+      </item>
+      <item path="bsp/boards/openmotestm/leds.c" ex="false" tool="0" flavor2="0">
+      </item>
+      <item path="bsp/boards/openmotestm/library/src/stm32f10x_adc.c"
+            ex="false"
+            tool="0"
+            flavor2="0">
+      </item>
+      <item path="bsp/boards/openmotestm/library/src/stm32f10x_bkp.c"
+            ex="false"
+            tool="0"
+            flavor2="0">
+      </item>
+      <item path="bsp/boards/openmotestm/library/src/stm32f10x_can.c"
+            ex="false"
+            tool="0"
+            flavor2="0">
+      </item>
+      <item path="bsp/boards/openmotestm/library/src/stm32f10x_crc.c"
+            ex="false"
+            tool="0"
+            flavor2="0">
+      </item>
+      <item path="bsp/boards/openmotestm/library/src/stm32f10x_dac.c"
+            ex="false"
+            tool="0"
+            flavor2="0">
+      </item>
+      <item path="bsp/boards/openmotestm/library/src/stm32f10x_dbgmcu.c"
+            ex="false"
+            tool="0"
+            flavor2="0">
+      </item>
+      <item path="bsp/boards/openmotestm/library/src/stm32f10x_dma.c"
+            ex="false"
+            tool="0"
+            flavor2="0">
+      </item>
+      <item path="bsp/boards/openmotestm/library/src/stm32f10x_exti.c"
+            ex="false"
+            tool="0"
+            flavor2="0">
+      </item>
+      <item path="bsp/boards/openmotestm/library/src/stm32f10x_flash.c"
+            ex="false"
+            tool="0"
+            flavor2="0">
+      </item>
+      <item path="bsp/boards/openmotestm/library/src/stm32f10x_fsmc.c"
+            ex="false"
+            tool="0"
+            flavor2="0">
+      </item>
+      <item path="bsp/boards/openmotestm/library/src/stm32f10x_gpio.c"
+            ex="false"
+            tool="0"
+            flavor2="0">
+      </item>
+      <item path="bsp/boards/openmotestm/library/src/stm32f10x_i2c.c"
+            ex="false"
+            tool="0"
+            flavor2="0">
+      </item>
+      <item path="bsp/boards/openmotestm/library/src/stm32f10x_iwdg.c"
+            ex="false"
+            tool="0"
+            flavor2="0">
+      </item>
+      <item path="bsp/boards/openmotestm/library/src/stm32f10x_lib.c"
+            ex="false"
+            tool="0"
+            flavor2="0">
+      </item>
+      <item path="bsp/boards/openmotestm/library/src/stm32f10x_nvic.c"
+            ex="false"
+            tool="0"
+            flavor2="0">
+      </item>
+      <item path="bsp/boards/openmotestm/library/src/stm32f10x_pwr.c"
+            ex="false"
+            tool="0"
+            flavor2="0">
+      </item>
+      <item path="bsp/boards/openmotestm/library/src/stm32f10x_rcc.c"
+            ex="false"
+            tool="0"
+            flavor2="0">
+      </item>
+      <item path="bsp/boards/openmotestm/library/src/stm32f10x_rtc.c"
+            ex="false"
+            tool="0"
+            flavor2="0">
+      </item>
+      <item path="bsp/boards/openmotestm/library/src/stm32f10x_sdio.c"
+            ex="false"
+            tool="0"
+            flavor2="0">
+      </item>
+      <item path="bsp/boards/openmotestm/library/src/stm32f10x_spi.c"
+            ex="false"
+            tool="0"
+            flavor2="0">
+      </item>
+      <item path="bsp/boards/openmotestm/library/src/stm32f10x_systick.c"
+            ex="false"
+            tool="0"
+            flavor2="0">
+      </item>
+      <item path="bsp/boards/openmotestm/library/src/stm32f10x_tim.c"
+            ex="false"
+            tool="0"
+            flavor2="0">
+      </item>
+      <item path="bsp/boards/openmotestm/library/src/stm32f10x_usart.c"
+            ex="false"
+            tool="0"
+            flavor2="0">
+      </item>
+      <item path="bsp/boards/openmotestm/library/src/stm32f10x_wwdg.c"
+            ex="false"
+            tool="0"
+            flavor2="0">
+      </item>
+      <item path="bsp/boards/openmotestm/nvic.c" ex="false" tool="0" flavor2="0">
+      </item>
+      <item path="bsp/boards/openmotestm/radiotimer.c"
+            ex="false"
+            tool="0"
+            flavor2="0">
+      </item>
+      <item path="bsp/boards/openmotestm/rcc.c" ex="false" tool="0" flavor2="0">
+      </item>
+      <item path="bsp/boards/openmotestm/rtc_timer.c" ex="false" tool="0" flavor2="0">
+      </item>
+      <item path="bsp/boards/openmotestm/spi.c" ex="false" tool="0" flavor2="0">
+      </item>
+      <item path="bsp/boards/openmotestm/startup.s" ex="false" tool="4" flavor2="0">
+      </item>
+      <item path="bsp/boards/openmotestm/uart.c" ex="false" tool="0" flavor2="0">
+      </item>
+      <item path="bsp/boards/python/board_obj.c" ex="false" tool="0" flavor2="0">
+      </item>
+      <item path="bsp/boards/python/bsp_timer_obj.c" ex="false" tool="0" flavor2="0">
+      </item>
+      <item path="bsp/boards/python/debugpins_obj.c" ex="false" tool="0" flavor2="0">
+      </item>
+      <item path="bsp/boards/python/eui64_obj.c" ex="false" tool="0" flavor2="0">
+      </item>
+      <item path="bsp/boards/python/leds_obj.c" ex="false" tool="0" flavor2="0">
+      </item>
+      <item path="bsp/boards/python/openwsnmodule.c" ex="false" tool="0" flavor2="0">
+      </item>
+      <item path="bsp/boards/python/radio_obj.c" ex="false" tool="0" flavor2="0">
+      </item>
+      <item path="bsp/boards/python/radiotimer_obj.c" ex="false" tool="0" flavor2="0">
+      </item>
+      <item path="bsp/boards/python/supply_obj.c" ex="false" tool="0" flavor2="0">
+      </item>
+      <item path="bsp/boards/python/uart_obj.c" ex="false" tool="0" flavor2="0">
+      </item>
+      <item path="bsp/boards/samr21_xpro/board.c" ex="false" tool="0" flavor2="0">
+      </item>
+      <item path="bsp/boards/samr21_xpro/bsp_timer.c" ex="false" tool="0" flavor2="0">
+      </item>
+      <item path="bsp/boards/samr21_xpro/debug_pins.c"
+            ex="false"
+            tool="0"
+            flavor2="0">
+      </item>
+      <item path="bsp/boards/samr21_xpro/drivers/src/cm0_handler.c"
+            ex="false"
+            tool="0"
+            flavor2="0">
+      </item>
+      <item path="bsp/boards/samr21_xpro/drivers/src/cm0plus_interrupt.c"
+            ex="false"
+            tool="0"
+            flavor2="0">
+      </item>
+      <item path="bsp/boards/samr21_xpro/drivers/src/samr21_extint.c"
+            ex="false"
+            tool="0"
+            flavor2="0">
+      </item>
+      <item path="bsp/boards/samr21_xpro/drivers/src/samr21_flash.c"
+            ex="false"
+            tool="0"
+            flavor2="0">
+      </item>
+      <item path="bsp/boards/samr21_xpro/drivers/src/samr21_gclk.c"
+            ex="false"
+            tool="0"
+            flavor2="0">
+      </item>
+      <item path="bsp/boards/samr21_xpro/drivers/src/samr21_gpio.c"
+            ex="false"
+            tool="0"
+            flavor2="0">
+      </item>
+      <item path="bsp/boards/samr21_xpro/drivers/src/samr21_spi.c"
+            ex="false"
+            tool="0"
+            flavor2="0">
+      </item>
+      <item path="bsp/boards/samr21_xpro/drivers/src/samr21_sysctrl.c"
+            ex="false"
+            tool="0"
+            flavor2="0">
+      </item>
+      <item path="bsp/boards/samr21_xpro/drivers/src/samr21_timer.c"
+            ex="false"
+            tool="0"
+            flavor2="0">
+      </item>
+      <item path="bsp/boards/samr21_xpro/drivers/src/samr21_uart.c"
+            ex="false"
+            tool="0"
+            flavor2="0">
+      </item>
+      <item path="bsp/boards/samr21_xpro/eui64.c" ex="false" tool="0" flavor2="0">
+      </item>
+      <item path="bsp/boards/samr21_xpro/flash.c" ex="false" tool="0" flavor2="0">
+      </item>
+      <item path="bsp/boards/samr21_xpro/gpio.c" ex="false" tool="0" flavor2="0">
+      </item>
+      <item path="bsp/boards/samr21_xpro/leds.c" ex="false" tool="0" flavor2="0">
+      </item>
+      <item path="bsp/boards/samr21_xpro/radio_timer.c"
+            ex="false"
+            tool="0"
+            flavor2="0">
+      </item>
+      <item path="bsp/boards/samr21_xpro/rtc.c" ex="false" tool="0" flavor2="0">
+      </item>
+      <item path="bsp/boards/samr21_xpro/spi_drv.c" ex="false" tool="0" flavor2="0">
+      </item>
+      <item path="bsp/boards/samr21_xpro/uart.c" ex="false" tool="0" flavor2="0">
+      </item>
+      <item path="bsp/boards/telosb/board.c" ex="false" tool="0" flavor2="0">
+      </item>
+      <item path="bsp/boards/telosb/board_crypto_engine.c"
+            ex="false"
+            tool="0"
+            flavor2="0">
+      </item>
+      <item path="bsp/boards/telosb/bsp_timer.c" ex="false" tool="0" flavor2="0">
+      </item>
+      <item path="bsp/boards/telosb/debugpins.c" ex="false" tool="0" flavor2="0">
+      </item>
+      <item path="bsp/boards/telosb/eui64.c" ex="false" tool="0" flavor2="0">
+      </item>
+      <item path="bsp/boards/telosb/leds.c" ex="false" tool="0" flavor2="0">
+      </item>
+      <item path="bsp/boards/telosb/radiotimer.c" ex="false" tool="0" flavor2="0">
+      </item>
+      <item path="bsp/boards/telosb/spi.c" ex="false" tool="0" flavor2="0">
+      </item>
+      <item path="bsp/boards/telosb/uart.c" ex="false" tool="0" flavor2="0">
+      </item>
+      <item path="bsp/boards/wsn430v13b/board.c" ex="false" tool="0" flavor2="0">
+      </item>
+      <item path="bsp/boards/wsn430v13b/bsp_timer.c" ex="false" tool="0" flavor2="0">
+      </item>
+      <item path="bsp/boards/wsn430v13b/debugpins.c" ex="false" tool="0" flavor2="0">
+      </item>
+      <item path="bsp/boards/wsn430v13b/eui64.c" ex="false" tool="0" flavor2="0">
+      </item>
+      <item path="bsp/boards/wsn430v13b/leds.c" ex="false" tool="0" flavor2="0">
+      </item>
+      <item path="bsp/boards/wsn430v13b/radiotimer.c" ex="false" tool="0" flavor2="0">
+      </item>
+      <item path="bsp/boards/wsn430v13b/spi.c" ex="false" tool="0" flavor2="0">
+      </item>
+      <item path="bsp/boards/wsn430v13b/uart.c" ex="false" tool="0" flavor2="0">
+      </item>
+      <item path="bsp/boards/wsn430v14/board.c" ex="false" tool="0" flavor2="0">
+      </item>
+      <item path="bsp/boards/wsn430v14/bsp_timer.c" ex="false" tool="0" flavor2="0">
+      </item>
+      <item path="bsp/boards/wsn430v14/debugpins.c" ex="false" tool="0" flavor2="0">
+      </item>
+      <item path="bsp/boards/wsn430v14/eui64.c" ex="false" tool="0" flavor2="0">
+      </item>
+      <item path="bsp/boards/wsn430v14/leds.c" ex="false" tool="0" flavor2="0">
+      </item>
+      <item path="bsp/boards/wsn430v14/radiotimer.c" ex="false" tool="0" flavor2="0">
+      </item>
+      <item path="bsp/boards/wsn430v14/spi.c" ex="false" tool="0" flavor2="0">
+      </item>
+      <item path="bsp/boards/wsn430v14/uart.c" ex="false" tool="0" flavor2="0">
+      </item>
+      <item path="bsp/boards/xpressohack/board.c" ex="false" tool="0" flavor2="0">
+      </item>
+      <item path="bsp/boards/xpressohack/bsp_timer.c" ex="false" tool="0" flavor2="0">
+      </item>
+      <item path="bsp/boards/xpressohack/clkpwr.c" ex="false" tool="0" flavor2="0">
+      </item>
+      <item path="bsp/boards/xpressohack/debugpins.c" ex="false" tool="0" flavor2="0">
+      </item>
+      <item path="bsp/boards/xpressohack/eui64.c" ex="false" tool="0" flavor2="0">
+      </item>
+      <item path="bsp/boards/xpressohack/iap.c" ex="false" tool="0" flavor2="0">
+      </item>
+      <item path="bsp/boards/xpressohack/leds.c" ex="false" tool="0" flavor2="0">
+      </item>
+      <item path="bsp/boards/xpressohack/lpc17xx_i2c.c"
+            ex="false"
+            tool="0"
+            flavor2="0">
+      </item>
+      <item path="bsp/boards/xpressohack/lpc17xx_pinsel.c"
+            ex="false"
+            tool="0"
+            flavor2="0">
+      </item>
+      <item path="bsp/boards/xpressohack/lpc17xx_uart.c"
+            ex="false"
+            tool="0"
+            flavor2="0">
+      </item>
+      <item path="bsp/boards/xpressohack/radiotimer.c"
+            ex="false"
+            tool="0"
+            flavor2="0">
+      </item>
+      <item path="bsp/boards/xpressohack/spi.c" ex="false" tool="0" flavor2="0">
+      </item>
+      <item path="bsp/boards/xpressohack/ssp.c" ex="false" tool="0" flavor2="0">
+      </item>
+      <item path="bsp/boards/xpressohack/ssp_spi_wrapper.c"
+            ex="false"
+            tool="0"
+            flavor2="0">
+      </item>
+      <item path="bsp/boards/xpressohack/timer.c" ex="false" tool="0" flavor2="0">
+      </item>
+      <item path="bsp/boards/xpressohack/uart.c" ex="false" tool="0" flavor2="0">
+      </item>
+      <item path="bsp/boards/z1/board.c" ex="false" tool="0" flavor2="0">
+      </item>
+      <item path="bsp/boards/z1/bsp_timer.c" ex="false" tool="0" flavor2="0">
+      </item>
+      <item path="bsp/boards/z1/debugpins.c" ex="false" tool="0" flavor2="0">
+      </item>
+      <item path="bsp/boards/z1/eui64.c" ex="false" tool="0" flavor2="0">
+      </item>
+      <item path="bsp/boards/z1/i2c.c" ex="false" tool="0" flavor2="0">
+      </item>
+      <item path="bsp/boards/z1/leds.c" ex="false" tool="0" flavor2="0">
+      </item>
+      <item path="bsp/boards/z1/radiotimer.c" ex="false" tool="0" flavor2="0">
+      </item>
+      <item path="bsp/boards/z1/sctimer.c" ex="false" tool="0" flavor2="0">
+      </item>
+      <item path="bsp/boards/z1/spi.c" ex="false" tool="0" flavor2="0">
+      </item>
+      <item path="bsp/boards/z1/uart.c" ex="false" tool="0" flavor2="0">
+      </item>
+      <item path="bsp/chips/adxl346/adxl346.c" ex="false" tool="0" flavor2="0">
+      </item>
+      <item path="bsp/chips/at86rf231/radio.c" ex="false" tool="0" flavor2="0">
+      </item>
+      <item path="bsp/chips/at86rf233/radio.c" ex="false" tool="0" flavor2="0">
+      </item>
+      <item path="bsp/chips/cc1101/radio.c" ex="false" tool="0" flavor2="0">
+      </item>
+      <item path="bsp/chips/cc2420/cc2420.c" ex="false" tool="0" flavor2="0">
+      </item>
+      <item path="bsp/chips/cc2420/cc2420_crypto.c" ex="false" tool="0" flavor2="0">
+      </item>
+      <item path="bsp/chips/cc2420/radio.c" ex="false" tool="0" flavor2="0">
+      </item>
+      <item path="bsp/chips/max44009/max44009.c" ex="false" tool="0" flavor2="0">
+      </item>
+      <item path="bsp/chips/sht21/sht21.c" ex="false" tool="0" flavor2="0">
+      </item>
+      <item path="build/python_gcc/bsp/boards/common/aes_cbc.c"
+            ex="false"
+            tool="0"
+            flavor2="0">
+      </item>
+      <item path="build/python_gcc/bsp/boards/common/aes_ccms.c"
+            ex="false"
+            tool="0"
+            flavor2="0">
+      </item>
+      <item path="build/python_gcc/bsp/boards/common/aes_ctr.c"
+            ex="false"
+            tool="0"
+            flavor2="0">
+      </item>
+      <item path="build/python_gcc/bsp/boards/common/aes_ecb.c"
+            ex="false"
+            tool="0"
+            flavor2="0">
+      </item>
+      <item path="build/python_gcc/bsp/boards/common/dummy_crypto_engine.c"
+            ex="false"
+            tool="0"
+            flavor2="0">
+      </item>
+      <item path="build/python_gcc/bsp/boards/common/firmware_crypto_engine.c"
+            ex="false"
+            tool="0"
+            flavor2="0">
+      </item>
+      <item path="build/python_gcc/bsp/boards/python/board_obj.c"
+            ex="false"
+            tool="0"
+            flavor2="0">
+      </item>
+      <item path="build/python_gcc/bsp/boards/python/bsp_timer_obj.c"
+            ex="false"
+            tool="0"
+            flavor2="0">
+      </item>
+      <item path="build/python_gcc/bsp/boards/python/debugpins_obj.c"
+            ex="false"
+            tool="0"
+            flavor2="0">
+      </item>
+      <item path="build/python_gcc/bsp/boards/python/eui64_obj.c"
+            ex="false"
+            tool="0"
+            flavor2="0">
+      </item>
+      <item path="build/python_gcc/bsp/boards/python/leds_obj.c"
+            ex="false"
+            tool="0"
+            flavor2="0">
+      </item>
+      <item path="build/python_gcc/bsp/boards/python/radio_obj.c"
+            ex="false"
+            tool="0"
+            flavor2="0">
+      </item>
+      <item path="build/python_gcc/bsp/boards/python/radiotimer_obj.c"
+            ex="false"
+            tool="0"
+            flavor2="0">
+      </item>
+      <item path="build/python_gcc/bsp/boards/python/supply_obj.c"
+            ex="false"
+            tool="0"
+            flavor2="0">
+      </item>
+      <item path="build/python_gcc/bsp/boards/python/uart_obj.c"
+            ex="false"
+            tool="0"
+            flavor2="0">
+      </item>
+      <item path="build/python_gcc/drivers/common/openhdlc.c"
+            ex="false"
+            tool="0"
+            flavor2="0">
+      </item>
+      <item path="build/python_gcc/drivers/common/openhdlc_obj.c"
+            ex="false"
+            tool="0"
+            flavor2="0">
+      </item>
+      <item path="build/python_gcc/drivers/common/opensensors.c"
+            ex="false"
+            tool="0"
+            flavor2="0">
+      </item>
+      <item path="build/python_gcc/drivers/common/opensensors_obj.c"
+            ex="false"
+            tool="0"
+            flavor2="0">
+      </item>
+      <item path="build/python_gcc/drivers/common/openserial.c"
+            ex="false"
+            tool="0"
+            flavor2="0">
+      </item>
+      <item path="build/python_gcc/drivers/common/openserial_obj.c"
+            ex="false"
+            tool="0"
+            flavor2="0">
+      </item>
+      <item path="build/python_gcc/drivers/common/opentimers.c"
+            ex="false"
+            tool="0"
+            flavor2="0">
+      </item>
+      <item path="build/python_gcc/drivers/common/opentimers_obj.c"
+            ex="false"
+            tool="0"
+            flavor2="0">
+      </item>
+      <item path="build/python_gcc/kernel/openos/scheduler.c"
+            ex="false"
+            tool="0"
+            flavor2="0">
+      </item>
+      <item path="build/python_gcc/kernel/openos/scheduler_obj.c"
+            ex="false"
+            tool="0"
+            flavor2="0">
+      </item>
+      <item path="build/python_gcc/openapps/c6t/c6t.c"
+            ex="false"
+            tool="0"
+            flavor2="0">
+      </item>
+      <item path="build/python_gcc/openapps/c6t/c6t_obj.c"
+            ex="false"
+            tool="0"
+            flavor2="0">
+      </item>
+      <item path="build/python_gcc/openapps/cexample/cexample.c"
+            ex="false"
+            tool="0"
+            flavor2="0">
+      </item>
+      <item path="build/python_gcc/openapps/cexample/cexample_obj.c"
+            ex="false"
+            tool="0"
+            flavor2="0">
+      </item>
+      <item path="build/python_gcc/openapps/cinfo/cinfo.c"
+            ex="false"
+            tool="0"
+            flavor2="0">
+      </item>
+      <item path="build/python_gcc/openapps/cinfo/cinfo_obj.c"
+            ex="false"
+            tool="0"
+            flavor2="0">
+      </item>
+      <item path="build/python_gcc/openapps/cleds/cleds.c"
+            ex="false"
+            tool="0"
+            flavor2="0">
+      </item>
+      <item path="build/python_gcc/openapps/cleds/cleds_obj.c"
+            ex="false"
+            tool="0"
+            flavor2="0">
+      </item>
+      <item path="build/python_gcc/openapps/cstorm/cstorm.c"
+            ex="false"
+            tool="0"
+            flavor2="0">
+      </item>
+      <item path="build/python_gcc/openapps/cstorm/cstorm_obj.c"
+            ex="false"
+            tool="0"
+            flavor2="0">
+      </item>
+      <item path="build/python_gcc/openapps/cwellknown/cwellknown.c"
+            ex="false"
+            tool="0"
+            flavor2="0">
+      </item>
+      <item path="build/python_gcc/openapps/cwellknown/cwellknown_obj.c"
+            ex="false"
+            tool="0"
+            flavor2="0">
+      </item>
+      <item path="build/python_gcc/openapps/openapps.c"
+            ex="false"
+            tool="0"
+            flavor2="0">
+      </item>
+      <item path="build/python_gcc/openapps/openapps_obj.c"
+            ex="false"
+            tool="0"
+            flavor2="0">
+      </item>
+      <item path="build/python_gcc/openapps/rrt/rrt.c"
+            ex="false"
+            tool="0"
+            flavor2="0">
+      </item>
+      <item path="build/python_gcc/openapps/rrt/rrt_obj.c"
+            ex="false"
+            tool="0"
+            flavor2="0">
+      </item>
+      <item path="build/python_gcc/openapps/techo/techo.c"
+            ex="false"
+            tool="0"
+            flavor2="0">
+      </item>
+      <item path="build/python_gcc/openapps/techo/techo_obj.c"
+            ex="false"
+            tool="0"
+            flavor2="0">
+      </item>
+      <item path="build/python_gcc/openapps/uecho/uecho.c"
+            ex="false"
+            tool="0"
+            flavor2="0">
+      </item>
+      <item path="build/python_gcc/openapps/uecho/uecho_obj.c"
+            ex="false"
+            tool="0"
+            flavor2="0">
+      </item>
+      <item path="build/python_gcc/openapps/uinject/uinject.c"
+            ex="false"
+            tool="0"
+            flavor2="0">
+      </item>
+      <item path="build/python_gcc/openapps/uinject/uinject_obj.c"
+            ex="false"
+            tool="0"
+            flavor2="0">
+      </item>
+      <item path="build/python_gcc/openstack/02a-MAClow/IEEE802154.c"
+            ex="false"
+            tool="0"
+            flavor2="0">
+      </item>
+      <item path="build/python_gcc/openstack/02a-MAClow/IEEE802154E.c"
+            ex="false"
+            tool="0"
+            flavor2="0">
+      </item>
+      <item path="build/python_gcc/openstack/02a-MAClow/IEEE802154E_obj.c"
+            ex="false"
+            tool="0"
+            flavor2="0">
+      </item>
+      <item path="build/python_gcc/openstack/02a-MAClow/IEEE802154_dummy_security.c"
+            ex="false"
+            tool="0"
+            flavor2="0">
+      </item>
+      <item path="build/python_gcc/openstack/02a-MAClow/IEEE802154_dummy_security_obj.c"
+            ex="false"
+            tool="0"
+            flavor2="0">
+      </item>
+      <item path="build/python_gcc/openstack/02a-MAClow/IEEE802154_obj.c"
+            ex="false"
+            tool="0"
+            flavor2="0">
+      </item>
+      <item path="build/python_gcc/openstack/02a-MAClow/IEEE802154_security.c"
+            ex="false"
+            tool="0"
+            flavor2="0">
+      </item>
+      <item path="build/python_gcc/openstack/02a-MAClow/IEEE802154_security_obj.c"
+            ex="false"
+            tool="0"
+            flavor2="0">
+      </item>
+      <item path="build/python_gcc/openstack/02a-MAClow/adaptive_sync.c"
+            ex="false"
+            tool="0"
+            flavor2="0">
+      </item>
+      <item path="build/python_gcc/openstack/02a-MAClow/adaptive_sync_obj.c"
+            ex="false"
+            tool="0"
+            flavor2="0">
+      </item>
+      <item path="build/python_gcc/openstack/02a-MAClow/topology.c"
+            ex="false"
+            tool="0"
+            flavor2="0">
+      </item>
+      <item path="build/python_gcc/openstack/02a-MAClow/topology_obj.c"
+            ex="false"
+            tool="0"
+            flavor2="0">
+      </item>
+      <item path="build/python_gcc/openstack/02b-MAChigh/neighbors.c"
+            ex="false"
+            tool="0"
+            flavor2="0">
+      </item>
+      <item path="build/python_gcc/openstack/02b-MAChigh/neighbors_obj.c"
+            ex="false"
+            tool="0"
+            flavor2="0">
+      </item>
+      <item path="build/python_gcc/openstack/02b-MAChigh/otf.c"
+            ex="false"
+            tool="0"
+            flavor2="0">
+      </item>
+      <item path="build/python_gcc/openstack/02b-MAChigh/otf_obj.c"
+            ex="false"
+            tool="0"
+            flavor2="0">
+      </item>
+      <item path="build/python_gcc/openstack/02b-MAChigh/processIE.c"
+            ex="false"
+            tool="0"
+            flavor2="0">
+      </item>
+      <item path="build/python_gcc/openstack/02b-MAChigh/processIE_obj.c"
+            ex="false"
+            tool="0"
+            flavor2="0">
+      </item>
+      <item path="build/python_gcc/openstack/02b-MAChigh/schedule.c"
+            ex="false"
+            tool="0"
+            flavor2="0">
+      </item>
+      <item path="build/python_gcc/openstack/02b-MAChigh/schedule_obj.c"
+            ex="false"
+            tool="0"
+            flavor2="0">
+      </item>
+      <item path="build/python_gcc/openstack/02b-MAChigh/sixtop.c"
+            ex="false"
+            tool="0"
+            flavor2="0">
+      </item>
+      <item path="build/python_gcc/openstack/02b-MAChigh/sixtop_obj.c"
+            ex="false"
+            tool="0"
+            flavor2="0">
+      </item>
+      <item path="build/python_gcc/openstack/03a-IPHC/iphc.c"
+            ex="false"
+            tool="0"
+            flavor2="0">
+      </item>
+      <item path="build/python_gcc/openstack/03a-IPHC/iphc_obj.c"
+            ex="false"
+            tool="0"
+            flavor2="0">
+      </item>
+      <item path="build/python_gcc/openstack/03a-IPHC/openbridge.c"
+            ex="false"
+            tool="0"
+            flavor2="0">
+      </item>
+      <item path="build/python_gcc/openstack/03a-IPHC/openbridge_obj.c"
+            ex="false"
+            tool="0"
+            flavor2="0">
+      </item>
+      <item path="build/python_gcc/openstack/03b-IPv6/forwarding.c"
+            ex="false"
+            tool="0"
+            flavor2="0">
+      </item>
+      <item path="build/python_gcc/openstack/03b-IPv6/forwarding_obj.c"
+            ex="false"
+            tool="0"
+            flavor2="0">
+      </item>
+      <item path="build/python_gcc/openstack/03b-IPv6/icmpv6.c"
+            ex="false"
+            tool="0"
+            flavor2="0">
+      </item>
+      <item path="build/python_gcc/openstack/03b-IPv6/icmpv6_obj.c"
+            ex="false"
+            tool="0"
+            flavor2="0">
+      </item>
+      <item path="build/python_gcc/openstack/03b-IPv6/icmpv6echo.c"
+            ex="false"
+            tool="0"
+            flavor2="0">
+      </item>
+      <item path="build/python_gcc/openstack/03b-IPv6/icmpv6echo_obj.c"
+            ex="false"
+            tool="0"
+            flavor2="0">
+      </item>
+      <item path="build/python_gcc/openstack/03b-IPv6/icmpv6rpl.c"
+            ex="false"
+            tool="0"
+            flavor2="0">
+      </item>
+      <item path="build/python_gcc/openstack/03b-IPv6/icmpv6rpl_obj.c"
+            ex="false"
+            tool="0"
+            flavor2="0">
+      </item>
+      <item path="build/python_gcc/openstack/04-TRAN/opencoap.c"
+            ex="false"
+            tool="0"
+            flavor2="0">
+      </item>
+      <item path="build/python_gcc/openstack/04-TRAN/opencoap_obj.c"
+            ex="false"
+            tool="0"
+            flavor2="0">
+      </item>
+      <item path="build/python_gcc/openstack/04-TRAN/opentcp.c"
+            ex="false"
+            tool="0"
+            flavor2="0">
+      </item>
+      <item path="build/python_gcc/openstack/04-TRAN/opentcp_obj.c"
+            ex="false"
+            tool="0"
+            flavor2="0">
+      </item>
+      <item path="build/python_gcc/openstack/04-TRAN/openudp.c"
+            ex="false"
+            tool="0"
+            flavor2="0">
+      </item>
+      <item path="build/python_gcc/openstack/04-TRAN/openudp_obj.c"
+            ex="false"
+            tool="0"
+            flavor2="0">
+      </item>
+      <item path="build/python_gcc/openstack/cross-layers/idmanager.c"
+            ex="false"
+            tool="0"
+            flavor2="0">
+      </item>
+      <item path="build/python_gcc/openstack/cross-layers/idmanager_obj.c"
+            ex="false"
+            tool="0"
+            flavor2="0">
+      </item>
+      <item path="build/python_gcc/openstack/cross-layers/openqueue.c"
+            ex="false"
+            tool="0"
+            flavor2="0">
+      </item>
+      <item path="build/python_gcc/openstack/cross-layers/openqueue_obj.c"
+            ex="false"
+            tool="0"
+            flavor2="0">
+      </item>
+      <item path="build/python_gcc/openstack/cross-layers/openrandom.c"
+            ex="false"
+            tool="0"
+            flavor2="0">
+      </item>
+      <item path="build/python_gcc/openstack/cross-layers/openrandom_obj.c"
+            ex="false"
+            tool="0"
+            flavor2="0">
+      </item>
+      <item path="build/python_gcc/openstack/cross-layers/packetfunctions.c"
+            ex="false"
+            tool="0"
+            flavor2="0">
+      </item>
+      <item path="build/python_gcc/openstack/cross-layers/packetfunctions_obj.c"
+            ex="false"
+            tool="0"
+            flavor2="0">
+      </item>
+      <item path="build/python_gcc/openstack/openstack.c"
+            ex="false"
+            tool="0"
+            flavor2="0">
+      </item>
+      <item path="build/python_gcc/openstack/openstack_obj.c"
+            ex="false"
+            tool="0"
+            flavor2="0">
+      </item>
+      <item path="build/python_gcc/projects/common/03oos_openwsn/03oos_openwsn.c"
+            ex="false"
+            tool="0"
+            flavor2="0">
+      </item>
+      <item path="build/python_gcc/projects/common/03oos_openwsn/03oos_openwsn_obj.c"
+            ex="false"
+            tool="0"
+            flavor2="0">
+      </item>
+      <item path="build/python_gcc/projects/common/03oos_openwsn/openwsnmodule.c"
+            ex="false"
+            tool="0"
+            flavor2="0">
+      </item>
+      <item path="build/python_gcc/projects/common/03oos_openwsn/openwsnmodule_obj.c"
+            ex="false"
+            tool="0"
+            flavor2="0">
+      </item>
+      <item path="drivers/common/openhdlc.c" ex="false" tool="0" flavor2="0">
+      </item>
+      <item path="drivers/common/opensensors.c" ex="false" tool="0" flavor2="0">
+      </item>
+      <item path="drivers/common/openserial.c" ex="false" tool="0" flavor2="0">
+      </item>
+      <item path="drivers/common/opentimers.c" ex="false" tool="0" flavor2="0">
+      </item>
+      <item path="drivers/gina/ADC_Channel.c" ex="false" tool="0" flavor2="0">
+      </item>
+      <item path="drivers/gina/button.c" ex="false" tool="0" flavor2="0">
+      </item>
+      <item path="drivers/gina/fuelgauge.c" ex="false" tool="0" flavor2="0">
+      </item>
+      <item path="drivers/gina/gyro.c" ex="false" tool="0" flavor2="0">
+      </item>
+      <item path="drivers/gina/heli.c" ex="false" tool="0" flavor2="0">
+      </item>
+      <item path="drivers/gina/large_range_accel.c" ex="false" tool="0" flavor2="0">
+      </item>
+      <item path="drivers/gina/magnetometer.c" ex="false" tool="0" flavor2="0">
+      </item>
+      <item path="drivers/gina/pwm.c" ex="false" tool="0" flavor2="0">
+      </item>
+      <item path="drivers/gina/sensitive_accel_temperature.c"
+            ex="false"
+            tool="0"
+            flavor2="0">
+      </item>
+      <item path="drivers/z1/tmp102.c" ex="false" tool="0" flavor2="0">
+      </item>
+      <item path="kernel/freertos/FreeRTOSV8.1.2/FreeRTOS/Source/croutine.c"
+            ex="false"
+            tool="0"
+            flavor2="0">
+      </item>
+      <item path="kernel/freertos/FreeRTOSV8.1.2/FreeRTOS/Source/event_groups.c"
+            ex="false"
+            tool="0"
+            flavor2="0">
+      </item>
+      <item path="kernel/freertos/FreeRTOSV8.1.2/FreeRTOS/Source/list.c"
+            ex="false"
+            tool="0"
+            flavor2="0">
+      </item>
+      <item path="kernel/freertos/FreeRTOSV8.1.2/FreeRTOS/Source/portable/GCC/ARM_CM3/port.c"
+            ex="false"
+            tool="0"
+            flavor2="0">
+      </item>
+      <item path="kernel/freertos/FreeRTOSV8.1.2/FreeRTOS/Source/portable/GCC/ARM_CM4F/port.c"
+            ex="false"
+            tool="0"
+            flavor2="0">
+      </item>
+      <item path="kernel/freertos/FreeRTOSV8.1.2/FreeRTOS/Source/portable/GCC/MSP430F449/port.c"
+            ex="false"
+            tool="0"
+            flavor2="0">
+      </item>
+      <item path="kernel/freertos/FreeRTOSV8.1.2/FreeRTOS/Source/portable/IAR/ARM_CM3/port.c"
+            ex="false"
+            tool="0"
+            flavor2="0">
+      </item>
+      <item path="kernel/freertos/FreeRTOSV8.1.2/FreeRTOS/Source/portable/IAR/ARM_CM3/portasm.s"
+            ex="false"
+            tool="4"
+            flavor2="0">
+      </item>
+      <item path="kernel/freertos/FreeRTOSV8.1.2/FreeRTOS/Source/portable/IAR/ARM_CM4F/port.c"
+            ex="false"
+            tool="0"
+            flavor2="0">
+      </item>
+      <item path="kernel/freertos/FreeRTOSV8.1.2/FreeRTOS/Source/portable/IAR/ARM_CM4F/portasm.s"
+            ex="false"
+            tool="4"
+            flavor2="0">
+      </item>
+      <item path="kernel/freertos/FreeRTOSV8.1.2/FreeRTOS/Source/portable/IAR/MSP430/port.c"
+            ex="false"
+            tool="0"
+            flavor2="0">
+      </item>
+      <item path="kernel/freertos/FreeRTOSV8.1.2/FreeRTOS/Source/portable/MemMang/heap_1.c"
+            ex="false"
+            tool="0"
+            flavor2="0">
+      </item>
+      <item path="kernel/freertos/FreeRTOSV8.1.2/FreeRTOS/Source/portable/MemMang/heap_2.c"
+            ex="false"
+            tool="0"
+            flavor2="0">
+      </item>
+      <item path="kernel/freertos/FreeRTOSV8.1.2/FreeRTOS/Source/portable/MemMang/heap_3.c"
+            ex="false"
+            tool="0"
+            flavor2="0">
+      </item>
+      <item path="kernel/freertos/FreeRTOSV8.1.2/FreeRTOS/Source/portable/MemMang/heap_4.c"
+            ex="false"
+            tool="0"
+            flavor2="0">
+      </item>
+      <item path="kernel/freertos/FreeRTOSV8.1.2/FreeRTOS/Source/portable/MemMang/heap_5.c"
+            ex="false"
+            tool="0"
+            flavor2="0">
+      </item>
+      <item path="kernel/freertos/FreeRTOSV8.1.2/FreeRTOS/Source/queue.c"
+            ex="false"
+            tool="0"
+            flavor2="0">
+      </item>
+      <item path="kernel/freertos/FreeRTOSV8.1.2/FreeRTOS/Source/tasks.c"
+            ex="false"
+            tool="0"
+            flavor2="0">
+      </item>
+      <item path="kernel/freertos/FreeRTOSV8.1.2/FreeRTOS/Source/timers.c"
+            ex="false"
+            tool="0"
+            flavor2="0">
+      </item>
+      <item path="kernel/freertos/scheduler.c" ex="false" tool="0" flavor2="0">
+      </item>
+      <item path="kernel/openos/scheduler.c" ex="false" tool="0" flavor2="0">
+      </item>
+      <item path="openapps/c6t/c6t.c" ex="false" tool="0" flavor2="0">
+      </item>
+      <item path="openapps/cexample/cexample.c" ex="false" tool="0" flavor2="0">
+      </item>
+      <item path="openapps/cinfo/cinfo.c" ex="false" tool="0" flavor2="0">
+      </item>
+      <item path="openapps/cleds/cleds.c" ex="false" tool="0" flavor2="0">
+      </item>
+      <item path="openapps/csensors/csensors.c" ex="false" tool="0" flavor2="0">
+      </item>
+      <item path="openapps/cstorm/cstorm.c" ex="false" tool="0" flavor2="0">
+      </item>
+      <item path="openapps/cwellknown/cwellknown.c" ex="false" tool="0" flavor2="0">
+      </item>
+      <item path="openapps/openapps.c" ex="false" tool="0" flavor2="0">
+      </item>
+      <item path="openapps/rrt/rrt.c" ex="false" tool="0" flavor2="0">
+      </item>
+      <item path="openapps/techo/techo.c" ex="false" tool="0" flavor2="0">
+      </item>
+      <item path="openapps/tohlone/tohlone.c" ex="false" tool="0" flavor2="0">
+      </item>
+      <item path="openapps/tohlone/tohlone_webpages.c"
+            ex="false"
+            tool="0"
+            flavor2="0">
+      </item>
+      <item path="openapps/uecho/uecho.c" ex="false" tool="0" flavor2="0">
+      </item>
+      <item path="openapps/uinject/uinject.c" ex="false" tool="0" flavor2="0">
+      </item>
+      <item path="openstack/02a-MAClow/IEEE802154.c" ex="false" tool="0" flavor2="0">
+      </item>
+      <item path="openstack/02a-MAClow/IEEE802154E.c" ex="false" tool="0" flavor2="0">
+      </item>
+      <item path="openstack/02a-MAClow/IEEE802154_dummy_security.c"
+            ex="false"
+            tool="0"
+            flavor2="0">
+      </item>
+      <item path="openstack/02a-MAClow/IEEE802154_security.c"
+            ex="false"
+            tool="0"
+            flavor2="0">
+      </item>
+      <item path="openstack/02a-MAClow/adaptive_sync.c"
+            ex="false"
+            tool="0"
+            flavor2="0">
+      </item>
+      <item path="openstack/02a-MAClow/topology.c" ex="false" tool="0" flavor2="0">
+      </item>
+      <item path="openstack/02b-MAChigh/neighbors.c" ex="false" tool="0" flavor2="0">
+      </item>
+      <item path="openstack/02b-MAChigh/otf.c" ex="false" tool="0" flavor2="0">
+      </item>
+      <item path="openstack/02b-MAChigh/processIE.c" ex="false" tool="0" flavor2="0">
+      </item>
+      <item path="openstack/02b-MAChigh/schedule.c" ex="false" tool="0" flavor2="0">
+      </item>
+      <item path="openstack/02b-MAChigh/sixtop.c" ex="false" tool="0" flavor2="0">
+      </item>
+      <item path="openstack/03a-IPHC/iphc.c" ex="false" tool="0" flavor2="0">
+      </item>
+      <item path="openstack/03a-IPHC/openbridge.c" ex="false" tool="0" flavor2="0">
+      </item>
+      <item path="openstack/03b-IPv6/MEDIO-STORING/icmpv6rpl.c"
+            ex="false"
+            tool="0"
+            flavor2="0">
+      </item>
+      <item path="openstack/03b-IPv6/NON-STORING/icmpv6rpl.c"
+            ex="false"
+            tool="0"
+            flavor2="0">
+      </item>
+      <item path="openstack/03b-IPv6/STORING/icmpv6rpl.c"
+            ex="false"
+            tool="0"
+            flavor2="0">
+      </item>
+      <item path="openstack/03b-IPv6/forwarding.c" ex="false" tool="0" flavor2="0">
+      </item>
+      <item path="openstack/03b-IPv6/icmpv6.c" ex="false" tool="0" flavor2="0">
+      </item>
+      <item path="openstack/03b-IPv6/icmpv6echo.c" ex="false" tool="0" flavor2="0">
+      </item>
+      <item path="openstack/03b-IPv6/icmpv6rpl.c" ex="false" tool="0" flavor2="0">
+      </item>
+      <item path="openstack/04-TRAN/opencoap.c" ex="false" tool="0" flavor2="0">
+      </item>
+      <item path="openstack/04-TRAN/opentcp.c" ex="false" tool="0" flavor2="0">
+      </item>
+      <item path="openstack/04-TRAN/openudp.c" ex="false" tool="0" flavor2="0">
+      </item>
+      <item path="openstack/cross-layers/idmanager.c" ex="false" tool="0" flavor2="0">
+      </item>
+      <item path="openstack/cross-layers/openqueue.c" ex="false" tool="0" flavor2="0">
+      </item>
+      <item path="openstack/cross-layers/openrandom.c"
+            ex="false"
+            tool="0"
+            flavor2="0">
+      </item>
+      <item path="openstack/cross-layers/packetfunctions.c"
+            ex="false"
+            tool="0"
+            flavor2="0">
+      </item>
+      <item path="openstack/openstack.c" ex="false" tool="0" flavor2="0">
+      </item>
+      <item path="projects/agilefox/00std_low_power_mode/00std_low_power_mode.c"
+            ex="false"
+            tool="0"
+            flavor2="0">
+      </item>
+      <item path="projects/agilefox/00std_low_power_mode/configureRadio.c"
+            ex="false"
+            tool="0"
+            flavor2="0">
+      </item>
+      <item path="projects/agilefox/01bsp_flash/application/01bsp_flash.c"
+            ex="false"
+            tool="0"
+            flavor2="0">
+      </item>
+      <item path="projects/common/01bsp_bothtimers/01bsp_bothtimers.c"
+            ex="false"
+            tool="0"
+            flavor2="0">
+      </item>
+      <item path="projects/common/01bsp_bsp_timer/01bsp_bsp_timer.c"
+            ex="false"
+            tool="0"
+            flavor2="0">
+      </item>
+      <item path="projects/common/01bsp_closetimers/01bsp_closetimers.c"
+            ex="false"
+            tool="0"
+            flavor2="0">
+      </item>
+      <item path="projects/common/01bsp_cryptoengine/01bsp_cryptoengine.c"
+            ex="false"
+            tool="0"
+            flavor2="0">
+      </item>
+      <item path="projects/common/01bsp_debugpins/01bsp_debugpins.c"
+            ex="false"
+            tool="0"
+            flavor2="0">
+      </item>
+      <item path="projects/common/01bsp_eui64/01bsp_eui64.c"
+            ex="false"
+            tool="0"
+            flavor2="0">
+      </item>
+      <item path="projects/common/01bsp_leds/01bsp_leds.c"
+            ex="false"
+            tool="0"
+            flavor2="0">
+      </item>
+      <item path="projects/common/01bsp_radio/01bsp_radio.c"
+            ex="false"
+            tool="0"
+            flavor2="0">
+      </item>
+      <item path="projects/common/01bsp_radio_rx/01bsp_radio_rx.c"
+            ex="false"
+            tool="0"
+            flavor2="0">
+      </item>
+      <item path="projects/common/01bsp_radio_tx/01bsp_radio_tx.c"
+            ex="false"
+            tool="0"
+            flavor2="0">
+      </item>
+      <item path="projects/common/01bsp_radiotimer/01bsp_radiotimer.c"
+            ex="false"
+            tool="0"
+            flavor2="0">
+      </item>
+      <item path="projects/common/01bsp_spi/01bsp_spi.c"
+            ex="false"
+            tool="0"
+            flavor2="0">
+      </item>
+      <item path="projects/common/01bsp_uart/01bsp_uart.c"
+            ex="false"
+            tool="0"
+            flavor2="0">
+      </item>
+      <item path="projects/common/02drv_openserial/02drv_openserial.c"
+            ex="false"
+            tool="0"
+            flavor2="0">
+      </item>
+      <item path="projects/common/02drv_opentimers/02drv_opentimers.c"
+            ex="false"
+            tool="0"
+            flavor2="0">
+      </item>
+      <item path="projects/common/02drv_sensors/02drv_sensors.c"
+            ex="false"
+            tool="0"
+            flavor2="0">
+      </item>
+      <item path="projects/common/03oos_macpong/03oos_macpong.c"
+            ex="false"
+            tool="0"
+            flavor2="0">
+      </item>
+      <item path="projects/common/03oos_mercator/03oos_mercator.c"
+            ex="false"
+            tool="0"
+            flavor2="0">
+      </item>
+      <item path="projects/common/03oos_openwsn/03oos_openwsn.c"
+            ex="false"
+            tool="0"
+            flavor2="0">
+      </item>
+      <item path="projects/common/03oos_sniffer/03oos_sniffer.c"
+            ex="false"
+            tool="0"
+            flavor2="0">
+      </item>
+      <item path="projects/gina/00std_eui64/00std_eui64.c"
+            ex="false"
+            tool="0"
+            flavor2="0">
+      </item>
+      <item path="projects/gina/00std_leds_xtal/00std_leds_xtal.c"
+            ex="false"
+            tool="0"
+            flavor2="0">
+      </item>
+      <item path="projects/gina/00std_timers/00std_timers.c"
+            ex="false"
+            tool="0"
+            flavor2="0">
+      </item>
+      <item path="projects/gina/00std_uart/00std_uart.c"
+            ex="false"
+            tool="0"
+            flavor2="0">
+      </item>
+      <item path="projects/gina/02drv_headsup/02drv_headsup.c"
+            ex="false"
+            tool="0"
+            flavor2="0">
+      </item>
+      <item path="projects/gina/old/imu_loop.c" ex="false" tool="0" flavor2="0">
+      </item>
+      <item path="projects/gina/old/intersection.c" ex="false" tool="0" flavor2="0">
+      </item>
+      <item path="projects/gina/old/test_fuelgauge.c" ex="false" tool="0" flavor2="0">
+      </item>
+      <item path="projects/gina/old/test_gyro.c" ex="false" tool="0" flavor2="0">
+      </item>
+      <item path="projects/gina/old/test_hybrid_arq.c"
+            ex="false"
+            tool="0"
+            flavor2="0">
+      </item>
+      <item path="projects/gina/old/test_i2c_connnected_slaves.c"
+            ex="false"
+            tool="0"
+            flavor2="0">
+      </item>
+      <item path="projects/gina/old/test_imu.c" ex="false" tool="0" flavor2="0">
+      </item>
+      <item path="projects/gina/old/test_imu_radio.c" ex="false" tool="0" flavor2="0">
+      </item>
+      <item path="projects/gina/old/test_large_range_accel.c"
+            ex="false"
+            tool="0"
+            flavor2="0">
+      </item>
+      <item path="projects/gina/old/test_magnetometer.c"
+            ex="false"
+            tool="0"
+            flavor2="0">
+      </item>
+      <item path="projects/gina/old/test_pwm.c" ex="false" tool="0" flavor2="0">
+      </item>
+      <item path="projects/gina/old/test_radio.c" ex="false" tool="0" flavor2="0">
+      </item>
+      <item path="projects/gina/old/test_sensitive_accel_temperature.c"
+            ex="false"
+            tool="0"
+            flavor2="0">
+      </item>
+      <item path="projects/openmotestm/00std_low_power_mode/00std_low_power_mode.c"
+            ex="false"
+            tool="0"
+            flavor2="0">
+      </item>
+      <item path="projects/openmotestm/01bsp_flash/application/01bsp_flash.c"
+            ex="false"
+            tool="0"
+            flavor2="0">
+      </item>
+      <item path="projects/samr21_xpro/00std_low_power_mode/00std_low_power_mode.c"
+            ex="false"
+            tool="0"
+            flavor2="0">
+      </item>
+      <item path="projects/samr21_xpro/00std_low_power_mode/cmsis/src/startup_samr21.c"
+            ex="false"
+            tool="0"
+            flavor2="0">
+      </item>
+      <item path="projects/samr21_xpro/00std_low_power_mode/cmsis/src/system_samr21.c"
+            ex="false"
+            tool="0"
+            flavor2="0">
+      </item>
+      <item path="projects/samr21_xpro/00std_low_power_mode/configureRadio.c"
+            ex="false"
+            tool="0"
+            flavor2="0">
+      </item>
+      <item path="projects/samr21_xpro/01bsp_bothtimers/cmsis/src/startup_samr21.c"
+            ex="false"
+            tool="0"
+            flavor2="0">
+      </item>
+      <item path="projects/samr21_xpro/01bsp_bothtimers/cmsis/src/system_samr21.c"
+            ex="false"
+            tool="0"
+            flavor2="0">
+      </item>
+      <item path="projects/samr21_xpro/01bsp_closetimers/cmsis/src/startup_samr21.c"
+            ex="false"
+            tool="0"
+            flavor2="0">
+      </item>
+      <item path="projects/samr21_xpro/01bsp_closetimers/cmsis/src/system_samr21.c"
+            ex="false"
+            tool="0"
+            flavor2="0">
+      </item>
+      <item path="projects/samr21_xpro/01bsp_flash/01bsp_flash.c"
+            ex="false"
+            tool="0"
+            flavor2="0">
+      </item>
+      <item path="projects/samr21_xpro/01bsp_flash/cmsis/src/startup_samr21.c"
+            ex="false"
+            tool="0"
+            flavor2="0">
+      </item>
+      <item path="projects/samr21_xpro/01bsp_flash/cmsis/src/system_samr21.c"
+            ex="false"
+            tool="0"
+            flavor2="0">
+      </item>
+      <item path="projects/samr21_xpro/01bsp_leds/cmsis/src/startup_samr21.c"
+            ex="false"
+            tool="0"
+            flavor2="0">
+      </item>
+      <item path="projects/samr21_xpro/01bsp_leds/cmsis/src/system_samr21.c"
+            ex="false"
+            tool="0"
+            flavor2="0">
+      </item>
+      <item path="projects/samr21_xpro/01bsp_radio/cmsis/src/startup_samr21.c"
+            ex="false"
+            tool="0"
+            flavor2="0">
+      </item>
+      <item path="projects/samr21_xpro/01bsp_radio/cmsis/src/system_samr21.c"
+            ex="false"
+            tool="0"
+            flavor2="0">
+      </item>
+      <item path="projects/samr21_xpro/01bsp_radio_rx/cmsis/src/startup_samr21.c"
+            ex="false"
+            tool="0"
+            flavor2="0">
+      </item>
+      <item path="projects/samr21_xpro/01bsp_radio_rx/cmsis/src/system_samr21.c"
+            ex="false"
+            tool="0"
+            flavor2="0">
+      </item>
+      <item path="projects/samr21_xpro/01bsp_radio_tx/cmsis/src/startup_samr21.c"
+            ex="false"
+            tool="0"
+            flavor2="0">
+      </item>
+      <item path="projects/samr21_xpro/01bsp_radio_tx/cmsis/src/system_samr21.c"
+            ex="false"
+            tool="0"
+            flavor2="0">
+      </item>
+      <item path="projects/samr21_xpro/01bsp_radiotimer/cmsis/src/startup_samr21.c"
+            ex="false"
+            tool="0"
+            flavor2="0">
+      </item>
+      <item path="projects/samr21_xpro/01bsp_radiotimer/cmsis/src/system_samr21.c"
+            ex="false"
+            tool="0"
+            flavor2="0">
+      </item>
+      <item path="projects/samr21_xpro/01bsp_spi/cmsis/src/startup_samr21.c"
+            ex="false"
+            tool="0"
+            flavor2="0">
+      </item>
+      <item path="projects/samr21_xpro/01bsp_spi/cmsis/src/system_samr21.c"
+            ex="false"
+            tool="0"
+            flavor2="0">
+      </item>
+      <item path="projects/samr21_xpro/01bsp_timer/cmsis/src/startup_samr21.c"
+            ex="false"
+            tool="0"
+            flavor2="0">
+      </item>
+      <item path="projects/samr21_xpro/01bsp_timer/cmsis/src/system_samr21.c"
+            ex="false"
+            tool="0"
+            flavor2="0">
+      </item>
+      <item path="projects/samr21_xpro/01bsp_uart/cmsis/src/startup_samr21.c"
+            ex="false"
+            tool="0"
+            flavor2="0">
+      </item>
+      <item path="projects/samr21_xpro/01bsp_uart/cmsis/src/system_samr21.c"
+            ex="false"
+            tool="0"
+            flavor2="0">
+      </item>
+      <item path="projects/samr21_xpro/02drv_opentimers/cmsis/src/startup_samr21.c"
+            ex="false"
+            tool="0"
+            flavor2="0">
+      </item>
+      <item path="projects/samr21_xpro/02drv_opentimers/cmsis/src/system_samr21.c"
+            ex="false"
+            tool="0"
+            flavor2="0">
+      </item>
+      <item path="projects/samr21_xpro/03oos_macpong/cmsis/src/startup_samr21.c"
+            ex="false"
+            tool="0"
+            flavor2="0">
+      </item>
+      <item path="projects/samr21_xpro/03oos_macpong/cmsis/src/system_samr21.c"
+            ex="false"
+            tool="0"
+            flavor2="0">
+      </item>
+      <item path="projects/samr21_xpro/03oos_openwsn/cmsis/src/startup_samr21.c"
+            ex="false"
+            tool="0"
+            flavor2="0">
+      </item>
+      <item path="projects/samr21_xpro/03oos_openwsn/cmsis/src/system_samr21.c"
+            ex="false"
+            tool="0"
+            flavor2="0">
+      </item>
+      <item path="projects/telosb/00std_button/00std_button.c"
+            ex="false"
+            tool="0"
+            flavor2="0">
+      </item>
+      <item path="projects/telosb/00std_chromatic/00std_chromatic.c"
+            ex="false"
+            tool="0"
+            flavor2="0">
+      </item>
+      <item path="projects/telosb/00std_clocks/00std_clocks.c"
+            ex="false"
+            tool="0"
+            flavor2="0">
+      </item>
+      <item path="projects/telosb/00std_eui64/00std_eui64.c"
+            ex="false"
+            tool="0"
+            flavor2="0">
+      </item>
+      <item path="projects/telosb/00std_i2c/00std_i2c.c"
+            ex="false"
+            tool="0"
+            flavor2="0">
+      </item>
+      <item path="projects/telosb/00std_leds_xtal/00std_leds_xtal.c"
+            ex="false"
+            tool="0"
+            flavor2="0">
+      </item>
+      <item path="projects/telosb/00std_spi/00std_spi.c"
+            ex="false"
+            tool="0"
+            flavor2="0">
+      </item>
+      <item path="projects/telosb/00std_uart/00std_uart.c"
+            ex="false"
+            tool="0"
+            flavor2="0">
+      </item>
+      <item path="projects/telosb/00std_uart0/00std_uart0.c"
+            ex="false"
+            tool="0"
+            flavor2="0">
+      </item>
+      <item path="projects/wsn430v13b/00std_button/00std_button.c"
+            ex="false"
+            tool="0"
+            flavor2="0">
+      </item>
+      <item path="projects/wsn430v13b/00std_clocks/00std_clocks.c"
+            ex="false"
+            tool="0"
+            flavor2="0">
+      </item>
+      <item path="projects/wsn430v13b/00std_eui64/00std_eui64.c"
+            ex="false"
+            tool="0"
+            flavor2="0">
+      </item>
+      <item path="projects/wsn430v13b/00std_i2c/00std_i2c.c"
+            ex="false"
+            tool="0"
+            flavor2="0">
+      </item>
+      <item path="projects/wsn430v13b/00std_leds_xtal/00std_leds_xtal.c"
+            ex="false"
+            tool="0"
+            flavor2="0">
+      </item>
+      <item path="projects/wsn430v13b/00std_spi/00std_spi.c"
+            ex="false"
+            tool="0"
+            flavor2="0">
+      </item>
+      <item path="projects/wsn430v13b/00std_uart/00std_uart.c"
+            ex="false"
+            tool="0"
+            flavor2="0">
+      </item>
+      <item path="projects/wsn430v14/00std_clocks/00std_clocks.c"
+            ex="false"
+            tool="0"
+            flavor2="0">
+      </item>
+      <item path="projects/wsn430v14/00std_eui64/00std_eui64.c"
+            ex="false"
+            tool="0"
+            flavor2="0">
+      </item>
+      <item path="projects/wsn430v14/00std_leds_xtal/00std_leds_xtal.c"
+            ex="false"
+            tool="0"
+            flavor2="0">
+      </item>
+      <item path="projects/wsn430v14/00std_spi/00std_spi.c"
+            ex="false"
+            tool="0"
+            flavor2="0">
+      </item>
+      <item path="projects/wsn430v14/00std_uart/00std_uart.c"
+            ex="false"
+            tool="0"
+            flavor2="0">
+      </item>
+      <item path="projects/xpressohack/00std_eui64b/src/cr_startup_lpc176x.c"
+            ex="false"
+            tool="0"
+            flavor2="0">
+      </item>
+      <item path="projects/xpressohack/00std_eui64b/src/main1.c"
+            ex="false"
+            tool="0"
+            flavor2="0">
+      </item>
+      <item path="projects/xpressohack/00std_spi/src/cr_startup_lpc176x.c"
+            ex="false"
+            tool="0"
+            flavor2="0">
+      </item>
+      <item path="projects/xpressohack/00std_spi/src/main.c"
+            ex="false"
+            tool="0"
+            flavor2="0">
+      </item>
+      <item path="projects/xpressohack/01bsp_leds/application/cr_startup_lpc176x.c"
+            ex="false"
+            tool="0"
+            flavor2="0">
+      </item>
+      <item path="projects/xpressohack/01bsp_radio/application/cr_startup_lpc176x.c"
+            ex="false"
+            tool="0"
+            flavor2="0">
+      </item>
+      <item path="projects/xpressohack/01bsp_spi/application/cr_startup_lpc176x.c"
+            ex="false"
+            tool="0"
+            flavor2="0">
+      </item>
+      <item path="projects/xpressohack/01bsp_timers/application/cr_startup_lpc176x.c"
+            ex="false"
+            tool="0"
+            flavor2="0">
+      </item>
+      <item path="projects/xpressohack/OpenWSN_OS/src/OpenAL/events.c"
+            ex="false"
+            tool="0"
+            flavor2="0">
+      </item>
+      <item path="projects/xpressohack/OpenWSN_OS/src/OpenAL/internal/openal_app_manager.c"
+            ex="false"
+            tool="0"
+            flavor2="0">
+      </item>
+      <item path="projects/xpressohack/OpenWSN_OS/src/OpenAL/internal/openal_event_manager.c"
+            ex="false"
+            tool="0"
+            flavor2="0">
+      </item>
+      <item path="projects/xpressohack/OpenWSN_OS/src/OpenAL/internal/openmote_pindefs.c"
+            ex="false"
+            tool="0"
+            flavor2="0">
+      </item>
+      <item path="projects/xpressohack/OpenWSN_OS/src/OpenAL/pins.c"
+            ex="false"
+            tool="0"
+            flavor2="0">
+      </item>
+      <item path="projects/xpressohack/OpenWSN_OS/src/cr_startup_lpc17.c"
+            ex="false"
+            tool="0"
+            flavor2="0">
+      </item>
+      <item path="projects/xpressohack/OpenWSN_OS/src/main.c"
+            ex="false"
+            tool="0"
+            flavor2="0">
+      </item>
+    </conf>
+  </confs>
+</configurationDescriptor>
