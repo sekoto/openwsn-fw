@@ -49,6 +49,7 @@ void icmpv6_receive(OpenQueueEntry_t* msg) {
       case IANA_ICMPv6_ECHO_REPLY:
          icmpv6echo_receive(msg);
          break;
+      case IANA_IPv6HOPOPT:   
       case IANA_ICMPv6_RPL:
          icmpv6rpl_receive(msg);
          break;

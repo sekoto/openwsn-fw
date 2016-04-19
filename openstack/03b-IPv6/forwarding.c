@@ -260,7 +260,6 @@ void forwarding_receive(
         printf(" %X",(&idmanager_vars.my64bID)->addr_64b[i]);  
     }
     printf("\n");
-    
     printf("** Forwarding -- Packet-Recieved.. \n");
     
     printf("** Forwarding -- Printing PACKET -");
@@ -281,16 +280,9 @@ void forwarding_receive(
     }
     printf("\n");
     
-    printf("** Forwarding -- l4_sourcePortORicmpv6Type.. %X\n",((ICMPv6_ht*)(msg->payload))->type);
-   
-    // retrieve ID of the MOTE
-    printf("### ID-MOTE -- ");
-    for (i=0;i<LENGTH_ADDR64b;i++) {
-        printf(" %X",(&idmanager_vars.my64bID)->addr_64b[i]);  
-    }
-    printf ("\n");
+    //printf("** Forwarding -- l4_sourcePortORicmpv6Type.. %X\n",((ICMPv6_ht*)(msg->payload))->type);
     
-    printf ("** Packet-Recieved.. \n");
+    printf ("** Packet -- ipv6_outer_header->next_header -- %X\n",ipv6_outer_header->next_header);
     
     if (
         (
@@ -307,7 +299,7 @@ void forwarding_receive(
             packetfunctions_tossHeader(msg,ipv6_outer_header->header_length);
         }
         
-        printf ("** Forwarding -- l3_destinationAddress.. ");
+        printf ("** Forwarding -- My IP -- l3_destinationAddress.. ");
         for (i=0;i<LENGTH_ADDR128b;i++) {
             printf (" %X",msg->l3_destinationAdd.addr_128b[i]);  
         }
@@ -347,30 +339,65 @@ void forwarding_receive(
         msg->creator = COMPONENT_FORWARDING;
       
         if (ipv6_outer_header->next_header!=IANA_IPv6ROUTE) {
+            printf ("** Forwarding -- Packet-Recieved..Not Source Route\n");
             flags = rpl_option->flags;
             senderRank = rpl_option->senderRank;
-            if ((flags & O_FLAG)!=0){
-                // wrong direction
-                // log error
-                openserial_printError(
-                    COMPONENT_FORWARDING,
-                    ERR_WRONG_DIRECTION,
-                    (errorparameter_t)flags,
-                    (errorparameter_t)senderRank
-                );
-            }
-            if (senderRank < neighbors_getMyDAGrank()){
-                // loop detected
-                // set flag
-                rpl_option->flags |= R_FLAG;
-                // log error
-                openserial_printError(
-                    COMPONENT_FORWARDING,
-                    ERR_LOOP_DETECTED,
-                    (errorparameter_t) senderRank,
-                    (errorparameter_t) neighbors_getMyDAGrank()
-                );
-            }
+            //printf ("** Forwarding -- Packet-Recieved.. RPL flags %X -- Binary ",flags);
+            //for(i=0x80;i!=0;i>>=1)
+            //printf("%c",(flags&i)?'1':'0'); 
+            //printf ("\n");
+            
+            //printf ("** Forwarding -- Packet-Recieved.. O flag %X\n",(rpl_option->flags & O_FLAG));
+            //printf ("** Forwarding -- senderRank %X\n",senderRank);
+
+            if ((flags & O_FLAG) == O_FLAG){
+                if (senderRank < neighbors_getMyDAGrank()){
+                    printf("** Forwarding -- DOWNSTREAM\n");
+                }else{
+                    // wrong direction
+                    // log error
+                    openserial_printError(
+                        COMPONENT_FORWARDING,
+                        ERR_WRONG_DIRECTION,
+                        (errorparameter_t)flags,
+                        (errorparameter_t)senderRank
+                    );
+                    // loop detected
+                    // set flag
+                    rpl_option->flags |= R_FLAG;
+                    // log error
+                    openserial_printError(
+                        COMPONENT_FORWARDING,
+                        ERR_LOOP_DETECTED,
+                        (errorparameter_t) senderRank,
+                        (errorparameter_t) neighbors_getMyDAGrank()
+                    );
+                }
+            }else{  
+                if (senderRank < neighbors_getMyDAGrank()){
+                    // wrong direction
+                    // log error
+                    openserial_printError(
+                        COMPONENT_FORWARDING,
+                        ERR_WRONG_DIRECTION,
+                        (errorparameter_t)flags,
+                        (errorparameter_t)senderRank
+                    );
+                    // loop detected
+                    // set flag
+                    rpl_option->flags |= R_FLAG;
+                    // log error
+                    openserial_printError(
+                        COMPONENT_FORWARDING,
+                        ERR_LOOP_DETECTED,
+                        (errorparameter_t) senderRank,
+                        (errorparameter_t) neighbors_getMyDAGrank()
+                    );
+                }else{
+                    printf("** Forwarding -- UPSTREAM\n");
+                }
+            }  
+            
             forwarding_createRplOption(rpl_option, rpl_option->flags);
             // resend as if from upper layer
             printf ("** Forwarding -- Packet-Recieved..resend as if from upper layer -- Routing-Table\n");
@@ -492,7 +519,7 @@ owerror_t forwarding_send_internal_RoutingTable(
    forwarding_getNextHop(&(msg->l3_destinationAdd),&(msg->l2_nextORpreviousHop));
    
    if (msg->l2_nextORpreviousHop.type==ADDR_NONE) {
-       printf("ERROR FORWARDING NEXT-HOP--- %X!!!!\n",msg->l2_nextORpreviousHop.type);
+      printf("ERROR FORWARDING NEXT-HOP--- %X!!!!\n",msg->l2_nextORpreviousHop.type);
       openserial_printError(
          COMPONENT_FORWARDING,
          ERR_NO_NEXTHOP,

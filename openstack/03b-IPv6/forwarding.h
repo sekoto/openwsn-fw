@@ -19,6 +19,10 @@ enum {
    PCKTSEND        = 2, // used by the node to indicate is sending a packet
 };
 
+/**
+\brief hop header flags
+
+*/
 enum {
    O_FLAG          = 0x10,
    R_FLAG          = 0x08,

@@ -85,7 +85,7 @@ owerror_t iphc_sendFromForwarding(
     if (ipv6_outer_header->src.type != ADDR_NONE){
         // there is IPinIP check hop limit in ip in ip encapsulation
         if (ipv6_outer_header->hop_limit==0){
-            printf("## IPCH -- HOP_LIMIT_REACHED\n");
+            //printf("## IPHC -- HOP_LIMIT_REACHED\n");
             openserial_printError(COMPONENT_IPHC,ERR_HOP_LIMIT_REACHED,
                                 (errorparameter_t)0,
                                 (errorparameter_t)0);
@@ -169,31 +169,32 @@ owerror_t iphc_sendFromForwarding(
         }
     }
     
-    //prepend Option hop by hop header except when src routing and dst is not 0xffff
-    //-- this is a little trick as src routing is using an option header set to 0x00
-    if (
-        rpl_option->optionType==RPL_HOPBYHOP_HEADER_OPTION_TYPE && 
-        packetfunctions_isBroadcastMulticast(&(msg->l3_destinationAdd))==FALSE
-    ){
-        printf ("*** RPL_HOPBYHOP_HEADER_OPTION_TYPE\n");      
-        iphc_prependIPv6HopByHopHeader(msg, msg->l4_protocol, rpl_option);
-    }
-    
-    // copy RH3s back if length > 0
-    if (rh3_length > 0){
-        packetfunctions_reserveHeaderSize(msg,rh3_length);
-        memcpy(&msg->payload[0],&rh3_copy[0],rh3_length);
-    }
-    
-    // if there are 6LoRH in the packet, add page dispatch no.1
-    if (
-        (*((uint8_t*)(msg->payload)) & FORMAT_6LORH_MASK) == CRITICAL_6LORH ||
-        (*((uint8_t*)(msg->payload)) & FORMAT_6LORH_MASK) == ELECTIVE_6LoRH
-    ){
-        packetfunctions_reserveHeaderSize(msg,sizeof(uint8_t));
-        *((uint8_t*)(msg->payload)) = PAGE_DISPATCH_NO_1;
-    }
-    
+        //prepend Option hop by hop header except when src routing and dst is not 0xffff
+        //-- this is a little trick as src routing is using an option header set to 0x00
+        if (
+            rpl_option->optionType==RPL_HOPBYHOP_HEADER_OPTION_TYPE && 
+            packetfunctions_isBroadcastMulticast(&(msg->l3_destinationAdd))==FALSE
+        ){
+            //printf ("** IPHC -- RPL_HOPBYHOP_HEADER_OPTION_TYPE\n");      
+            iphc_prependIPv6HopByHopHeader(msg, msg->l4_protocol, rpl_option);
+        }
+
+        // copy RH3s back if length > 0
+        if (rh3_length > 0){
+            //printf ("** IPHC -- rh3_length > 0\n");
+            packetfunctions_reserveHeaderSize(msg,rh3_length);
+            memcpy(&msg->payload[0],&rh3_copy[0],rh3_length);
+        } 
+        // if there are 6LoRH in the packet, add page dispatch no.1
+        if (
+            (*((uint8_t*)(msg->payload)) & FORMAT_6LORH_MASK) == CRITICAL_6LORH ||
+            (*((uint8_t*)(msg->payload)) & FORMAT_6LORH_MASK) == ELECTIVE_6LoRH
+        ){
+            //printf ("** IPHC -- there are 6LoRH in the packet\n");
+            packetfunctions_reserveHeaderSize(msg,sizeof(uint8_t));
+            *((uint8_t*)(msg->payload)) = PAGE_DISPATCH_NO_1;
+        }
+       
     return sixtop_send(msg);
 }
 
@@ -225,7 +226,7 @@ void iphc_receive(OpenQueueEntry_t* msg) {
     uint8_t              page_length;
     rpl_option_ht        rpl_option;
     uint8_t              rpi_length;
-   
+    
     msg->owner      = COMPONENT_IPHC;
    
     memset(&ipv6_outer_header,0,sizeof(ipv6_header_iht));
@@ -235,12 +236,16 @@ void iphc_receive(OpenQueueEntry_t* msg) {
     // then regular header
     iphc_retrieveIPv6Header(msg,&ipv6_outer_header,&ipv6_inner_header,&page_length);
     
+    //printf("** IPHC -- Recieving PACKET \n");
     // if the address is broadcast address, the ipv6 header is the inner header
     if (
         idmanager_getIsDAGroot()==FALSE ||
         packetfunctions_isBroadcastMulticast(&(ipv6_inner_header.dest))
     ) {
+ 
+        //printf("** IPHC -- Tossing Page\n");
         packetfunctions_tossHeader(msg,page_length);
+        
         if (
             ipv6_outer_header.next_header==IANA_IPv6HOPOPT &&
             ipv6_outer_header.hopByhop_option != NULL
@@ -250,14 +255,14 @@ void iphc_receive(OpenQueueEntry_t* msg) {
                               msg,
                               &rpl_option
                          );
-         
+            //printf("** IPHC -- Eliminating IPv6HopByHopHeader -- rpi_length %X\n",rpi_length);
             // toss the headers
             packetfunctions_tossHeader(
                 msg,
                 rpi_length
-            );
+            );    
         }
-      
+    
         // send up the stack
         forwarding_receive(
             msg,
@@ -555,6 +560,7 @@ void iphc_retrieveIPv6Header(OpenQueueEntry_t* msg, ipv6_header_iht* ipv6_outer_
     temp_8b = *((uint8_t*)(msg->payload)+ipv6_outer_header->header_length);
     if ((temp_8b&PAGE_DISPATCH_TAG) == PAGE_DISPATCH_TAG){
         page = temp_8b&PAGE_DISPATCH_NUM; 
+        //printf("** IPHC -- PAGE_DISPATCH_NUM %X\n",page);
         *page_length = 1;
     } else {
         page = 0;
@@ -1027,36 +1033,36 @@ void iphc_prependIPv6HopByHopHeader(
    ){
    uint8_t temp_8b;
    
-   printf("** IPHC -- prependIPv6HopByHopHeader\n");
+   //printf("** IPHC -- prependIPv6HopByHopHeader\n");
    
    if ((rpl_option->flags & K_FLAG) == 0){
       packetfunctions_reserveHeaderSize(msg,sizeof(uint16_t));
       msg->payload[0] = (uint8_t)((rpl_option->senderRank&0xFF00)>>8);
       msg->payload[1] = (uint8_t)(rpl_option->senderRank&0x00FF);
    } else {
+      //printf("** IPHC -- prependIPv6HopByHopHeader -- senderRank !=0 \n"); 
       packetfunctions_reserveHeaderSize(msg,sizeof(uint8_t));
       *((uint8_t*)(msg->payload)) = (uint8_t)((rpl_option->senderRank&0xFF00)>>8);
    }
    
-   printf("** IPHC -- prependIPv6HopByHopHeader -- I_FLAG \n");
-   
    if ((rpl_option->flags & I_FLAG) == 0){
+      //printf("** IPHC -- prependIPv6HopByHopHeader -- I_FLAG \n");
       packetfunctions_reserveHeaderSize(msg,sizeof(uint8_t));
       *((uint8_t*)(msg->payload)) = rpl_option->rplInstanceID;  
    }
    
-   printf("** IPHC -- prependIPv6HopByHopHeader -- RPI_6LOTH_TYPE\n");
-   
+    
+   //printf("** IPHC -- prependIPv6HopByHopHeader -- RPI_6LOTH_TYPE\n");
    packetfunctions_reserveHeaderSize(msg,sizeof(uint8_t));
    *((uint8_t*)(msg->payload)) = RPI_6LOTH_TYPE;
        
-   printf("** IPHC -- prependIPv6HopByHopHeader -- temp_8b\n");
-   
+    
+   //printf("** IPHC -- prependIPv6HopByHopHeader -- temp_8b\n");
    temp_8b = CRITICAL_6LORH | rpl_option->flags; 
    packetfunctions_reserveHeaderSize(msg,sizeof(uint8_t));
    *((uint8_t*)(msg->payload)) = temp_8b;
 }
-
+  
 /**
 \brief Retrieve an IPv6 hop-by-hop header from a message.
 

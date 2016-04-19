@@ -275,13 +275,13 @@ void packetfunctions_writeAddress(OpenQueueEntry_t* msg, open_addr_t* address, b
 void packetfunctions_reserveHeaderSize(OpenQueueEntry_t* pkt, uint8_t header_length) {
    pkt->payload -= header_length;
    pkt->length  += header_length;
-   //printf ("!!! reserveHeaderSize -- pkt->payload %X || pkt->packet %X\n",(uint8_t*)(pkt->payload),(uint8_t*)(pkt->packet));
-   //if ( (uint8_t*)(pkt->payload) < (uint8_t*)(pkt->packet) ) {
-   if ( (uint8_t*)(pkt->payload) < (uint8_t*)(pkt->packet) ) { 
+   //printf ("!!! reserveHeaderSize -- pointer pkt->payload %X || pointer pkt->packet %X\n",(uint8_t*)(pkt->payload),(uint8_t*)(pkt->packet));
+   //printf ("!!! reserveHeaderSize -- pointer pkt->payload %X || pointer pkt->packet %X\n",(uint8_t*)(pkt->payload),(uint8_t*)(pkt->packet));
+   if ( (uint8_t*)(pkt->payload) < (uint8_t*)(pkt->packet) ) {
       printf ("!!! Error packetfunctions_reserveHeaderSize!!!\n");
-      //openserial_printCritical(COMPONENT_PACKETFUNCTIONS,ERR_HEADER_TOO_LONG,
-      //                      (errorparameter_t)0,
-      //                     (errorparameter_t)pkt->length);
+      openserial_printCritical(COMPONENT_PACKETFUNCTIONS,ERR_HEADER_TOO_LONG,
+                            (errorparameter_t)0,
+                            (errorparameter_t)pkt->length);
    }
 }
 
