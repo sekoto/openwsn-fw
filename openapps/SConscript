@@ -32,6 +32,8 @@ defaultAppsInit   = [
     'techo',
     'uecho',
     'rrt',
+	'uecho',
+	'uinject',
 ]
 
 # additional apps the user wants to build

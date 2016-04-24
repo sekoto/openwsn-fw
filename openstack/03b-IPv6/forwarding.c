@@ -262,17 +262,17 @@ void forwarding_receive(
     printf("\n");
     printf("** Forwarding -- Packet-Recieved.. \n");
     
-    printf("** Forwarding -- Printing PACKET -");
-    for (i=0;i<130;i++) {
-        printf(" %X",msg->packet[i]);  
-    }
-    printf ("\n");
+    //printf("** Forwarding -- Printing PACKET -");
+    //for (i=0;i<130;i++) {
+    //    printf(" %X",msg->packet[i]);  
+    //}
+    //printf ("\n");
     
-    printf("** Forwarding -Recieved- -- Printing MSG PAYLOAD -");
-    for (i=0;i<msg->length;i++) {
-        printf(" %X",msg->payload[i]);  
-    }
-    printf ("\n");
+    //printf("** Forwarding -Recieved- -- Printing MSG PAYLOAD -");
+    //for (i=0;i<msg->length;i++) {
+    //    printf(" %X",msg->payload[i]);  
+    //}
+    //printf ("\n");
     
     printf("** Forwarding -- l3_destinationAddress.. ");
     for (i=0;i<LENGTH_ADDR128b;i++) {
@@ -282,7 +282,7 @@ void forwarding_receive(
     
     //printf("** Forwarding -- l4_sourcePortORicmpv6Type.. %X\n",((ICMPv6_ht*)(msg->payload))->type);
     
-    printf ("** Packet -- ipv6_outer_header->next_header -- %X\n",ipv6_outer_header->next_header);
+    //printf ("** Packet -- ipv6_outer_header->next_header -- %X\n",ipv6_outer_header->next_header);
     
     if (
         (

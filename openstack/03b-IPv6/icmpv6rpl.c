@@ -47,6 +47,10 @@ bool ThisRowMatch(
      );
 uint8_t routes_getNumRoutes(void);
 
+void routetable_timer_cb(opentimer_id_t id);
+void routetable_timer_task(void);
+void routetable_read(void);
+
 //=========================== public ==========================================
 
 /**
@@ -153,9 +157,19 @@ void icmpv6rpl_init() {
 }
 
 void routingtable_init() {    
+   uint32_t        RTPeriod;
+   
    // clear module variables
    memset(&routes_vars,0,sizeof(routes_vars_t));
    
+   routes_vars.RTPeriod                 = TIMER_RT_TIMEOUT;
+   RTPeriod                             = routes_vars.RTPeriod - 0x80 + (openrandom_get16b()&0xff);
+   routes_vars.timerIdRT                = opentimers_start(
+                                                RTPeriod,
+                                                TIMER_PERIODIC,
+                                                TIME_MS,
+                                                routetable_timer_cb
+                                          );
 }
 
 void  icmpv6rpl_writeDODAGid(uint8_t* dodagid) {
@@ -1034,7 +1048,7 @@ void removeRoute(uint8_t routeIndex) {
    routes_vars.routes[routeIndex].PathSequence              = 0;
    routes_vars.routes[routeIndex].PathLifetime              = 0;
    routes_vars.routes[routeIndex].destination.type          = ADDR_NONE;
-   routes_vars.routes[routeIndex].tosend                          = TRUE;
+   routes_vars.routes[routeIndex].tosend                    = TRUE;
    routes_vars.routes[routeIndex].scount                    = 0;
 }
 
@@ -1049,6 +1063,83 @@ uint8_t routes_getNumRoutes() {
       }
    }
    return returnVal;
+}
+
+
+void routetable_setRTPeriod(uint16_t RTPeriod){
+   uint32_t        RTPeriodRandom;
+   
+   routes_vars.RTPeriod = RTPeriod;
+   RTPeriodRandom = routes_vars.RTPeriod - 0x80 + (openrandom_get16b()&0xff);
+   opentimers_setPeriod(
+       routes_vars.timerIdRT,
+       TIME_MS,
+       RTPeriodRandom
+   );
+}
+
+/**
+\brief Route Table timer callback function.
+
+\note This function is executed in interrupt context, and should only push a
+   task.
+*/
+void routetable_timer_cb(opentimer_id_t id) {
+   scheduler_push_task(routetable_timer_task,TASKPRIO_RPL);
+}
+
+/**
+\brief Handler for Route Table timer event.
+
+\note This function is executed in task context, called by the scheduler.
+*/
+void routetable_timer_task() {
+   uint32_t        RTPeriod;
+   
+   // Works only in Storing-Mode
+   if (RPLMODE==1){
+    // read Route-Table
+    routetable_read();
+   
+    // arm the Route-Table timer with this new value
+    RTPeriod = routes_vars.RTPeriod - 0x80 + (openrandom_get16b()&0xff);
+    opentimers_setPeriod(
+        routes_vars.timerIdRT,
+        TIME_MS,
+        RTPeriod
+    );
+
+   }
+   
+}
+
+void routetable_read(){
+   uint8_t  i,posi;
+   
+    printf("**** Reading Routing-Table!! -- ### ID-MOTE -- ");
+    for (i=0;i<LENGTH_ADDR64b;i++) {
+        printf(" %X",(&idmanager_vars.my64bID)->addr_64b[i]);  
+    }
+    printf ("\n");
+    
+    for (posi=0;posi<MAX_ROUTE_NUM;posi++) {
+       if (routes_vars.routes[posi].used==TRUE) {
+           printf("**** Reading Routing-Table!! -- PathLifetime -- %X",routes_vars.routes[posi].PathLifetime);
+           printf(" ++ Route-MOTE-Address -- ");
+           for (i=0;i<LENGTH_ADDR128b;i++) {
+           printf(" %X",(&routes_vars.routes[posi].destination)->addr_128b[i]);  
+           }
+           printf ("\n");
+           
+           
+           routes_vars.routes[posi].PathLifetime       = routes_vars.routes[posi].PathLifetime - RTAGING;
+           // If PathLifetime is 0 or less remove the Route
+           if (routes_vars.routes[posi].PathLifetime <= 0){
+               removeRoute(posi);
+           }
+       }
+    
+    }
 }
 
 //=========================== helpers =========================================

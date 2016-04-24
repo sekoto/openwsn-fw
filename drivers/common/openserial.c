@@ -533,6 +533,9 @@ void openserial_goldenImageCommands(void){
        case COMMAND_SET_DAOPERIOD: // two bytes, in mili-seconds
            icmpv6rpl_setDAOPeriod(comandParam_16);
            break;
+       case COMMAND_SET_RTPERIOD: // two bytes, in mili-seconds
+           routetable_setRTPeriod(comandParam_16);
+           break;
        case COMMAND_SET_DAGRANK: // two bytes
            neighbors_setMyDAGrank(comandParam_16);
            break;

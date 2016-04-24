@@ -15,6 +15,7 @@
 
 #define TIMER_DIO_TIMEOUT         10000
 #define TIMER_DAO_TIMEOUT         60000
+#define TIMER_RT_TIMEOUT          60000
 
 #if RPLMODE == 0
     // Non-Storing Mode of Operation (1)
@@ -71,6 +72,10 @@
 
 // max number of routes sended in DAO message
 #define MAX_ROUTE_SEND              0x01
+
+// value to remove from PathLifetime in Routing Table rows
+#define RTAGING                     0x40
+
 
 enum{
   OPTION_ROUTE_INFORMATION_TYPE   = 0x03,
@@ -187,12 +192,16 @@ typedef struct {
    icmpv6rpl_dao_target_ht   dao_target;              ///< pre-populated DAO "Target Info" option header.
    opentimer_id_t            timerIdDAO;              ///< ID of the timer used to send DAOs.
    uint32_t                  daoPeriod;               ///< duration, in ms, of a timerIdDAO timeout.
-   uint8_t                   delayDAO;                ///< number of timerIdDIO events before actually sending a DAO.
+   uint8_t                   delayDAO;                ///< number of timerIdDAO events before actually sending a DAO.
 } icmpv6rpl_vars_t;
 
 typedef struct {
-   routeRow_t           routes[MAX_ROUTE_NUM];
-   bool                 tosend; // To control if we have to send a Route Table row
+   routeRow_t               routes[MAX_ROUTE_NUM];
+   bool                     tosend; // To control if we have to send a Route Table row
+   // Timers for reading the Routing Table and expire routes
+   opentimer_id_t           timerIdRT;              ///< ID of the timer used to read Routing Table.
+   uint32_t                 RTPeriod;               ///< duration, in ms, of a timerIdRT timeout.
+   uint8_t                  delayRT;                ///< number of timerIdRT events before actually reading Routing Table.
 } routes_vars_t;
 
 
@@ -211,5 +220,6 @@ void     icmpv6rpl_setDAOPeriod(uint16_t daoPeriod);
 \}
 */
 void     routingtable_init(void);
+void     routetable_setRTPeriod(uint16_t RTPeriod);
 
 #endif
