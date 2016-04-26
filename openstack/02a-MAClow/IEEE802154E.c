@@ -16,6 +16,7 @@
 #include "sixtop.h"
 #include "adaptive_sync.h"
 #include "processIE.h"
+#include "icmpv6rpl.h"
 
 //=========================== variables =======================================
 
@@ -848,7 +849,17 @@ port_INLINE void activity_ti1ORri1() {
       if (ieee154e_vars.deSyncTimeout==0) {
          // declare myself desynchronized
          changeIsSync(FALSE);
-        
+         
+         if (RPLMODE==1){
+            printf("** IEEE802154E -- Desincronizing ");
+            printf("### ID-MOTE -- ");
+            for (i=0;i<LENGTH_ADDR64b;i++) {
+                printf(" %X",(&idmanager_vars.my64bID)->addr_64b[i]);  
+            }
+            printf ("\n");
+            
+         }
+         
          // log the error
          openserial_printError(COMPONENT_IEEE802154E,ERR_DESYNCHRONIZED,
                                (errorparameter_t)ieee154e_vars.slotOffset,

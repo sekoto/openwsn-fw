@@ -639,7 +639,7 @@ void sendDAO() {
    uint8_t              i;
    open_addr_t          rtpref;
    open_addr_t          rtadd;
-   int16_t              ccount;
+   uint16_t             ccount;
    uint8_t              posi;
    bool                 selected;
    bool                 onetarget;
@@ -716,7 +716,7 @@ void sendDAO() {
    // Limit onlye one Target Option
    onetarget=FALSE;
    
-   if ( ( RPLMODE == 1 ) || ( routes_vars.tosend == TRUE ) ){ 
+   if ( ( RPLMODE == 1 ) && ( routes_vars.tosend == TRUE ) ){ 
        
         // Routes announced -- Storing-Mode
         //Predefined values for controlling send
@@ -731,14 +731,16 @@ void sendDAO() {
         //printf ("\n");
    
         for (nbrIdx=0;nbrIdx<MAX_ROUTE_NUM;nbrIdx++) {
+            
             if (routes_vars.routes[nbrIdx].used==TRUE) {
-                
-                if ( (routes_vars.routes[nbrIdx].tosend==TRUE) || (ccount > routes_vars.routes[nbrIdx].scount) ) {
+                      
+                if ( (routes_vars.routes[nbrIdx].tosend==TRUE) && (ccount > routes_vars.routes[nbrIdx].scount) ) {
+                    printf ("------------------SELECTED ROUTE TABLE TO SEND\n");
                     selected=TRUE; 
                     posi=nbrIdx;
                     ccount=routes_vars.routes[nbrIdx].scount;
-                }    
-                
+                }
+           
                 //printf ("+++ Type IPv6 registered - %u\n",routes_vars.routes[nbrIdx].destination.type);
                 //printf ("|-----Route(%u)------\n",nbrIdx);
                 //printf("|### Routing-IPv6-Destiny(Child) -- ");
@@ -761,7 +763,9 @@ void sendDAO() {
         if ( selected == TRUE ){
             onetarget=TRUE;
             routes_vars.tosend=FALSE;
+             
             routes_vars.routes[posi].scount=routes_vars.routes[posi].scount+1;
+            routes_vars.routes[posi].tosend=FALSE;
             
             packetfunctions_ip128bToMac64b(&(routes_vars.routes[posi].destination),&rtpref,&rtadd);
             packetfunctions_writeAddress(msg,&rtadd,OW_BIG_ENDIAN);
@@ -1130,8 +1134,7 @@ void routetable_read(){
            printf(" %X",(&routes_vars.routes[posi].destination)->addr_128b[i]);  
            }
            printf ("\n");
-           
-           
+
            routes_vars.routes[posi].PathLifetime       = routes_vars.routes[posi].PathLifetime - RTAGING;
            // If PathLifetime is 0 or less remove the Route
            if (routes_vars.routes[posi].PathLifetime <= 0){

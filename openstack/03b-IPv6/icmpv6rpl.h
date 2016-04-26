@@ -170,7 +170,7 @@ typedef struct {
    uint8_t          PathLifetime; // Path-Lifetime 
    open_addr_t      destination; // Destination Prefix (or address or Mcast Group) 
    bool             tosend; // Record if send this route
-   int16_t          scount; // Counting how many times sended
+   uint16_t          scount; // Counting how many times sended
 } routeRow_t;
 END_PACK
 

@@ -249,7 +249,7 @@ void packetfunctions_writeAddress(OpenQueueEntry_t* msg, open_addr_t* address, b
          address_length = 16;
          break;
       default:
-         printf("!!! Error packetfunctions_writeAddress!!! %u\n",address->type); 
+         //printf("!!! Error packetfunctions_writeAddress!!! %u\n",address->type); 
          openserial_printCritical(COMPONENT_PACKETFUNCTIONS,ERR_WRONG_ADDR_TYPE,
                                (errorparameter_t)address->type,
                                (errorparameter_t)7);
@@ -278,7 +278,7 @@ void packetfunctions_reserveHeaderSize(OpenQueueEntry_t* pkt, uint8_t header_len
    //printf ("!!! reserveHeaderSize -- pointer pkt->payload %X || pointer pkt->packet %X\n",(uint8_t*)(pkt->payload),(uint8_t*)(pkt->packet));
    //printf ("!!! reserveHeaderSize -- pointer pkt->payload %X || pointer pkt->packet %X\n",(uint8_t*)(pkt->payload),(uint8_t*)(pkt->packet));
    if ( (uint8_t*)(pkt->payload) < (uint8_t*)(pkt->packet) ) {
-      printf ("!!! Error packetfunctions_reserveHeaderSize!!!\n");
+      //printf ("!!! Error packetfunctions_reserveHeaderSize!!!\n");
       openserial_printCritical(COMPONENT_PACKETFUNCTIONS,ERR_HEADER_TOO_LONG,
                             (errorparameter_t)0,
                             (errorparameter_t)pkt->length);
@@ -290,7 +290,7 @@ void packetfunctions_tossHeader(OpenQueueEntry_t* pkt, uint8_t header_length) {
    pkt->length  -= header_length;
    //printf ("!!! tossHeader -- pkt->payload %X || pkt->packet %X\n",(uint8_t*)(pkt->payload),(uint8_t*)(pkt->packet));
    if ( (uint8_t*)(pkt->payload) > (uint8_t*)(pkt->packet+126) ) {
-      printf ("!!! Error packetfunctions_tossHeader!!!\n");
+      //printf ("!!! Error packetfunctions_tossHeader!!!\n");
       openserial_printError(COMPONENT_PACKETFUNCTIONS,ERR_HEADER_TOO_LONG,
                             (errorparameter_t)1,
                             (errorparameter_t)pkt->length);
