@@ -19,8 +19,8 @@
     #define TIMER_RT_TIMEOUT          60000
 #elif RPLMODE == 1
     #define TIMER_DIO_TIMEOUT         10000
-    #define TIMER_DAO_TIMEOUT         80000
-    #define TIMER_RT_TIMEOUT          80000
+    #define TIMER_DAO_TIMEOUT         60000
+    #define TIMER_RT_TIMEOUT          60000
 #endif
 
 #if RPLMODE == 0

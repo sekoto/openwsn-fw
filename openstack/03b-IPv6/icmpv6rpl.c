@@ -45,7 +45,7 @@ bool ThisRowMatch(
         open_addr_t* address,
         uint8_t      rowNumber
      );
-uint8_t routes_getNumRoutes(void);
+uint8_t routes_getNumRoutes(uint8_t  TipRoutes);
 
 void routetable_timer_cb(opentimer_id_t id);
 void routetable_timer_task(void);
@@ -615,26 +615,32 @@ void icmpv6rpl_timer_DAO_cb(opentimer_id_t id) {
 void icmpv6rpl_timer_DAO_task() {
    uint32_t        daoPeriod;
    uint32_t        tempPeriod;
-   uint32_t        divPeriod;
+   uint8_t         divPeriod;
+   uint8_t         i;
    
    // send DAO
    sendDAO();
   
    if (RPLMODE==1){
-        // Recalculate DAO Period
-       if (routes_getNumRoutes()==0){
+       // Recalculate DAO Period counting Table Routing to send
+       if (routes_getNumRoutes(1)==0){
            divPeriod=1;
        }else{
-           divPeriod=routes_getNumRoutes();
+           divPeriod=routes_getNumRoutes(1)+1;
        }
-       tempPeriod = (icmpv6rpl_vars.daoPeriod / divPeriod;      
+       printf("## DAO-task -- ID-MOTE ");
+       for (i=0;i<LENGTH_ADDR64b;i++) {
+            printf(" %X",(&idmanager_vars.my64bID)->addr_64b[i]);  
+       }      
+       printf(" -- NumRoutes %X\n",divPeriod);  
+       tempPeriod = (icmpv6rpl_vars.daoPeriod / divPeriod);
        // arm the DAO timer with this new value
        daoPeriod = tempPeriod - 0x80 + (openrandom_get16b()&0xff);    
    } else {
        // arm the DAO timer with this new value
        daoPeriod = icmpv6rpl_vars.daoPeriod - 0x80 + (openrandom_get16b()&0xff);  
    }  
-   
+   // setting the new daPeriod for the new task
    opentimers_setPeriod(
       icmpv6rpl_vars.timerIdDAO,
       TIME_MS,
@@ -1071,16 +1077,36 @@ void removeRoute(uint8_t routeIndex) {
    routes_vars.routes[routeIndex].scount                    = 0;
 }
 
-uint8_t routes_getNumRoutes() {
+uint8_t routes_getNumRoutes(uint8_t tiprt) {
    uint8_t i;
    uint8_t returnVal;
+   uint8_t totalrt;
+   uint8_t sendrt;
    
    returnVal=0;
+   totalrt=0;
+   sendrt=0;
    for (i=0;i<MAX_ROUTE_NUM;i++) {
       if (routes_vars.routes[i].used==TRUE) {
-         returnVal++;
+         totalrt++;
+         if (routes_vars.routes[i].tosend==TRUE) {
+             sendrt++;
+         }
       }
    }
+   
+   switch (tiprt) {
+      case 0:
+         returnVal=totalrt;
+         break;
+      case 1:
+         returnVal=sendrt;
+         break;
+      default:
+          returnVal=totalrt;
+          break;
+   }
+   
    return returnVal;
 }
 
