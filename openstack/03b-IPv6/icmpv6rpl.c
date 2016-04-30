@@ -614,12 +614,27 @@ void icmpv6rpl_timer_DAO_cb(opentimer_id_t id) {
 */
 void icmpv6rpl_timer_DAO_task() {
    uint32_t        daoPeriod;
+   uint32_t        tempPeriod;
+   uint32_t        divPeriod;
    
    // send DAO
    sendDAO();
+  
+   if (RPLMODE==1){
+        // Recalculate DAO Period
+       if (routes_getNumRoutes()==0){
+           divPeriod=1;
+       }else{
+           divPeriod=routes_getNumRoutes();
+       }
+       tempPeriod = (icmpv6rpl_vars.daoPeriod / divPeriod;      
+       // arm the DAO timer with this new value
+       daoPeriod = tempPeriod - 0x80 + (openrandom_get16b()&0xff);    
+   } else {
+       // arm the DAO timer with this new value
+       daoPeriod = icmpv6rpl_vars.daoPeriod - 0x80 + (openrandom_get16b()&0xff);  
+   }  
    
-   // arm the DAO timer with this new value
-   daoPeriod = icmpv6rpl_vars.daoPeriod - 0x80 + (openrandom_get16b()&0xff);
    opentimers_setPeriod(
       icmpv6rpl_vars.timerIdDAO,
       TIME_MS,

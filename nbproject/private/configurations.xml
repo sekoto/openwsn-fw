@@ -1203,7 +1203,6 @@
               <in>icmpv6echo.h</in>
               <in>icmpv6echo_obj.c</in>
               <in>icmpv6echo_obj.h</in>
-              <in>icmpv6rpl-storing.h</in>
               <in>icmpv6rpl.c</in>
               <in>icmpv6rpl.h</in>
               <in>icmpv6rpl_obj.c</in>
