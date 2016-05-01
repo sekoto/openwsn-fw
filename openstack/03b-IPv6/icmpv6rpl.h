@@ -80,7 +80,7 @@
 #define MAX_ROUTE_SEND              0x01
 
 // value to remove from PathLifetime in Routing Table rows
-#define RTAGING                     0x40
+#define RTAGING                     0x39
 
 
 enum{
@@ -192,6 +192,7 @@ typedef struct {
    uint32_t                  dioPeriod;               ///< duration, in ms, of a timerIdDIO timeout.
    opentimer_id_t            timerIdDIO;              ///< ID of the timer used to send DIOs.
    uint8_t                   delayDIO;                ///< number of timerIdDIO events before actually sending a DIO.
+   uint32_t                  dioSended;               ///< num of DIO messages send  
    // DAO-related
    icmpv6rpl_dao_ht          dao;                     ///< pre-populated DAO packet.
    icmpv6rpl_dao_transit_ht  dao_transit;             ///< pre-populated DAO "Transit Info" option header.
@@ -199,6 +200,7 @@ typedef struct {
    opentimer_id_t            timerIdDAO;              ///< ID of the timer used to send DAOs.
    uint32_t                  daoPeriod;               ///< duration, in ms, of a timerIdDAO timeout.
    uint8_t                   delayDAO;                ///< number of timerIdDAO events before actually sending a DAO.
+   uint32_t                  daoSended;               ///< num of DAO messages send  
 } icmpv6rpl_vars_t;
 
 typedef struct {

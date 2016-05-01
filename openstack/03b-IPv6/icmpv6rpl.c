@@ -153,7 +153,9 @@ void icmpv6rpl_init() {
                                                 TIME_MS,
                                                 icmpv6rpl_timer_DAO_cb
                                              );
-   
+   // Message counters
+   icmpv6rpl_vars.dioSended                 = 0;
+   icmpv6rpl_vars.daoSended                 = 0;
 }
 
 void routingtable_init() {    
@@ -498,8 +500,16 @@ void icmpv6rpl_timer_DIO_cb(opentimer_id_t id) {
 */
 void icmpv6rpl_timer_DIO_task() {
    uint32_t        dioPeriod;
+   
    // send DIO
    sendDIO();
+   
+   // incrementing DIO Sended
+   icmpv6rpl_vars.dioSended++;
+           
+   printf("## DIO-Counter -- ID-MOTE ");
+   printf(" %X",(&idmanager_vars.my64bID)->addr_64b[7]);       
+   printf(" -- DIO Sended %X\n",icmpv6rpl_vars.dioSended);    
    
    // arm the DIO timer with this new value
    dioPeriod = icmpv6rpl_vars.dioPeriod - 0x80 + (openrandom_get16b()&0xff);
@@ -621,19 +631,28 @@ void icmpv6rpl_timer_DAO_task() {
    // send DAO
    sendDAO();
   
+   // incrementing DIO Sended
+   icmpv6rpl_vars.daoSended++;
+           
+   printf("## DAO-Counter -- ID-MOTE ");
+   printf(" %X",(&idmanager_vars.my64bID)->addr_64b[7]);       
+   printf(" -- DAO Sended %X\n",icmpv6rpl_vars.daoSended);  
+   
    if (RPLMODE==1){
        // Recalculate DAO Period counting Table Routing to send
-       if (routes_getNumRoutes(1)==0){
+       if (routes_getNumRoutes(0)==0){
            divPeriod=1;
        }else{
-           divPeriod=routes_getNumRoutes(1)+1;
+           divPeriod=routes_getNumRoutes(0)+1;
        }
-       printf("## DAO-task -- ID-MOTE ");
-       for (i=0;i<LENGTH_ADDR64b;i++) {
-            printf(" %X",(&idmanager_vars.my64bID)->addr_64b[i]);  
-       }      
-       printf(" -- NumRoutes %X\n",divPeriod);  
+       //printf("## DAO-task -- ID-MOTE ");
+       //for (i=0;i<LENGTH_ADDR64b;i++) {
+       //     printf(" %X",(&idmanager_vars.my64bID)->addr_64b[i]);  
+       //}      
+       //printf(" -- NumRoutes %X",divPeriod);  
        tempPeriod = (icmpv6rpl_vars.daoPeriod / divPeriod);
+       //printf(" ** icmpv6rpl_timer_DAO_task -- DAOPeriod-Modified %X",tempPeriod);   
+       //printf(" --  icmpv6rpl_vars.timerIdDAO %X\n",icmpv6rpl_vars.timerIdDAO); 
        // arm the DAO timer with this new value
        daoPeriod = tempPeriod - 0x80 + (openrandom_get16b()&0xff);    
    } else {
@@ -756,7 +775,6 @@ void sendDAO() {
             if (routes_vars.routes[nbrIdx].used==TRUE) {
                       
                 if ( (routes_vars.routes[nbrIdx].tosend==TRUE) && (ccount > routes_vars.routes[nbrIdx].scount) ) {
-                    printf ("------------------SELECTED ROUTE TABLE TO SEND\n");
                     selected=TRUE; 
                     posi=nbrIdx;
                     ccount=routes_vars.routes[nbrIdx].scount;
@@ -1097,6 +1115,7 @@ uint8_t routes_getNumRoutes(uint8_t tiprt) {
    
    switch (tiprt) {
       case 0:
+          printf ("** Total Routes\n");
          returnVal=totalrt;
          break;
       case 1:
