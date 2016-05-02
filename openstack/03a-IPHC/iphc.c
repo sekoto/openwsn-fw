@@ -82,7 +82,7 @@ owerror_t iphc_sendFromForwarding(
     }
     
     //printf ("** IPHC -- Hop Limit - ipv6_outer_header->hop_limit %X\n",ipv6_outer_header->hop_limit);
-    printf ("** IPHC -- Hop Limit - ipv6_inner_header->hop_limit %X\n",ipv6_inner_header->hop_limit);
+    //printf ("** IPHC -- Hop Limit - ipv6_inner_header->hop_limit %X\n",ipv6_inner_header->hop_limit);
     
     //discard the packet.. hop limit reached.
     if (ipv6_outer_header->src.type != ADDR_NONE){
@@ -106,7 +106,7 @@ owerror_t iphc_sendFromForwarding(
         } else {
             // decrement the packet's hop limit
             ipv6_inner_header->hop_limit--;
-            printf ("** IPHC -- Hop Limit - ipv6_inner_header->hop_limit DECREMENTING %X\n",ipv6_inner_header->hop_limit);
+            //printf ("** IPHC -- Hop Limit - ipv6_inner_header->hop_limit DECREMENTING %X\n",ipv6_inner_header->hop_limit);
         }
     }
    
