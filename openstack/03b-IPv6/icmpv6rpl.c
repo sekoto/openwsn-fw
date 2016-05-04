@@ -304,7 +304,7 @@ void icmpv6rpl_receive(OpenQueueEntry_t* msg) {
          break;
       
       case IANA_ICMPv6_RPL_DAO:
-        //printf("+++++ DAO-Message \n");
+        
        	if (RPLMODE==0){ 
 		
             // this should never happen
@@ -313,7 +313,8 @@ void icmpv6rpl_receive(OpenQueueEntry_t* msg) {
             //                      (errorparameter_t)0);
 		
 	} else if (RPLMODE==1){ 
-		
+            
+            //printf("+++++ DAO-Message \n");
             memcpy(
                 &(icmpv6rpl_vars.dao),
 		(icmpv6rpl_dao_ht*)(msg->payload),
@@ -348,6 +349,10 @@ void icmpv6rpl_receive(OpenQueueEntry_t* msg) {
             //    printf (" %X",msg->payload[i]);  
             //}
             //printf ("\n");
+            
+            printf ("\n");
+            printf("## MOTE [%X] ---- Recieved DAO-Message",(&idmanager_vars.my64bID)->addr_64b[7]);
+            printf(" from MOTE [%X]\n",origmac.addr_64b[7]);
 			
             // retrieve DAO option code
             daooptioncode      = msg->payload[sizeof(icmpv6rpl_dao_ht)];
@@ -507,9 +512,9 @@ void icmpv6rpl_timer_DIO_task() {
    // incrementing DIO Sended
    icmpv6rpl_vars.dioSended++;
            
-   printf("## DIO-Counter -- ID-MOTE ");
-   printf(" %X",(&idmanager_vars.my64bID)->addr_64b[7]);       
-   printf(" -- DIO Sended %X\n",icmpv6rpl_vars.dioSended);    
+   //printf("## DIO-Counter -- ID-MOTE ");
+   //printf(" %X",(&idmanager_vars.my64bID)->addr_64b[7]);       
+   //printf(" -- DIO Sended %X\n",icmpv6rpl_vars.dioSended);    
    
    // arm the DIO timer with this new value
    dioPeriod = icmpv6rpl_vars.dioPeriod - 0x80 + (openrandom_get16b()&0xff);
@@ -634,9 +639,9 @@ void icmpv6rpl_timer_DAO_task() {
    // incrementing DIO Sended
    icmpv6rpl_vars.daoSended++;
            
-   printf("## DAO-Counter -- ID-MOTE ");
-   printf(" %X",(&idmanager_vars.my64bID)->addr_64b[7]);       
-   printf(" -- DAO Sended %X\n",icmpv6rpl_vars.daoSended);  
+   //printf("## DAO-Counter -- ID-MOTE ");
+   //printf(" %X",(&idmanager_vars.my64bID)->addr_64b[7]);       
+   //printf(" -- DAO Sended %X\n",icmpv6rpl_vars.daoSended);  
    
    if (RPLMODE==1){
        // Recalculate DAO Period counting Table Routing to send
@@ -645,6 +650,7 @@ void icmpv6rpl_timer_DAO_task() {
        }else{
            divPeriod=routes_getNumRoutes(0)+1;
        }
+       //printf("## DAO-task -- divPeriod %X\n",divPeriod);
        //printf("## DAO-task -- ID-MOTE ");
        //for (i=0;i<LENGTH_ADDR64b;i++) {
        //     printf(" %X",(&idmanager_vars.my64bID)->addr_64b[i]);  
@@ -980,16 +986,16 @@ void registerRoute(open_addr_t*     destaddress,
                    uint8_t          PathS,
                    uint8_t          PathL) {
    uint8_t  i,posi;
-
-   //printf("Registering route process....\n");
-   // printf("IPv6 type....%u\n",IPv6->type); 
+    printf ("\n");
+    printf("## MOTE [%X] ---- Registering route process\n",(&idmanager_vars.my64bID)->addr_64b[7]);
+    // printf("IPv6 type....%u\n",IPv6->type); 
    // add this Route
    if (isRoute(destaddress)==FALSE) {
-      //printf("The route is not on the table...\n");
+      printf("  The route is not on the table...\n");
       i=0;
       while(i<MAX_ROUTE_NUM) {
          if (routes_vars.routes[i].used==FALSE) {
-             //printf("Adding route...\n");
+             printf("    Adding route...\n");
             // add this route
             routes_vars.routes[i].used                      = TRUE;
             routes_vars.routes[i].advertneighinf            = 0;
@@ -1017,7 +1023,7 @@ void registerRoute(open_addr_t*     destaddress,
          return;
       }
    }else{
-       //printf("The route is in the table already...\n");
+       printf(" The route is in the table already...\n");
         // Obtain position of route
         posi = posRoute(destaddress);
         // Is new the address of publisher
@@ -1040,7 +1046,7 @@ void registerRoute(open_addr_t*     destaddress,
                     //printf("+++ New Orig-Publisher...\n");
                 }
 				
-                //printf("Updating Route...\n");
+                printf("    Updating Route...\n");
                 // update this route
                 routes_vars.routes[posi].used                      = TRUE;
                 routes_vars.routes[posi].advertneighinf            = 0;
@@ -1115,7 +1121,7 @@ uint8_t routes_getNumRoutes(uint8_t tiprt) {
    
    switch (tiprt) {
       case 0:
-          printf ("** Total Routes\n");
+          //rintf ("** Total Routes\n");
          returnVal=totalrt;
          break;
       case 1:
@@ -1180,25 +1186,29 @@ void routetable_timer_task() {
 void routetable_read(){
    uint8_t  i,posi;
    
-    printf("**** Reading Routing-Table!! -- ### ID-MOTE -- ");
-    for (i=0;i<LENGTH_ADDR64b;i++) {
-        printf(" %X",(&idmanager_vars.my64bID)->addr_64b[i]);  
-    }
     printf ("\n");
-    
+    printf("## MOTE [%X] ---- Reading Routing-Table\n",(&idmanager_vars.my64bID)->addr_64b[7]);
+
     for (posi=0;posi<MAX_ROUTE_NUM;posi++) {
        if (routes_vars.routes[posi].used==TRUE) {
-           printf("**** Reading Routing-Table!! -- PathLifetime -- %X",routes_vars.routes[posi].PathLifetime);
-           printf(" ++ Route-MOTE-Address -- ");
+           printf(" PathLifetime = %X",routes_vars.routes[posi].PathLifetime);
+           printf(" >>> Route-MOTE-Address = ");
            for (i=0;i<LENGTH_ADDR128b;i++) {
            printf(" %X",(&routes_vars.routes[posi].destination)->addr_128b[i]);  
            }
            printf ("\n");
 
-           routes_vars.routes[posi].PathLifetime       = routes_vars.routes[posi].PathLifetime - RTAGING;
+           //routes_vars.routes[posi].PathLifetime = routes_vars.routes[posi].PathLifetime - RTAGING;
            // If PathLifetime is 0 or less remove the Route
-           if (routes_vars.routes[posi].PathLifetime <= 0){
-               removeRoute(posi);
+           //if (routes_vars.routes[posi].PathLifetime <= 0){
+           //    removeRoute(posi);
+           //}
+           
+           if (routes_vars.routes[posi].PathLifetime <= RTAGING){
+              printf("    Removing Route -- PathLifetime Expired\n"); 
+              removeRoute(posi);
+           } else { 
+              routes_vars.routes[posi].PathLifetime = routes_vars.routes[posi].PathLifetime - RTAGING; 
            }
        }
     

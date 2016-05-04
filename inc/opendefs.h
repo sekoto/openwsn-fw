@@ -23,7 +23,7 @@
 // RPLMODE = 1 -- Storing Mode
 // RPLMODE = 0 -- Non-Storing Mode
 #ifndef RPLMODE
-#define RPLMODE 1
+#define RPLMODE 0
 #endif
 
 static const uint8_t infoStackName[] = "OpenWSN ";
